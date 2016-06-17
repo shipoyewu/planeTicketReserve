@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-17 8:20:37 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.mps.model.Orders" table="orders" catalog="planeticketreserve" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="team" class="com.mps.model.Team" fetch="select">
+            <column name="teamid" not-null="true" />
+        </many-to-one>
+        <many-to-one name="traveller" class="com.mps.model.Traveller" fetch="select">
+            <column name="travellerid" not-null="true" />
+        </many-to-one>
+        <property name="flight" type="string">
+            <column name="flight" length="25" />
+        </property>
+        <property name="startpoint" type="string">
+            <column name="startpoint" length="25" />
+        </property>
+        <property name="endpoint" type="string">
+            <column name="endpoint" length="25" />
+        </property>
+        <property name="starttime" type="timestamp">
+            <column name="starttime" length="19" />
+        </property>
+        <property name="endtime" type="timestamp">
+            <column name="endtime" length="19" />
+        </property>
+        <property name="advancestatus" type="java.lang.Integer">
+            <column name="advancestatus" />
+        </property>
+        <property name="ticketstatus" type="java.lang.Integer">
+            <column name="ticketstatus" />
+        </property>
+        <property name="tickettime" type="timestamp">
+            <column name="tickettime" length="19" />
+        </property>
+        <property name="price" type="java.lang.Double">
+            <column name="price" precision="22" scale="0" />
+        </property>
+        <property name="seat" type="java.lang.Integer">
+            <column name="seat" />
+        </property>
+        <property name="space" type="java.lang.Integer">
+            <column name="space" />
+        </property>
+    </class>
+</hibernate-mapping>

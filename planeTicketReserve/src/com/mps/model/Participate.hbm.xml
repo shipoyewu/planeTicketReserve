@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-17 8:20:37 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.mps.model.Participate" table="participate" catalog="planeticketreserve" optimistic-lock="version">
+        <composite-id name="id" class="com.mps.model.ParticipateId">
+            <key-property name="travellerid" type="int">
+                <column name="travellerid" />
+            </key-property>
+            <key-property name="teamid" type="int">
+                <column name="teamid" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="team" class="com.mps.model.Team" update="false" insert="false" fetch="select">
+            <column name="teamid" not-null="true" />
+        </many-to-one>
+        <many-to-one name="traveller" class="com.mps.model.Traveller" update="false" insert="false" fetch="select">
+            <column name="travellerid" not-null="true" />
+        </many-to-one>
+        <property name="jointime" type="timestamp">
+            <column name="jointime" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

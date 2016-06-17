@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-17 8:20:37 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.mps.model.Traveller" table="traveller" catalog="planeticketreserve" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="agency" class="com.mps.model.Agency" fetch="select">
+            <column name="agencyid" not-null="true" />
+        </many-to-one>
+        <property name="sex" type="string">
+            <column name="sex" length="25" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="25" />
+        </property>
+        <property name="idcard" type="string">
+            <column name="idcard" length="25" />
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" length="25" />
+        </property>
+        <set name="participates" table="participate" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="travellerid" not-null="true" />
+            </key>
+            <one-to-many class="com.mps.model.Participate" />
+        </set>
+        <set name="orderses" table="orders" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="travellerid" not-null="true" />
+            </key>
+            <one-to-many class="com.mps.model.Orders" />
+        </set>
+    </class>
+</hibernate-mapping>
