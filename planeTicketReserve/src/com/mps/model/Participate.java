@@ -1,5 +1,5 @@
 package com.mps.model;
-// Generated 2016-6-17 8:20:37 by Hibernate Tools 4.3.1.Final
+// Generated 2016-6-18 9:41:43 by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class Participate implements java.io.Serializable {
 
-	private ParticipateId id;
+	private int id;
 	private Team team;
 	private Traveller traveller;
 	private Date jointime;
@@ -16,24 +16,18 @@ public class Participate implements java.io.Serializable {
 	public Participate() {
 	}
 
-	public Participate(ParticipateId id, Team team, Traveller traveller) {
-		this.id = id;
-		this.team = team;
-		this.traveller = traveller;
-	}
-
-	public Participate(ParticipateId id, Team team, Traveller traveller, Date jointime) {
+	public Participate(int id, Team team, Traveller traveller, Date jointime) {
 		this.id = id;
 		this.team = team;
 		this.traveller = traveller;
 		this.jointime = jointime;
 	}
 
-	public ParticipateId getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(ParticipateId id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
