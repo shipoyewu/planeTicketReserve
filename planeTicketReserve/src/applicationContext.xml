@@ -50,17 +50,7 @@
 	<!-- REST服务的注解例子 -->
 	<jaxrs:server id="Service" address="/REST">
 		<jaxrs:serviceBeans>
-			<bean class="ts.serviceImpl.MiscService">
-				<property name="transNodeDao" ref="transNodeDao"></property>	<!-- 配置MiscService中的属性dao -->
-				<property name="regionDao" ref="regionDao"></property>
-				<property name="customerInfoDao" ref="customerInfoDao"></property>
-			</bean>
-			<bean class="ts.serviceImpl.DomainService">
-				<property name="expressSheetDao" ref="expressSheetDao"></property>	<!-- 配置DomainService中的属性dao -->
-				<property name="transPackageDao" ref="transPackageDao"></property>
-				<property name="transHistoryDao" ref="transHistoryDao"></property>
-				<property name="transPackageContentDao" ref="transPackageContentDao"></property>
-				<property name="userInfoDao" ref="userInfoDao"></property>
+			<bean class="com.mps.service.ServiceImp">
 			</bean>
 		</jaxrs:serviceBeans>
 
@@ -71,7 +61,7 @@
 
 		<jaxrs:providers>
 			<ref bean="jsonProvider" />
-			<bean class="ts.serviceException.InvokeFaultExceptionMapper" />
+			<bean class="com.mps.exceptionmapper.InvokeFaultExceptionMapper" /> 
 		</jaxrs:providers>
 		<jaxrs:languageMappings>
 			<entry key="en" value="en-gb" />
@@ -104,5 +94,4 @@
 		<property name="supportUnwrapped" value="true" />
 		<property name="attributesToElements" value="true" />
 	</bean>
-
 </beans>
