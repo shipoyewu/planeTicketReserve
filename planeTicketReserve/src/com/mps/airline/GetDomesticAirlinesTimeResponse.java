@@ -94,7 +94,9 @@ public class GetDomesticAirlinesTimeResponse {
     @XmlType(name = "", propOrder = {
         "any"
     })
-    public static class GetDomesticAirlinesTimeResult {
+    //返回内部类
+    
+    public static class GetDomesticAirlinesTimeResult {	
 
         @XmlAnyElement(lax = true)
         protected Object any;

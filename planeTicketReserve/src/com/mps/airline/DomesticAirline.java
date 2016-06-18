@@ -19,7 +19,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "DomesticAirline", targetNamespace = "http://WebXml.com.cn/", wsdlLocation = "file:/C:/Users/Zongzan/Desktop/DomesticAirline.asmx.xml")
+@WebServiceClient(name = "DomesticAirline", targetNamespace = "http://WebXml.com.cn/", wsdlLocation = "http://ws.webxml.com.cn/webservices/DomesticAirline.asmx?wsdl")
 public class DomesticAirline
     extends Service
 {
@@ -32,7 +32,7 @@ public class DomesticAirline
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/C:/Users/Zongzan/Desktop/DomesticAirline.asmx.xml");
+            url = new URL("http://ws.webxml.com.cn/webservices/DomesticAirline.asmx?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
