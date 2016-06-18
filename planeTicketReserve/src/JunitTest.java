@@ -13,9 +13,7 @@ import com.mps.model.Agency;
 public class JunitTest {
 	@Resource
 	AgencyDaoImp agencyDaoImp;
-	public JunitTest() {
-		// TODO Auto-generated constructor stub
-	}
+
 	@Test
 	public void test(){
 		Agency agency = new Agency();
