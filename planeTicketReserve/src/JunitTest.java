@@ -22,7 +22,11 @@ public class JunitTest {
 		agency.setPhone("13027711597");
 		agency.setPwd("123456");
 		agency.setContacts("è¶¸ç¸ç");
-		agencyDaoImp.save(agency);
+		try{
+			agencyDaoImp.save(agency);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		
 	}
 }
