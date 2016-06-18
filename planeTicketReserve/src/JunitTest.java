@@ -13,17 +13,16 @@ import com.mps.model.Agency;
 public class JunitTest {
 	@Resource
 	AgencyDaoImp agencyDaoImp;
-	public JunitTest() {
-		// TODO Auto-generated constructor stub
-	}
+
 	@Test
 	public void test(){
 		System.out.println("111");
 		Agency agency = new Agency();
-		agency.setAddress("zonzansww是是是");
+		agency.setAddress("河南省郑州市高新区科学大道");
 		agency.setName("snice");
 		agency.setPhone("13027711597");
 		agency.setPwd("123456");
+
 		agency.setContacts("Ok");
 		System.out.println("1111");
 		try{
@@ -32,5 +31,6 @@ public class JunitTest {
 			e.printStackTrace();
 		}
 		System.out.println("12312");
+
 	}
 }
