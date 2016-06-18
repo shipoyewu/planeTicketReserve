@@ -16,7 +16,7 @@ public class JunitTest {
 
 	@Test
 	public void test(){
-		System.out.println("111");
+		System.out.println("1144441");
 		Agency agency = new Agency();
 		agency.setAddress("河南省郑州市高新区科学大道");
 		agency.setName("snice");
