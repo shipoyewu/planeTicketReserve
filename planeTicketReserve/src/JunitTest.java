@@ -16,17 +16,21 @@ public class JunitTest {
 
 	@Test
 	public void test(){
+		System.out.println("111");
 		Agency agency = new Agency();
-		agency.setAddress("ºÓÄÏÊ¡Ö£ÖİÊĞ¸ßĞÂÇø¿ÆÑ§´óµÀ100ºÅ");
-		agency.setName("ºÇºÇßÕÂÃĞĞÉç");
+		agency.setAddress("zonzanswwé„îˆ›æ§¸é„ï¿½");
+		agency.setName("snice");
 		agency.setPhone("13027711597");
 		agency.setPwd("123456");
-		agency.setContacts("è¶¸ç¸ç");
+
+		agency.setContacts("Ok");
+		System.out.println("1111");
 		try{
 			agencyDaoImp.save(agency);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
+		System.out.println("12312");
+
 	}
 }
