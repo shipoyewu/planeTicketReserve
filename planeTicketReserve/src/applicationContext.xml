@@ -34,6 +34,8 @@
 		<property name="packagesToScan">	<!--不知道为了什么,这里必须要有 -->
 			<list>
 				<value>com.mps.model</value>
+				<value>com.mps.daoBase</value>
+				<value>com.mps.daoImp</value>
 			</list>
 		</property>
 	</bean>
@@ -45,8 +47,24 @@
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager"
 		proxy-target-class="true" />
-
-	
+	<bean id="agencyDaoImp" class="com.mps.daoImp.AgencyDaoImp">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="ordersDaoImp" class="com.mps.daoImp.OrdersDaoImp">
+	    <property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="participateDaoImp" class="com.mps.daoImp.ParticipateDaoImp">
+	    <property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>	
+	<bean id="routeDaoImp" class="com.mps.daoImp.RouteDaoImp">
+	    <property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="teamDaoImp" class="com.mps.daoImp.TeamDaoImp">
+	    <property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="travellerDaoImp" class="com.mps.daoImp.TravellerDaoImp">
+	    <property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 	<!-- REST服务的注解例子 -->
 	<jaxrs:server id="Service" address="/REST">
 		<jaxrs:serviceBeans>
