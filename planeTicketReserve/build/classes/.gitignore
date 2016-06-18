@@ -1,12 +1,1 @@
-/com/
-/hibernate.cfg.xml
-/plane.sql
-<<<<<<< HEAD
-/daoBase/
-=======
-/applicationContext.xml
-/applicationContext2.xml
-/hibernate.reveng.xml
->>>>>>> branch 'master' of https://github.com/shipoyewu/planeTicketReserve
-/JunitTest.class
-/planeticketreserve.sql
+/cn/

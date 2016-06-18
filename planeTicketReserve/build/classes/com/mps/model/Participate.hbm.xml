@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-18 9:41:44 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="com.mps.model.Participate" table="participate" catalog="planeticketreserve" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="team" class="com.mps.model.Team" fetch="select">
+            <column name="teamid" not-null="true" />
+        </many-to-one>
+        <many-to-one name="traveller" class="com.mps.model.Traveller" fetch="select">
+            <column name="travellerid" not-null="true" />
+        </many-to-one>
+        <property name="jointime" type="timestamp">
+            <column name="jointime" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

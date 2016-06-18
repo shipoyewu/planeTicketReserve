@@ -1,12 +1,14 @@
 import javax.annotation.Resource;
 
+import org.apache.axis.Message;
+import org.apache.axis.message.MessageElement;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mps.daoImp.AgencyDaoImp;
-import com.mps.model.Agency;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
@@ -16,21 +18,14 @@ public class JunitTest {
 
 	@Test
 	public void test(){
-		System.out.println("111");
-		Agency agency = new Agency();
-		agency.setAddress("河南省郑州市高新区科学大道");
-		agency.setName("snice");
-		agency.setPhone("13027711597");
-		agency.setPwd("123456");
-
-		agency.setContacts("Ok");
-		System.out.println("1111");
+		
 		try{
-			agencyDaoImp.save(agency);
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		System.out.println("12312");
+		
+		
 
 	}
 }
