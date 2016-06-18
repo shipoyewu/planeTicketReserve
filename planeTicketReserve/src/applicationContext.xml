@@ -31,13 +31,6 @@
 			</props>
 		</property>
 
-		<property name="packagesToScan">	<!--不知道为了什么,这里必须要有 -->
-			<list>
-				<value>com.mps.model</value>
-				<value>com.mps.daoBase</value>
-				<value>com.mps.daoImp</value>
-			</list>
-		</property>
 	</bean>
 
 	<!-- 配置事务管理器 -->
