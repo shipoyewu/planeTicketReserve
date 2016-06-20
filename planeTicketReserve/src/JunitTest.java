@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mps.daoImp.AgencyDaoImp;
+import com.mps.daoImp.TravellerDaoImp;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -15,10 +16,11 @@ import com.mps.daoImp.AgencyDaoImp;
 public class JunitTest {
 	@Resource
 	AgencyDaoImp agencyDaoImp;
-
+	@Resource
+	TravellerDaoImp tdi;
 	@Test
 	public void test(){
-	
+	System.out.println(tdi.getTraveller("37048119940312031X").getName());
 
 	}
 }

@@ -3,10 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <title>客户管理</title>
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/demo/demo.css">
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../js/TravellerManage.js"></script>
 </head>
 <body>
-	<iframe>
-	
-	</iframe>
+<div class="easyui-panel" style="width:200px;height:100px"
+			data-options="fit:true,border:false">
+			<div class="easyui-tabs" data-options="fit:true,border:false,plain:true">
+			<div title="添加旅客" data-options="href:'AddTraveller.html'" style="padding:10px"></div>
+				<div title="旅客信息检索" style="padding:5px">
+					<input id="ss" class="easyui-searchbox" style="width:300px"
+					    data-options="searcher:qq,prompt:'请输入',menu:'#mm'"></input>
+					<div id="mm" style="width:120px">
+					    <div data-options="name:'id',iconCls:'icon-ok'">用户编号</div>
+					    <div data-options="name:'idcard'">身份证号</div>
+					</div>
+				
+				</div>
+			
+			</div>
+		</div>
+
 </body>
 </html>
