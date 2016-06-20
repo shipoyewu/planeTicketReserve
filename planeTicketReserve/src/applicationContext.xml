@@ -15,7 +15,7 @@
 
 	<import resource="classpath:META-INF/cxf/cxf.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
-
+	
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="configLocation" value="classpath:hibernate.cfg.xml">
@@ -58,10 +58,13 @@
 	<bean id="travellerDaoImp" class="com.mps.daoImp.TravellerDaoImp">
 	    <property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	<bean id="webService" class="cn.com.WebXml.ServiceFacade"> 
+	</bean>
 	<!-- REST服务的注解例子 -->
 	<jaxrs:server id="Service" address="/REST">
 		<jaxrs:serviceBeans>
 			<bean class="com.mps.service.ServiceImp">
+			    <property name="webService" ref="webService"></property>
 			</bean>
 		</jaxrs:serviceBeans>
 

@@ -92,7 +92,6 @@ public class ServiceFacade {
 		
 	}
 	public static void main(String args[]) throws JSONException{
-		System.out.println(new ServiceFacade().getAirLines("南阳", "郑州", "2016-6-18"));
-		System.out.println(new ServiceFacade().getAllCity());
+		System.out.println(new ServiceFacade().getAirLines("南阳", "郑州", "2016-6-20").replaceAll("\\[", ""));
 	}
 }
