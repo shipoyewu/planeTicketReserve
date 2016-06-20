@@ -21,7 +21,7 @@
     <servlet-mapping>  
         <servlet-name>CXFServlet</servlet-name>  
         <!-- url可自定义配置，用于CXFServlet请求地址拦截 --> 
-        <url-pattern>/*</url-pattern>  
+        <url-pattern>/REST/*</url-pattern>  
     </servlet-mapping>
 
 	<!--OpenSessionInViewFilter配置，解决延迟加载时Session会关闭的问题 -->

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>机票预订</title>
+	<link rel="stylesheet">
+	
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/demo/demo.css">
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+	
+	<script type="text/javascript">
+		function myformatter(date){  
+		    var y = date.getFullYear();  
+		    var m = date.getMonth()+1;  
+		    var d = date.getDate();  
+		    return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);  
+		}
+		var obj;
+		$(function(){  
+		　  var curr_time = new Date();     
+		 　 $("#date").datebox("setValue",myformatter(curr_time));
+		  $('#date').datebox('calendar').calendar({
+				validator: function(date){
+					var now = new Date();
+					var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+					var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+30);
+					return d1<=date && date<=d2;
+				}
+			});
+		   $.ajax({
+				url:'city.json',
+				method:'GET',
+				async: false,
+				success: function(data){
+					obj =eval(data);
+					$('#start').combobox('loadData',obj);
+					$('#end').combobox('loadData',obj);
+				}
+		  });
+			
+			
+		});
+		function find(){
+			var s = $('#start').textbox('getValue');
+			var e = $('#end').textbox('getValue');
+			
+			if(s)if(e){
+				var cc = 0;
+				for(var i = 0;i < obj.length;i++){
+					if(obj[i]['cnCityName']==s){
+						cc ++;
+					}
+					if(obj[i]['cnCityName']==e){
+						cc +=2;
+					}
+				}
+				
+				if(cc == 3){
+					$('#ff').form('submit',{
+						url:'',
+						onSubmit:function(){
+								
+						},
+						success:function(data){
+							alert(data);
+						}
+					});
+				}else{
+					alert("城市选择有错！请重新选择")
+				}
+				
+			}
+		}
+		
+	</script>
+
+</head>
+<body>
+	<div class="easyui-panel" title="机票预订"> 
+		
+	<form id="ff" method="post">
+		<table cellpadding="3">
+		<tr>
+			<td><td>出发城市: </td><td><select id="start" name="start" class="easyui-combobox" style="width:100px"
+				data-options="valueField:'cnCityName',textField:'cnCityName',required:true"/></td></td>
+			<td><td>到达城市：</td><td><select id="end" name="end" class="easyui-combobox"  style="width:100px"
+				data-options="valueField:'cnCityName',textField:'cnCityName',required:true"/></td></td>
+			<td>
+				<td>出发时间：</td>
+				<td><input id="date" name="date" class="easyui-datebox"/></td>
+			</td>
+			<td>
+				<a href="#" id="search" name="search" class="easyui-linkbutton" data-options="required:true" iconCls="icon-search" onclick="javascript:find()">查询航班</a>
+			</td>
+		</tr>
+	</form>
+	
+	
+</body>
+</html>
