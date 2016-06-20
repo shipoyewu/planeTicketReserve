@@ -20,7 +20,7 @@ public class JunitTest {
 	TravellerDaoImp tdi;
 	@Test
 	public void test(){
-	System.out.println(tdi.getTraveller("37048119940312031X").getName());
+	System.out.println(tdi.getTraveller("37048119940312031X", 2).getName());
 
 	}
 }
