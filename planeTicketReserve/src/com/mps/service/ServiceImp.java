@@ -27,7 +27,7 @@ public class ServiceImp implements Service {
 
 	public void setTdi(TravellerDaoImp tdi) {
 		this.tdi = tdi;
-=======
+	}
 	public ServiceFacade webService;
 
 	public ServiceFacade getWebService() {
@@ -36,7 +36,6 @@ public class ServiceImp implements Service {
 
 	public void setWebService(ServiceFacade webService) {
 		this.webService = webService;
->>>>>>> refs/remotes/origin/master
 	}
 
 	@Override

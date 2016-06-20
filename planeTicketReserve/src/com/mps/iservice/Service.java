@@ -1,6 +1,7 @@
 package com.mps.iservice;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -11,7 +12,7 @@ public interface Service {
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Path("/test")
-	public void test();
+	public String test();
 	
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -28,6 +29,11 @@ public interface Service {
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Path("getTravellerById/{id}")
 	public String getTravellerById(@PathParam("id") int id);
-
+	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/getAirLines")
+	public String getAirLines(String json);
+	
 	
 }
