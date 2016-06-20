@@ -9,6 +9,6 @@ public class AgencyDaoImp extends BaseDao<Agency, Integer> {
 		super(Agency.class);
 		// TODO Auto-generated constructor stub
 	}
-
+ 
 	
 }

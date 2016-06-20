@@ -98,4 +98,10 @@ public class Agency implements java.io.Serializable {
 		this.travellers = travellers;
 	}
 
+	@Override
+	public String toString() {
+		return "Agency [id=" + id + ", pwd=" + pwd + ", name=" + name + ", address=" + address + ", contacts="
+				+ contacts + ", phone=" + phone + ", teams=" + teams + ", travellers=" + travellers + "]";
+	}
+	
 }

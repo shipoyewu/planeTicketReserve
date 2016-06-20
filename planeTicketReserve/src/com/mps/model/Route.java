@@ -70,4 +70,10 @@ public class Route implements java.io.Serializable {
 		this.ordernumber = ordernumber;
 	}
 
+	@Override
+	public String toString() {
+		return "Route [id=" + id + ", team=" + team + ", startpoint=" + startpoint + ", endpoint=" + endpoint
+				+ ", ordernumber=" + ordernumber + "]";
+	}
+
 }
