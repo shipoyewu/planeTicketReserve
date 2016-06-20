@@ -20,19 +20,19 @@
 					<input id="ss" class="easyui-searchbox" style="width:300px"
 					    data-options="searcher:qq,prompt:'请输入',menu:'#mm'"></input>
 					<div id="mm" style="width:120px">
-					    <div data-options="name:'id',iconCls:'icon-ok'">用户编号</div>
+					    <div data-options="name:'all',iconCls:'icon-ok'">全部</div>
 					    <div data-options="name:'idcard'">身份证号</div>
+					    <div data-options="name:'id'">用户编号</div>
 					</div>
 					<table class="easyui-datagrid" title="旅客信息" style="width:700px;height:250px"
 						data-options="singleSelect:true,collapsible:true,method:'get'">
 						<thead>
 							<tr>
-								<th data-options="field:'itemid',width:80">Item ID</th>
-								<th data-options="field:'productid',width:100">Product</th>
-								<th data-options="field:'listprice',width:80,align:'right'">List Price</th>
-								<th data-options="field:'unitcost',width:80,align:'right'">Unit Cost</th>
-								<th data-options="field:'attr1',width:250">Attribute</th>
-								<th data-options="field:'status',width:60,align:'center'">Status</th>
+								<th data-options="field:'id',width:80">旅客ID</th>
+								<th data-options="field:'name',width:80">姓名</th>
+								<th data-options="field:'sex',width:30,align:'center'">性别</th>
+								<th data-options="field:'tel',width:120,align:'center'">联系方式</th>
+								<th data-options="field:'idcard',width:250">身份证号</th>
 							</tr>
 						</thead>
 					</table>
