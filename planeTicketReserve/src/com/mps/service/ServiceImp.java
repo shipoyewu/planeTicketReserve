@@ -1,23 +1,15 @@
 package com.mps.service;
-
-<<<<<<< HEAD
 import com.mps.daoImp.AgencyDaoImp;
 import com.mps.daoImp.TravellerDaoImp;
-=======
 import java.util.Map;
 
->>>>>>> refs/remotes/origin/master
 import com.mps.iservice.Service;
-<<<<<<< HEAD
 import com.mps.model.Traveller;
-=======
 import com.mps.util.PostSplite;
 
 import cn.com.WebXml.ServiceFacade;
->>>>>>> refs/remotes/origin/master
 
 public class ServiceImp implements Service {
-<<<<<<< HEAD
 
 	TravellerDaoImp tdi;
 	AgencyDaoImp adi;
