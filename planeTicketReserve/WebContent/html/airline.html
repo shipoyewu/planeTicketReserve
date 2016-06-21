@@ -13,6 +13,8 @@
 	<script type="text/javascript" src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
 	
 	<script type="text/javascript">
+		var findDate ;
+		 
 		(function($){
 			function pagerFilter(data){
 				if ($.isArray(data)){	// is array
@@ -159,6 +161,18 @@
 					$('#end').combobox('loadData',obj);
 				}
 		  });
+		   $("#dd").datagrid({
+				onDblClickRow:function(rowindex,rowdata){
+					$('#dlg').dialog('open');
+					$('#AirlineCode').textbox('setValue',rowdata.AirlineCode);
+					$('#Company').textbox('setValue',rowdata.Company);
+					$('#ArriveTime').textbox('setValue',rowdata.ArriveTime);
+					$('#ArriveDrome').textbox('setValue',rowdata.ArriveDrome);
+					$('#StartDrome').textbox('setValue',rowdata.StartDrome);
+					$('#StartTime').textbox('setValue',rowdata.StartTime);
+					
+				}
+			}); 
 			
 			
 		});
@@ -177,6 +191,7 @@
 					}
 				}
 				if(cc == 3){
+					findDate = $('#date').datebox('getValue');
 					$.messager.progress();
 					$('#ff').form('submit',{
 						url:'../REST/REST/Service/getAirLines',
@@ -188,13 +203,17 @@
 							$.messager.progress('close');	
 							$('#dd').datagrid('loadData',cc);
 							$('#dd').datagrid('reloadFooter');
-							$('#dd').datagrid('clientPaging');                      
+							$('#dd').datagrid('clientPaging');
+							                     
 						}
 					});
 				}else{
 					alert("城市选择有错！请重新选择")
 				}
 			}
+		}
+		function comfirm(){
+			$('#dlg').dialog('close');
 		}
 		
 	</script>
@@ -218,6 +237,7 @@
 				<a href="#" id="search" name="search" class="easyui-linkbutton" data-options="required:true" iconCls="icon-search" onclick="javascript:find()">查询航班</a>
 			</td>
 		</tr>
+		</table>
 	</form>
 	<table id="dd" class="easyui-datagrid" title="航班信息" style="width:100%"
 			data-options="rownumbers:true,singleSelect:true,pagination:true">
@@ -232,12 +252,46 @@
 			</tr>
 		</thead>
 	</table>
-	<script>
-		function format(val,row){
+	<div id="dlg" class="easyui-dialog" title="飞机票预订" style="width:1000px;height:400px;padding:10px"
+			data-options="closed:true">
+			<form> 
+				<div class="easyui-panel" title="航班信息"> 
+				<table>
+					
+					<tr>
+						<td>
+						<p>航 班 号:</p></td><td><input name="AirlineCode" class="easyui-textbox" id="AirlineCode" 
+							disabled="disabled" style="width:100px">
+						</td>
+						<td><p>航空公司:</p></td><td><input name="Company" class="easyui-textbox" id="Company" disabled="disabled" style="width:100px"></td>
+					</tr>
+					
+					<tr>
+						<td>
+						 	<p>出发城市:</p></td><td><input name="StartDrome" class="easyui-textbox" id="StartDrome" disabled="disabled" style="width:150px">
+						</td>
+						<td> 	
+							<p>降落城市:</p></td><td><input name="ArriveDrome" class="easyui-textbox" id="ArriveDrome" disabled="disabled" style="width:150px">
+						</td>
+						<td>	
+						 	<p>出发时间:</p></td><td><input name="StartTime" class="easyui-textbox" id="StartTime" disabled="disabled" style="width:80px">
+						</td>
+						<td>
+						 	<p>到达时间:</p></td><td><input name="ArriveTime" class="easyui-textbox" id="ArriveTime" disabled="disabled" style="width:80px">
+						</td>
+					</tr>
+				</table>
+				</div>
+				<div class="easyui-panel" title="人员信息">
+				</div>
+				<div align="right">
+				<a href="#" id="search" name="search" class="easyui-linkbutton" iconCls="icon-ok" onclick="comfirm()" >确认</a>
+				<a href="#" id="search" name="search" class="easyui-linkbutton" iconCls="icon-ok" onclick="$('#dlg').dialog('close')" >取消</a>
+				</div> 
+			</form>
 			
-		}
-	</script>
-	
+	</div>
+	</div>
 	
 </body>
 </html>
