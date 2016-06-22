@@ -19,11 +19,11 @@ function submitForm(){
 		return false;
 	}
 	$('#traveller').form('submit', {    
-	    url:"../REST/REST/Service/saveOrUpdatesTraveller/"+name+'/'+sex+'/'+idcard+'/'+tel,    
+	    url:"../REST/REST/Service/saveOrUpdatesTraveller/"+name+'/'+sex=='man'?"男":"女"+'/'+idcard+'/'+tel,    
 	    onSubmit: function(){    
 	        // do some check    
 	        // return false to prevent submit;  
-	    },    
+	    },
 	    success:function(data){
 	        $.messager.alert('提示','提交成功'); 
 	    }    
@@ -51,5 +51,6 @@ function isCardNo(card)
  * 搜索框搜索旅客信息
  */
 function qq(value,name){
-     $.messager.alert('提示','value+":"+name')
+     $.messager.alert('提示', value+""+name);
+     
    }

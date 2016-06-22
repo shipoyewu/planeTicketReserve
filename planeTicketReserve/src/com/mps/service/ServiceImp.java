@@ -1,12 +1,13 @@
 package com.mps.service;
+
+import java.util.Map;
+
 import com.mps.daoImp.AgencyDaoImp;
 import com.mps.daoImp.OrdersDaoImp;
 import com.mps.daoImp.ParticipateDaoImp;
 import com.mps.daoImp.RouteDaoImp;
 import com.mps.daoImp.TeamDaoImp;
 import com.mps.daoImp.TravellerDaoImp;
-import java.util.Map;
-
 import com.mps.iservice.Service;
 import com.mps.model.Traveller;
 import com.mps.util.PostSplite;
@@ -137,6 +138,7 @@ public class ServiceImp implements Service {
 	@Override
 	public String getTravellerByIdCard(String idcard, int agencyid) {
 		// TODO Auto-generated method stub
+		agencyid = 2;
 		Traveller t = travellerDaoImp.getTraveller(idcard, agencyid);
 		if(t == null)
 			return null;
