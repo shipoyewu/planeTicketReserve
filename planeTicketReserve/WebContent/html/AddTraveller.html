@@ -12,27 +12,27 @@
 	<script type="text/javascript" src="../js/TravellerManage.js"></script>
 </head>
 <body>
-		<form id="traveller" method="post">
+		<form id="traveller" method="get">
 	    	<table cellpadding="5">
 	    		<tr>
 	    			<td>姓名:</td>
-	    			<td><input class="easyui-textbox" type="text" name="name" data-options="required:true"></input></td>
+	    			<td><input class="easyui-textbox" id="name" type="text" name="name" data-options="required:true"></input></td>
 	    		</tr>
 	    		<tr>
 	    			<td>性别:</td>
 	    			<td><select id="sex" class="easyui-combobox" name="sex" style="width:200px;">   
-					    <option value="val">男</option>   
-					    <option>女</option>   
-					    <option>其他</option>   
+					    <option value="man">男</option>   
+					    <option value="woman">女</option>   
+					    <option value="else">其他</option>
 						</select></td>
 	    		</tr>
 	    		<tr>
 	    			<td>身份证号:</td>
-	    			<td><input class="easyui-textbox" type="text" name="subject" data-options="required:true"></input></td>
+	    			<td><input class="easyui-textbox" id="idcard" type="text" name="idcard" data-options="required:true"></input></td>
 	    		</tr>
 	    		<tr>
 	    			<td>手机号:</td>
-	    			<td><input class="easyui-textbox" type="text" name="subject" data-options="required:true"></input></td>
+	    			<td><input class="easyui-textbox" id="tel" type="text" name="tel" data-options="required:true"></input></td>
 	    		</tr>
 			</table>
 		</form>	

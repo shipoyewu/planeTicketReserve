@@ -1,5 +1,9 @@
 package com.mps.service;
 import com.mps.daoImp.AgencyDaoImp;
+import com.mps.daoImp.OrdersDaoImp;
+import com.mps.daoImp.ParticipateDaoImp;
+import com.mps.daoImp.RouteDaoImp;
+import com.mps.daoImp.TeamDaoImp;
 import com.mps.daoImp.TravellerDaoImp;
 import java.util.Map;
 
@@ -11,24 +15,65 @@ import cn.com.WebXml.ServiceFacade;
 
 public class ServiceImp implements Service {
 
-	TravellerDaoImp tdi;
-	AgencyDaoImp adi;
-	public AgencyDaoImp getAdi() {
-		return adi;
-	}
-
-	public void setAdi(AgencyDaoImp adi) {
-		this.adi = adi;
-	}
-
-	public TravellerDaoImp getTdi() {
-		return tdi;
-	}
-
-	public void setTdi(TravellerDaoImp tdi) {
-		this.tdi = tdi;
-	}
+	public TravellerDaoImp travellerDaoImp;
+	public AgencyDaoImp agencyDaoImp;
 	public ServiceFacade webService;
+	public OrdersDaoImp ordersDaoImp;
+	public ParticipateDaoImp participateDaoImp;
+	public TeamDaoImp teamDaoImp;
+	public RouteDaoImp routeDaoImp;
+	
+	public RouteDaoImp getRouteDaoImp() {
+		return routeDaoImp;
+	}
+
+	public void setRouteDaoImp(RouteDaoImp routeDaoImp) {
+		this.routeDaoImp = routeDaoImp;
+	}
+
+	public OrdersDaoImp getOrdersDaoImp() {
+		return ordersDaoImp;
+	}
+
+	public void setOrdersDaoImp(OrdersDaoImp ordersDaoImp) {
+		this.ordersDaoImp = ordersDaoImp;
+	}
+
+	public ParticipateDaoImp getParticipateDaoImp() {
+		return participateDaoImp;
+	}
+
+	public void setParticipateDaoImp(ParticipateDaoImp participateDaoImp) {
+		this.participateDaoImp = participateDaoImp;
+	}
+
+	public TeamDaoImp getTeamDaoImp() {
+		return teamDaoImp;
+	}
+
+	public void setTeamDaoImp(TeamDaoImp teamDaoImp) {
+		this.teamDaoImp = teamDaoImp;
+	}
+
+	public ServiceImp() {
+		super();
+	}
+	
+	public TravellerDaoImp getTravellerDaoImp() {
+		return travellerDaoImp;
+	}
+
+	public void setTravellerDaoImp(TravellerDaoImp travellerDaoImp) {
+		this.travellerDaoImp = travellerDaoImp;
+	}
+
+	public AgencyDaoImp getAgencyDaoImp() {
+		return agencyDaoImp;
+	}
+
+	public void setAgencyDaoImp(AgencyDaoImp agencyDaoImp) {
+		this.agencyDaoImp = agencyDaoImp;
+	}
 
 	public ServiceFacade getWebService() {
 		return webService;
@@ -64,13 +109,13 @@ public class ServiceImp implements Service {
 	public String saveOrUpdatesTraveller(String name, String sex, String idcard, String tel) {
 		// TODO Auto-generated method stub
 		Traveller t = new Traveller();
-		t.setAgency(adi.get(2));///---------------------------test
+		t.setAgency(agencyDaoImp.get(2));///---------------------------test
 		t.setIdcard(idcard);
 		t.setName(name);
 		t.setSex(sex);
 		t.setPhone(tel);
 		try {
-			tdi.save(t);
+			travellerDaoImp.save(t);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,7 +127,7 @@ public class ServiceImp implements Service {
 	@Override
 	public String getTravellerById(int id) {
 		// TODO Auto-generated method stub
-		Traveller t = tdi.get(id);
+		Traveller t = travellerDaoImp.get(id);
 		if(t == null)
 			return null;
 		else 
@@ -92,7 +137,7 @@ public class ServiceImp implements Service {
 	@Override
 	public String getTravellerByIdCard(String idcard, int agencyid) {
 		// TODO Auto-generated method stub
-		Traveller t = tdi.getTraveller(idcard, agencyid);
+		Traveller t = travellerDaoImp.getTraveller(idcard, agencyid);
 		if(t == null)
 			return null;
 		else 
