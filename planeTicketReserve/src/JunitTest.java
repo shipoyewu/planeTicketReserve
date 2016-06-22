@@ -17,10 +17,10 @@ public class JunitTest {
 	@Resource
 	AgencyDaoImp agencyDaoImp;
 	@Resource
-	TravellerDaoImp tdi;
+	TravellerDaoImp travellerDaoImp;
 	@Test
 	public void test(){
-	System.out.println(tdi.getTraveller("37048119940312031X", 2).getName());
+		System.out.println(agencyDaoImp.checkPassword("1302777", "123456"));
 
 	}
 }

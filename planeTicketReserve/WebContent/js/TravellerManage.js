@@ -18,8 +18,11 @@ function submitForm(){
 		$.messager.alert('提示','手机号格式错误');
 		return false;
 	}
+	var s;
+	if(sex == "man")	s = "男";
+		else s = "女";
 	$('#traveller').form('submit', {    
-	    url:"../REST/REST/Service/saveOrUpdatesTraveller/"+name+'/'+sex=='man'?"男":"女"+'/'+idcard+'/'+tel,    
+	    url:"../REST/REST/Service/saveOrUpdatesTraveller/"+name+'/'+s+'/'+idcard+'/'+tel,    
 	    onSubmit: function(){    
 	        // do some check    
 	        // return false to prevent submit;  
@@ -51,6 +54,29 @@ function isCardNo(card)
  * 搜索框搜索旅客信息
  */
 function qq(value,name){
-     $.messager.alert('提示', value+""+name);
-     
+	if(name == "all"){
+	    $('#dg').datagrid({
+    	    url:'../REST/REST/Service/getAllTraveller/'+"2",///这里应该放agencyid
+    	    columns:[[
+    	        {field:'id',title:'旅客ID',width:100},
+    	        {field:'name',title:'姓名',width:100},
+    	        {field:'sex',title:'性别',width:50},
+    	        {field:'phone',title:'联系方式',width:130,align:'center'},
+    	        {field:'idcard',title:'身份证号',width:250,align:'center'},
+    	    ]]
+    	});
+	}
+	else{
+		 $('#dg').datagrid({
+	    	    url:'../REST/REST/Service/getTravellerByIdCard/'+value+'/'+"2",///这里应该放agencyid
+	    	    columns:[[
+	    	        {field:'id',title:'旅客ID',width:100},
+	    	        {field:'name',title:'姓名',width:100},
+	    	        {field:'sex',title:'性别',width:50},
+	    	        {field:'phone',title:'联系方式',width:130,align:'center'},
+	    	        {field:'idcard',title:'身份证号',width:250,align:'center'},
+	    	    ]]
+	    	});
+	}
+	
    }

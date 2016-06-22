@@ -1,5 +1,7 @@
 package com.mps.iservice;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -7,6 +9,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import com.mps.model.Traveller;
 
 @Path("/Service")
 public interface Service {
@@ -23,19 +27,29 @@ public interface Service {
 								@PathParam("idcard")String idcard, @PathParam("tel") String tel);
 	
 	@GET
-	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
 	@Path("getTravellerByIdCard/{idcard}/{agencyid}")
-	public String getTravellerByIdCard(@PathParam("idcard") String idcard, @PathParam("agencyid") int agencyid);
+	public List<Traveller> getTravellerByIdCard(@PathParam("idcard") String idcard, @PathParam("agencyid") int agencyid);
 	
 	@GET
-	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	@Path("getTravellerById/{id}")
-	public String getTravellerById(@PathParam("id") int id);
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("getAllTraveller/{agencyid}")
+	public List<Traveller> getAllTraveller(@PathParam("agencyid") int agencyid);
 	
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/getAirLines")
 	public String getAirLines(String json);
 	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/checkLoginUser")
+	public int checkLoginUser(String para);
 	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/register")
+	public String register(String para);
 }

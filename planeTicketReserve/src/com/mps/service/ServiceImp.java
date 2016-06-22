@@ -1,5 +1,7 @@
 package com.mps.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.mps.daoImp.AgencyDaoImp;
@@ -9,6 +11,7 @@ import com.mps.daoImp.RouteDaoImp;
 import com.mps.daoImp.TeamDaoImp;
 import com.mps.daoImp.TravellerDaoImp;
 import com.mps.iservice.Service;
+import com.mps.model.Agency;
 import com.mps.model.Traveller;
 import com.mps.util.PostSplite;
 
@@ -126,24 +129,50 @@ public class ServiceImp implements Service {
 	}
 
 	@Override
-	public String getTravellerById(int id) {
+	public List<Traveller> getAllTraveller(int agencyid) {
 		// TODO Auto-generated method stub
-		Traveller t = travellerDaoImp.get(id);
-		if(t == null)
-			return null;
-		else 
-			return "succ";
+		List<Traveller> t = travellerDaoImp.getAllTraveller(agencyid);
+		System.out.println("size:"+t.size());
+		return t;
 	}
 
 	@Override
-	public String getTravellerByIdCard(String idcard, int agencyid) {
+	public List<Traveller> getTravellerByIdCard(String idcard, int agencyid) {
 		// TODO Auto-generated method stub
 		agencyid = 2;
-		Traveller t = travellerDaoImp.getTraveller(idcard, agencyid);
-		if(t == null)
-			return null;
-		else 
-			return "succ";
+		List<Traveller> items = new ArrayList<Traveller>();
+		items.add(travellerDaoImp.getTraveller(idcard, agencyid));
+		return items;
 	}
+
+	@Override
+	public int checkLoginUser(String para) {
+		// TODO Auto-generated method stub
+		String[] paras = para.split("&");
+		System.out.println("postfangfa:"+para);
+		return agencyDaoImp.checkPassword(paras[0], paras[1]);
+	}
+
+	@Override
+	public String register(String para) {
+		// TODO Auto-generated method stub
+		//联系人&手机号&旅行社名&密码&地址
+		String[] paras = para.split("&");
+		Agency agency = new Agency();
+		agency.setContacts(paras[0]);
+		agency.setPhone(paras[1]);
+		agency.setName(paras[2]);
+		agency.setPwd(paras[3]);
+		agency.setAddress(paras[4]);
+		try {
+			agencyDaoImp.save(agency);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "unSuccess";
+		}
+		return "Success";
+	}
+	
 
 }

@@ -23,17 +23,6 @@
         <property name="phone" type="string">
             <column name="phone" length="25" />
         </property>
-        <set name="teams" table="team" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="agencyid" not-null="true" />
-            </key>
-            <one-to-many class="com.mps.model.Team" />
-        </set>
-        <set name="travellers" table="traveller" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="agencyid" not-null="true" />
-            </key>
-            <one-to-many class="com.mps.model.Traveller" />
-        </set>
+      
     </class>
 </hibernate-mapping>
