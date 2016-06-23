@@ -42,12 +42,6 @@ public interface Service {
 	public void updateAgencyInfo(@PathParam("pwd")String pwd,@PathParam("agencyname")String agencyname,
 			@PathParam("address")String address,@PathParam("contacts")String contacts,
 			@PathParam("phonenumber")String phonenumber);
-	
 
-	@GET
-	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	@Path("/updateAgencyInfo/{name}/{starttime}/{endtime}/{type}/{status}/{agency}")
-	public void saveOrupdateTeam(@PathParam("name")String name,@PathParam("starttime")Date starttime,
-			@PathParam("endtime")Date endtime,@PathParam("type")int type,@PathParam("status")int status,@PathParam("agency")Agency agency);
 }
  
