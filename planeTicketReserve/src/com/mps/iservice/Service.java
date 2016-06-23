@@ -21,6 +21,12 @@ public interface Service {
 	@Path("/test")
 	public String test();
 	
+	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/getAirLines")
+	public String getAirLines(String json);
+	
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Path("/getListTeam/{agencyid}")
