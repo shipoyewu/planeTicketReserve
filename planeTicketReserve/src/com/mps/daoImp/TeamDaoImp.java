@@ -12,7 +12,7 @@ public class TeamDaoImp extends BaseDao<Team, Integer> {
 		super(Team.class);
 	}
 	public List<Team> getListTeam(int agencyid){
-		List<Team> allteam = super.findBy("id", true, Restrictions.sqlRestriction("agencyid = " + agencyid +"and status = 0"));
+		List<Team> allteam = super.findBy("id", true, Restrictions.sqlRestriction("agencyid = " + agencyid +" and status = 0 "));
 		return allteam;
 	}
  

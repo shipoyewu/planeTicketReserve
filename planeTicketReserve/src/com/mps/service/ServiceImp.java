@@ -1,8 +1,13 @@
 package com.mps.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.mps.daoImp.AgencyDaoImp;
 import com.mps.daoImp.OrdersDaoImp;
@@ -17,6 +22,7 @@ import com.mps.util.PostSplite;
 
 import cn.com.WebXml.ServiceFacade;
 
+import com.google.gson.JsonObject;
 import com.mps.daoImp.*;
 import com.mps.model.*;
 
@@ -228,6 +234,58 @@ public class ServiceImp implements Service {
 			return "unSuccess";
 		}
 		return "Success";
+	}
+
+	@Override
+	public String orderAirline(String json) {
+		// TODO Auto-generated method stub
+		Map<String, String> ma = PostSplite.postchange(json);
+		JSONArray tre = (JSONArray)JSONObject.stringToValue(ma.get("listTre"));
+		Orders a = new Orders();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		a.setFlight(ma.get("airlinecode"));
+		try{
+			
+			a.setStarttime(sdf.parse(ma.get("starttime")));
+			a.setEndtime(sdf.parse(ma.get("endtime")));
+			a.setStartpoint(ma.get("startdrome"));
+			a.setEndpoint(ma.get("arrivedrome"));
+			a.setPrice(50.0);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+			
+		synchronized (ordersDaoImp) {
+			int count =ordersDaoImp.getCountOfAirline(a.getFlight(), a.getStarttime());
+			int cc = tre.length();
+			if(cc <= 60-count){
+				for(int i = 0;i < cc;i++){
+					Orders o = new Orders();
+					o.setFlight(a.getFlight());
+					o.setStarttime(a.getStarttime());
+					o.setEndtime(a.getEndtime());
+					o.setEndpoint(a.getEndpoint());
+					o.setStartpoint(a.getStartpoint());
+					o.setSpace(0);
+					o.setSeat(cc+i);
+					o.setPrice(50.0);
+					Traveller t = null;
+					try {
+						o.setTeam(teamDaoImp.get(tre.getJSONObject(i).getInt("teamid")));
+						t= travellerDaoImp.get(tre.getJSONObject(i).getInt("id"));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return "unsucc";
+					}
+					o.setTraveller(t);
+					ordersDaoImp.save(o);
+				}
+			}else{
+				return "unscc";
+			}
+		}
+		return "succ";
 	}
 
 }

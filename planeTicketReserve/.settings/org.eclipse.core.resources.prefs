@@ -1,11 +1,2 @@
 eclipse.preferences.version=1
 encoding//src/JunitTest.java=UTF-8
-encoding//src/cn/com/WebXml/DataSet.java=UTF-8
-encoding//src/cn/com/WebXml/DomesticAirline.java=UTF-8
-encoding//src/cn/com/WebXml/DomesticAirlineLocator.java=UTF-8
-encoding//src/cn/com/WebXml/DomesticAirlineSoap.java=UTF-8
-encoding//src/cn/com/WebXml/DomesticAirlineSoapStub.java=UTF-8
-encoding//src/cn/com/WebXml/GetDomesticAirlinesTime.java=UTF-8
-encoding//src/cn/com/WebXml/GetDomesticAirlinesTimeResponse.java=UTF-8
-encoding//src/cn/com/WebXml/GetDomesticAirlinesTimeResponseGetDomesticAirlinesTimeResult.java=UTF-8
-encoding//src/cn/com/WebXml/GetDomesticCityResponseGetDomesticCityResult.java=UTF-8
