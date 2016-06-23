@@ -105,4 +105,10 @@ public class Traveller implements java.io.Serializable {
 		this.orderses = orderses;
 	}
 
+	@Override
+	public String toString() {
+		return "Traveller [id=" + id + ", agency=" + agency + ", sex=" + sex + ", name=" + name + ", idcard=" + idcard
+				+ ", phone=" + phone + ", participates=" + participates + ", orderses=" + orderses + "]";
+	}
+	
 }

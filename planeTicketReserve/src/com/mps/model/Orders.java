@@ -165,4 +165,13 @@ public class Orders implements java.io.Serializable {
 		this.space = space;
 	}
 
+	@Override
+	public String toString() {
+		return "Orders [id=" + id + ", team=" + team + ", traveller=" + traveller + ", flight=" + flight
+				+ ", startpoint=" + startpoint + ", endpoint=" + endpoint + ", starttime=" + starttime + ", endtime="
+				+ endtime + ", advancestatus=" + advancestatus + ", ticketstatus=" + ticketstatus + ", tickettime="
+				+ tickettime + ", price=" + price + ", seat=" + seat + ", space=" + space + "]";
+	}
+	
+
 }

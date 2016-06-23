@@ -13,13 +13,33 @@ import javax.ws.rs.core.MediaType;
 
 import com.mps.model.Agency;
 import com.mps.model.Team;
+import com.mps.model.Traveller;
 
 @Path("/Service")
 public interface Service {
 	@GET
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Path("/test")
 	public String test();
+	
+	@GET
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.TEXT_PLAIN})
+	@Path("saveOrUpdatesTraveller/{name}/{sex}/{idcard}/{tel}")
+	public String saveOrUpdatesTraveller(@PathParam("name")String name, @PathParam("sex") String sex,
+								@PathParam("idcard")String idcard, @PathParam("tel") String tel);
+	
+	@GET
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("getTravellerByIdCard/{idcard}/{agencyid}")
+	public List<Traveller> getTravellerByIdCard(@PathParam("idcard") String idcard, @PathParam("agencyid") int agencyid);
+	
+	@GET
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("getAllTraveller/{agencyid}")
+	public List<Traveller> getAllTraveller(@PathParam("agencyid") int agencyid);
 	
 	
 	@POST
@@ -50,5 +70,14 @@ public interface Service {
 	@Path("/updateAgencyInfo/{name}/{starttime}/{endtime}/{type}/{status}/{agency}")
 	public void saveOrupdateTeam(@PathParam("name")String name,@PathParam("starttime")Date starttime,
 			@PathParam("endtime")Date endtime,@PathParam("type")int type,@PathParam("status")int status,@PathParam("agency")Agency agency);
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/checkLoginUser")
+	public int checkLoginUser(String para);
+	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/register")
+	public String register(String para);
 }
  

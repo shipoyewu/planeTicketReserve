@@ -59,4 +59,9 @@ public class Participate implements java.io.Serializable {
 		this.jointime = jointime;
 	}
 
+	@Override
+	public String toString() {
+		return "Participate [id=" + id + ", team=" + team + ", traveller=" + traveller + ", jointime=" + jointime + "]";
+	}
+	
 }

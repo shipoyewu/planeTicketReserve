@@ -125,4 +125,11 @@ public class Team implements java.io.Serializable {
 		this.routes = routes;
 	}
 
+	@Override
+	public String toString() {
+		return "Team [id=" + id + ", agency=" + agency + ", name=" + name + ", starttime=" + starttime + ", endtime="
+				+ endtime + ", type=" + type + ", status=" + status + ", orderses=" + orderses + ", participates="
+				+ participates + ", routes=" + routes + "]";
+	}
+	
 }

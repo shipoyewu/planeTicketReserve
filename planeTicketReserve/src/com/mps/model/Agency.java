@@ -18,6 +18,7 @@ public class Agency implements java.io.Serializable {
 	private String address;
 	private String contacts;
 	private String phone;
+	
 
 	public Agency() {
 	}
@@ -28,6 +29,7 @@ public class Agency implements java.io.Serializable {
 		this.address = address;
 		this.contacts = contacts;
 		this.phone = phone;
+		
 	}
 
 	public Integer getId() {
@@ -78,5 +80,12 @@ public class Agency implements java.io.Serializable {
 		this.phone = phone;
 	}
 
+	@Override
+	public String toString() {
+		return "Agency [id=" + id + ", pwd=" + pwd + ", name=" + name + ", address=" + address + ", contacts="
+				+ contacts + ", phone=" + phone + "]";
+	}
+
+	
 
 }

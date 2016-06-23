@@ -23,6 +23,7 @@
         <property name="phone" type="string">
             <column name="phone" length="25" />
         </property>
+      
         
     </class>
 </hibernate-mapping>

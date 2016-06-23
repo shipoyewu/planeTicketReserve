@@ -65,6 +65,12 @@
 		<jaxrs:serviceBeans>
 			<bean class="com.mps.service.ServiceImp">
 			    <property name="webService" ref="webService"></property>
+			    <property name="agencyDaoImp" ref="agencyDaoImp"></property>
+			    <property name="ordersDaoImp" ref="ordersDaoImp"></property>
+			    <property name="participateDaoImp" ref="participateDaoImp"></property>
+			    <property name="routeDaoImp" ref="routeDaoImp"></property>
+			    <property name="teamDaoImp" ref="teamDaoImp"></property>
+			    <property name="travellerDaoImp" ref="travellerDaoImp"></property>
 			</bean>
 		</jaxrs:serviceBeans>
 
