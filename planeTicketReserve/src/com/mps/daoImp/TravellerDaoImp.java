@@ -22,5 +22,6 @@ public class TravellerDaoImp extends BaseDao<Traveller, Integer> {
 	public List<Traveller> getAllTraveller(int agencyId){
 		List<Traveller> tras = super.findBy("id", true, Restrictions.sqlRestriction("agencyid=" + agencyId));
 		return tras;
+		super(Traveller.class);
 	}
 }
