@@ -36,7 +36,6 @@ public class ServiceImp implements Service {
 		str = str.replaceAll("\\[", "");
 		str = str.replaceAll("\\]", "");
 		str = "["+str+"]";
-	
 		return str;
 	}
 
