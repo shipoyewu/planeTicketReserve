@@ -14,6 +14,13 @@ import java.util.Date;
 import java.util.List;
 
 
+import com.mps.daoImp.*;
+import com.mps.model.*;
+
+import java.util.Date;
+import java.util.List;
+
+
 public class ServiceImp implements Service {
 	public AgencyDaoImp agencyDaoImp;
 	public OrdersDaoImp ordersDaoImp;
@@ -86,19 +93,11 @@ public class ServiceImp implements Service {
 		
 	}
 
-public void saveOrupdateTeam(String name,Date starttime,Date endtime,int type,int status,Agency agency){
-		Team team = new Team();
-		team.setName(name);
-		team.setStarttime(starttime);
-		team.setEndtime(endtime);
-		team.setStatus(status);
-		team.setType(type);
-		team.setAgency(agency);
-		try {
-			teamDaoImp.save(team);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@Override
+	public void saveOrupdateTeam(String name, Date starttime, Date endtime, int type, int status, Agency agency) {
+		// TODO Auto-generated method stub
+		
 	}
+	
+	
 }
