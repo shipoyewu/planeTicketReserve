@@ -18,8 +18,6 @@ public class Agency implements java.io.Serializable {
 	private String address;
 	private String contacts;
 	private String phone;
-	private Set teams = new HashSet(0);
-	private Set travellers = new HashSet(0);
 
 	public Agency() {
 	}
@@ -30,8 +28,6 @@ public class Agency implements java.io.Serializable {
 		this.address = address;
 		this.contacts = contacts;
 		this.phone = phone;
-		this.teams = teams;
-		this.travellers = travellers;
 	}
 
 	public Integer getId() {
@@ -82,20 +78,5 @@ public class Agency implements java.io.Serializable {
 		this.phone = phone;
 	}
 
-	public Set getTeams() {
-		return this.teams;
-	}
-
-	public void setTeams(Set teams) {
-		this.teams = teams;
-	}
-
-	public Set getTravellers() {
-		return this.travellers;
-	}
-
-	public void setTravellers(Set travellers) {
-		this.travellers = travellers;
-	}
 
 }

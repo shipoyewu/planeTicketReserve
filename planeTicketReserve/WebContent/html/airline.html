@@ -173,8 +173,13 @@
 					
 				}
 			}); 
-			
-			
+		   $('#cc').combobox('reload');
+		   $('#cc').combobox('onSelect',function(rec){
+			   var url = '/'+rec.id;
+			   $('#houxuan').datagird('reload',url);
+			   $('#houxuan').datagird('checkAll');
+		   });
+		   
 		});
 		function find(){
 			var s = $('#start').textbox('getValue');
@@ -215,47 +220,57 @@
 		function comfirm(){
 			$('#dlg').dialog('close');
 		}
-		
+		function add(){
+			var houxuan=$('#houxuan').datagird('getSelections');
+			$('#yixuan').datagird('appendRow',houxuan);
+		}
+		function remove(){
+			var yixuan = $('#houxuan').datagird('getSelections');
+			for(var i = 0;i < yixuan.length;i++){
+				 $('#houxuan').datagird('deleteRow',yixuan.index);
+			}
+		}
 	</script>
 
 </head>
 <body>
 	<div class="easyui-panel" title="机票预订"> 
 		
-	<form id="ff" method="post" style="width:100%">
-		<table cellpadding="3">
-		<tr>
-			<td><td>出发城市: </td><td><select id="start" name="start" class="easyui-combobox" style="width:100px"
-				data-options="valueField:'cnCityName',textField:'cnCityName',required:true"/></td></td>
-			<td><td>到达城市：</td><td><select id="end" name="end" class="easyui-combobox"  style="width:100px"
-				data-options="valueField:'cnCityName',textField:'cnCityName',required:true"/></td></td>
-			<td>
-				<td>出发时间：</td>
-				<td><input id="date" name="date" class="easyui-datebox"/></td>
-			</td>
-			<td>
-				<a href="#" id="search" name="search" class="easyui-linkbutton" data-options="required:true" iconCls="icon-search" onclick="javascript:find()">查询航班</a>
-			</td>
-		</tr>
-		</table>
-	</form>
-	<table id="dd" class="easyui-datagrid" title="航班信息" style="width:100%"
-			data-options="rownumbers:true,singleSelect:true,pagination:true">
-		<thead>
+		<form id="ff" method="post" style="width:100%">
+			<table cellpadding="3">
 			<tr>
-				<th data-options="field:'AirlineCode',width:80,align:'center'">航班号</th>
-				<th data-options="field:'Company',width:100,align:'center'">航空公司</th>
-				<th data-options="field:'StartDrome',width:250,align:'center'">出发城市</th>
-				<th data-options="field:'ArriveDrome',width:250,align:'center'">降落城市</th>
-				<th data-options="field:'StartTime',width:100,align:'center',sortable:true">出发时间</th>
-				<th data-options="field:'ArriveTime',width:60,align:'center',sortable:true">到达时间</th>
+				<td><td>出发城市: </td><td><select id="start" name="start" class="easyui-combobox" style="width:100px"
+					data-options="valueField:'cnCityName',textField:'cnCityName',required:true"/></td></td>
+				<td><td>到达城市：</td><td><select id="end" name="end" class="easyui-combobox"  style="width:100px"
+					data-options="valueField:'cnCityName',textField:'cnCityName',required:true"/></td></td>
+				<td>
+					<td>出发时间：</td>
+					<td><input id="date" name="date" class="easyui-datebox"/></td>
+				</td>
+				<td>
+					<a href="#" id="search" name="search" class="easyui-linkbutton" data-options="required:true" iconCls="icon-search" onclick="javascript:find()">查询航班</a>
+				</td>
 			</tr>
-		</thead>
-	</table>
-	<div id="dlg" class="easyui-dialog" title="飞机票预订" style="width:1000px;height:400px;padding:10px"
-			data-options="closed:true">
-			<form> 
-				<div class="easyui-panel" title="航班信息"> 
+			</table>
+		</form>
+		<table id="dd" class="easyui-datagrid" title="航班信息" style="width:100%"
+				data-options="rownumbers:true,singleSelect:true,pagination:true">
+			<thead>
+				<tr>
+					<th data-options="field:'AirlineCode',width:80,align:'center'">航班号</th>
+					<th data-options="field:'Company',width:100,align:'center'">航空公司</th>
+					<th data-options="field:'StartDrome',width:250,align:'center'">出发城市</th>
+					<th data-options="field:'ArriveDrome',width:250,align:'center'">降落城市</th>
+					<th data-options="field:'StartTime',width:100,align:'center',sortable:true">出发时间</th>
+					<th data-options="field:'ArriveTime',width:60,align:'center',sortable:true">到达时间</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<div id="dlg" class="easyui-dialog" title="飞机票预订" style="width:1000px;height:600px;padding:10px"
+				data-options="closed:false">
+		<form > 
+			<div class="easyui-panel" title="航班信息"> 
 				<table>
 					
 					<tr>
@@ -281,17 +296,62 @@
 						</td>
 					</tr>
 				</table>
-				</div>
-				<div class="easyui-panel" title="人员信息">
-				</div>
-				<div align="right">
-				<a href="#" id="search" name="search" class="easyui-linkbutton" iconCls="icon-ok" onclick="comfirm()" >确认</a>
-				<a href="#" id="search" name="search" class="easyui-linkbutton" iconCls="icon-ok" onclick="$('#dlg').dialog('close')" >取消</a>
-				</div> 
-			</form>
+			</div>
 			
+			<div class="easyui-panel" title="添加人员"  style="height:400px">
+					<div  style="width:45%;float:left">
+					<table id="houxuan" class="easyui-datagrid" title="人员选择" style="height:350px"
+						data-options="
+							rownumbers:true,
+							toolbar:'#aa',
+							checkbox:'true',
+							checkOnSelect:'true'
+						">
+						<thead>
+							<tr>
+								<th data-options="field:'name',width:80,align:'center'">姓名</th>
+								<th data-options="field:'sex',width:80,align:'center'">性别</th>
+								<th data-options="field:'idcard',width:80,align:'center'">身份证号</th>
+								<th data-options="field:'phone',width:80,align:'center'">电话</th>
+							</tr>
+						</thead>
+					</table>
+					<div id="aa">
+						旅游团
+						<input id="cc" class="easyui-combobox" 
+    						data-options="valueField:'id',textField:'text'" /> 
+					</div>
+					</div>
+					<div style="width:10%;float:left" >
+						<div class="easyui-panel" style="height:350px;width:auto">
+						<div style="float:left;position: absolute;top:55%;left: 49%">
+							<li style="list-style:none;"><a href="#" id="add" class="easyui-linkbutton" style="display: inline-block;" iconCls="icon-add" onclick="add()" ></a></li>
+							<li style="list-style:none;"><a href="#" id="remove" class="easyui-linkbutton" iconCls="icon-remove" onclick="" ></a></li>
+						</div>
+						</div>
+					</div>
+					<div style="width:45%;float:left" >
+					<table id="yixuan" class="easyui-datagrid" title="预订人员" style="height:350px"
+						data-options="
+							rownumbers:true,
+							checkbox:'true',
+							checkOnSelect:'true'">
+						<thead>
+							<tr>
+								<th data-options="field:'name',width:80,align:'center'">姓名</th>
+								<th data-options="field:'sex',width:80,align:'center'">性别</th>
+								<th data-options="field:'idcard',width:80,align:'center'">身份证号</th>
+								<th data-options="field:'phone',width:80,align:'center'">电话</th>
+							</tr>
+						</thead>
+					</table>
+					</div>
+			</div>
+			<div align="right">
+				<a href="#" id="comfir" name="search" class="easyui-linkbutton" iconCls="icon-ok" onclick="comfirm()" >确认</a>
+				<a href="#" id="cancel" name="search" class="easyui-linkbutton" iconCls="icon-ok" onclick="$('#dlg').dialog('close')" >取消</a>
+			</div> 
+		</form>
 	</div>
-	</div>
-	
 </body>
 </html>
