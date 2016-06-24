@@ -38,6 +38,12 @@ public interface Service {
 	@Path("getAllTraveller/{agencyid}")
 	public List<Traveller> getAllTraveller(@PathParam("agencyid") int agencyid);
 	
+	@GET
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("getTraverllerByTeam/{teamid}")
+	public List<Traveller> getTraverllerByTeam(@PathParam("teamid") int teamid);
+	
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/getAirLines")

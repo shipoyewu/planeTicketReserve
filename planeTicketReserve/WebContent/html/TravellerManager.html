@@ -16,17 +16,22 @@
 			data-options="fit:true,border:false">
 			<div class="easyui-tabs" data-options="fit:true,border:false,plain:true">
 			<div title="添加旅客" data-options="href:'AddTraveller.html'" style="padding:10px"></div>
-				<div title="旅客信息检索" style="padding:5px">
+				<div title="旅客信息检索" style="padding:5px" align="center">
 					<input id="ss" class="easyui-searchbox" style="width:300px"
 					    data-options="searcher:qq,prompt:'请输入',menu:'#mm'"></input>
 					<div id="mm" style="width:120px">
 					    <div data-options="name:'all',iconCls:'icon-ok'">全部</div>
 					    <div data-options="name:'idcard'">身份证号</div>
+					    
 					</div>
+					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'"   
+        				onclick="edit()">修改</a>  
 					<table id="dg" class="easyui-datagrid" title="旅客信息" style="width:700px;height:250px"
-						data-options="singleSelect:true,collapsible:true,method:'get'">
+						data-options="singleSelect:true,method:'get'">
 					</table>
-					
+					<div id="editdialog">
+						
+					</div>  
 				</div>
 			
 			</div>

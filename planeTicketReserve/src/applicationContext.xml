@@ -57,6 +57,7 @@
 	</bean>
 	<bean id="travellerDaoImp" class="com.mps.daoImp.TravellerDaoImp">
 	    <property name="sessionFactory" ref="sessionFactory"></property>
+	    <property name="participateDaoImp" ref="participateDaoImp"></property>
 	</bean>
 	<bean id="webService" class="cn.com.WebXml.ServiceFacade"> 
 	</bean>

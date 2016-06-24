@@ -173,6 +173,19 @@ public class ServiceImp implements Service {
 		}
 		return "Success";
 	}
+
+	@Override
+	public List<Traveller> getTraverllerByTeam(int teamid) {
+		// TODO Auto-generated method stub
+		List<Traveller> items = null;
+		try {
+			items = travellerDaoImp.getTravelsByTeamid(teamid);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return items;
+	}
 	
 
 }

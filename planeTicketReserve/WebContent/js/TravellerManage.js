@@ -78,5 +78,34 @@ function qq(value,name){
 	    	    ]]
 	    	});
 	}
-	
    }
+var rownum;//全局变量传值
+function edit(){
+	var row = $("#dg").datagrid("getSelected");
+	rownum = row.id;
+	if(row == null){
+		$.messager.alert('提示','请先点击需要修改的行'); 
+	}
+	else{
+		$('#editdialog').dialog({    
+		    title: '编辑',    
+		    width: 400,    
+		    height: 400,    
+		    closed: false,    
+		    cache: false,    
+		    modal: true   
+		});    
+		$('#editdialog').dialog('refresh', 'TravellerEdit.html');  
+	}
+}
+function updateEdit(){
+	alert(rownum);
+	$.ajax({
+			type :'post',
+        url : '../REST/REST/Service/register',
+        data : contacts+'&'+phone+'&'+agencyname+'&'+psw1+'&'+address,
+        success : function(msg){
+        	alert("注册成功！");
+        }
+		});
+}
