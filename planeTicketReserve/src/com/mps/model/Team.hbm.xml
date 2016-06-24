@@ -26,19 +26,19 @@
         <property name="status" type="java.lang.Integer">
             <column name="status" />
         </property>
-        <set name="orderses" table="orders" inverse="true" lazy="true" fetch="select">
+        <set name="orderses" table="orders" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="teamid" not-null="true" />
             </key>
             <one-to-many class="com.mps.model.Orders" />
         </set>
-        <set name="participates" table="participate" inverse="true" lazy="true" fetch="select">
+        <set name="participates" table="participate" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="teamid" not-null="true" />
             </key>
             <one-to-many class="com.mps.model.Participate" />
         </set>
-        <set name="routes" table="route" inverse="true" lazy="true" fetch="select">
+        <set name="routes" table="route" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="teamid" not-null="true" />
             </key>

@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 2016-6-18 9:41:44 by Hibernate Tools 4.3.1.Final -->
 <hibernate-mapping>
-    <class name="com.mps.model.Traveller" table="traveller" catalog="planeticketreserve" optimistic-lock="version">
+    <class name="com.mps.model.Traveller" table="traveller" catalog="planeticketreserve" optimistic-lock="version" lazy="false">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
@@ -23,13 +23,13 @@
         <property name="phone" type="string">
             <column name="phone" length="25" />
         </property>
-        <set name="participates" table="participate" inverse="true" lazy="true" fetch="select">
+        <set name="participates" table="participate" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="travellerid" not-null="true" />
             </key>
             <one-to-many class="com.mps.model.Participate" />
         </set>
-        <set name="orderses" table="orders" inverse="true" lazy="true" fetch="select">
+        <set name="orderses" table="orders" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="travellerid" not-null="true" />
             </key>
