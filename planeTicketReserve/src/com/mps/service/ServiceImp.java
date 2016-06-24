@@ -39,14 +39,6 @@ public class ServiceImp implements Service {
 	public ParticipateDaoImp participateDaoImp;
 	public TeamDaoImp teamDaoImp;
 	public RouteDaoImp routeDaoImp;
-	public AgencyDaoImp agencyDaoImp;
-	public OrdersDaoImp ordersDaoImp;
-	public ParticipateDaoImp participateDaoImp;
-	public RouteDaoImp routeDaoImp;
-	public TeamDaoImp teamDaoImp;
-	public TravellerDaoImp travellerDaoImp;
-
-
 	
 	public RouteDaoImp getRouteDaoImp() {
 		return routeDaoImp;
@@ -247,8 +239,16 @@ public class ServiceImp implements Service {
 	public List<Traveller> getTraverllerByTeam(int teamid) {
 		// TODO Auto-generated method stub
 		List<Traveller> items = null;
+		List<Participate> ps = participateDaoImp.getParticipByTeamId(teamid);
+		System.out.println(ps.size());
 		try {
-			items = travellerDaoImp.getTravelsByTeamid(teamid);
+			for(Participate p : ps){
+				System.out.println(p.toString());
+				items
+				.add(travellerDaoImp
+				.get(p
+				.getId()));
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -275,7 +275,7 @@ public class ServiceImp implements Service {
 		}
 			
 		synchronized (ordersDaoImp) {
-			int count =ordersDaoImp.getCountOfAirline(a.getFlight(), a.getStarttime());
+			int count =ordersDaoImp.getCountOfAirline(a.getFlight(), (java.sql.Date) a.getStarttime());
 			int cc = tre.length();
 			if(cc <= 60-count){
 				for(int i = 0;i < cc;i++){

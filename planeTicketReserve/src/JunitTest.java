@@ -1,9 +1,7 @@
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.annotation.Resource;
-
-import org.apache.axis.Message;
-import org.apache.axis.message.MessageElement;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,6 +12,7 @@ import com.mps.daoImp.ParticipateDaoImp;
 import com.mps.daoImp.TeamDaoImp;
 import com.mps.daoImp.OrdersDaoImp;
 import com.mps.daoImp.TravellerDaoImp;
+import com.mps.model.Participate;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,9 +31,9 @@ public class JunitTest {
 	
 	@Test
 	public void test(){
-		//System.out.println(agencyDaoImp.checkPassword("1302777", "123456"));
+		
 		try {
-			System.out.println(travellerDaoImp.get(1).getAgency().getAddress());
+			System.out.println(participateDaoImp.getParticipByTeamId(1));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 2016-6-18 9:41:44 by Hibernate Tools 4.3.1.Final -->
 <hibernate-mapping>
-    <class name="com.mps.model.Participate" table="participate" catalog="planeticketreserve" optimistic-lock="version" lazy="false">
+    <class name="com.mps.model.Participate" table="participate" catalog="planeticketreserve" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="assigned" />

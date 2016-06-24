@@ -10,7 +10,6 @@ function submitForm(){
 	var tel = document.getElementById("tel").value;
 	var name = document.getElementById("name").value;
 	var sex = document.getElementById("sex").value;
-	alert(sex);
 	if(!isCardNo(idcard)){
 		$.messager.alert('提示','身份证号格式错误');
 		return false;
@@ -21,11 +20,13 @@ function submitForm(){
 	var s;
 	if(sex == "man")	s = "男";
 		else s = "女";
+	
 	$('#traveller').form('submit', {    
 	    url:"../REST/REST/Service/saveOrUpdatesTraveller/"+name+'/'+s+'/'+idcard+'/'+tel,    
 	    onSubmit: function(){    
 	        // do some check    
 	        // return false to prevent submit;  
+	    	alert('heheda');
 	    },
 	    success:function(data){
 	        $.messager.alert('提示','提交成功'); 
