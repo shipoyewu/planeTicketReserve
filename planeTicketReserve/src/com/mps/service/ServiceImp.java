@@ -276,13 +276,13 @@ public class ServiceImp implements Service {
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						return "unsucc";
+						return "unsucc:内部错误!";
 					}
 					o.setTraveller(t);
 					ordersDaoImp.save(o);
 				}
 			}else{
-				return "unscc";
+				return "unscc:座位不够！";
 			}
 		}
 		return "succ";

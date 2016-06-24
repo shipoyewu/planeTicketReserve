@@ -238,8 +238,9 @@
 						alert("预订成功！");
 						$('#dlg').dialog('close');
 					}else{
-						alert("预订失败");
+						var now = data.split(":");
 						$('#dlg').dialog('close');
+						alert(now[1]);
 					}
 			    }    
 			});
