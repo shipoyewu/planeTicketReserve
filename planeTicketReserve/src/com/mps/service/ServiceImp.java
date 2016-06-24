@@ -1,8 +1,13 @@
 package com.mps.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.mps.daoImp.AgencyDaoImp;
 import com.mps.daoImp.OrdersDaoImp;
@@ -17,6 +22,14 @@ import com.mps.util.PostSplite;
 
 import cn.com.WebXml.ServiceFacade;
 
+import com.google.gson.JsonObject;
+import com.mps.daoImp.*;
+import com.mps.model.*;
+
+import java.util.Date;
+import java.util.List;
+
+
 public class ServiceImp implements Service {
 
 	public TravellerDaoImp travellerDaoImp;
@@ -26,6 +39,14 @@ public class ServiceImp implements Service {
 	public ParticipateDaoImp participateDaoImp;
 	public TeamDaoImp teamDaoImp;
 	public RouteDaoImp routeDaoImp;
+	public AgencyDaoImp agencyDaoImp;
+	public OrdersDaoImp ordersDaoImp;
+	public ParticipateDaoImp participateDaoImp;
+	public RouteDaoImp routeDaoImp;
+	public TeamDaoImp teamDaoImp;
+	public TravellerDaoImp travellerDaoImp;
+
+
 	
 	public RouteDaoImp getRouteDaoImp() {
 		return routeDaoImp;
@@ -87,6 +108,7 @@ public class ServiceImp implements Service {
 		this.webService = webService;
 	}
 
+
 	@Override
 	public String test() {
 		// TODO Auto-generated method stub
@@ -105,8 +127,55 @@ public class ServiceImp implements Service {
 		str = str.replaceAll("\\[", "");
 		str = str.replaceAll("\\]", "");
 		str = "["+str+"]";
-	
 		return str;
+	}
+	
+	@Override
+	public List<Team> getListTeam(int agencyid){
+		List<Team> allteam = teamDaoImp.getListTeam(agencyid);
+		return allteam;
+	}
+	
+	@Override
+	public Agency getAgencyInfoByAgencyid(int agencyid){
+		Agency agency = agencyDaoImp.getAgencyInfoByAgencyid(agencyid);
+		if(agency == null)
+			return null;
+		else
+			return agency;
+	}
+	
+	@Override
+	public void updateAgencyInfo(String pwd,String agencyname,String address,String contacts,String phonenumber){
+		Agency agency = new Agency();
+		agency.setPwd(pwd);
+		agency.setPhone(phonenumber);
+		agency.setName(agencyname);
+		agency.setAddress(address);
+		agency.setContacts(contacts);
+		try {
+			agencyDaoImp.save(agency);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void saveOrupdateTeam(String name,Date starttime,Date endtime,int type,int status,Agency agency){
+			Team team = new Team();
+			team.setName(name);
+			team.setStarttime(starttime);
+			team.setEndtime(endtime);
+			team.setStatus(status);
+			team.setType(type);
+			team.setAgency(agency);
+			try {
+				teamDaoImp.save(team);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 	@Override
@@ -187,5 +256,55 @@ public class ServiceImp implements Service {
 		 return items;
 	}
 	
+	public String orderAirline(String json) {
+		// TODO Auto-generated method stub
+		Map<String, String> ma = PostSplite.postchange(json);
+		JSONArray tre = (JSONArray)JSONObject.stringToValue(ma.get("listTre"));
+		Orders a = new Orders();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		a.setFlight(ma.get("airlinecode"));
+		try{
+			
+			a.setStarttime(sdf.parse(ma.get("starttime")));
+			a.setEndtime(sdf.parse(ma.get("endtime")));
+			a.setStartpoint(ma.get("startdrome"));
+			a.setEndpoint(ma.get("arrivedrome"));
+			a.setPrice(50.0);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+			
+		synchronized (ordersDaoImp) {
+			int count =ordersDaoImp.getCountOfAirline(a.getFlight(), a.getStarttime());
+			int cc = tre.length();
+			if(cc <= 60-count){
+				for(int i = 0;i < cc;i++){
+					Orders o = new Orders();
+					o.setFlight(a.getFlight());
+					o.setStarttime(a.getStarttime());
+					o.setEndtime(a.getEndtime());
+					o.setEndpoint(a.getEndpoint());
+					o.setStartpoint(a.getStartpoint());
+					o.setSpace(0);
+					o.setSeat(cc+i);
+					o.setPrice(50.0);
+					Traveller t = null;
+					try {
+						o.setTeam(teamDaoImp.get(tre.getJSONObject(i).getInt("teamid")));
+						t= travellerDaoImp.get(tre.getJSONObject(i).getInt("id"));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						return "unsucc";
+					}
+					o.setTraveller(t);
+					ordersDaoImp.save(o);
+				}
+			}else{
+				return "unscc";
+			}
+		}
+		return "succ";
+	}
 
 }

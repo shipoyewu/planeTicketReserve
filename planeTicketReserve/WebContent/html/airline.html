@@ -170,15 +170,21 @@
 					$('#ArriveDrome').textbox('setValue',rowdata.ArriveDrome);
 					$('#StartDrome').textbox('setValue',rowdata.StartDrome);
 					$('#StartTime').textbox('setValue',rowdata.StartTime);
-					
 				}
 			}); 
-		   $('#cc').combobox('reload');
-		   $('#cc').combobox('onSelect',function(rec){
-			   var url = '/'+rec.id;
-			   $('#houxuan').datagird('reload',url);
-			   $('#houxuan').datagird('checkAll');
-		   });
+		   $('#cc').combobox('reload',"../REST/REST/Service/getListTeam/"+"1");
+		   $('#cc').combobox({
+			   onSelect: function(record){
+				   $.ajax({
+					   url:"../REST/REST/Service/getTraverllerByTeam/"+record.id,
+					   method:'GET',
+					   success: function(data){
+							$('#houxuan').datagird("load",data);
+					   }
+				   });
+				}
+			});
+
 		   
 		});
 		function find(){
@@ -205,6 +211,10 @@
 						},
 						success:function(data){
 							var cc = eval(data);
+							for(var i = 0;i < cc.length;i++){
+								cc[i].StartTime= findDate + " " + cc[i].StartTime;
+								cc[i].ArriveTime= findDate + " " + cc[i].ArriveTime;
+							}
 							$.messager.progress('close');	
 							$('#dd').datagrid('loadData',cc);
 							$('#dd').datagrid('reloadFooter');
@@ -218,18 +228,43 @@
 			}
 		}
 		function comfirm(){
-			$('#dlg').dialog('close');
+			$('#order').form('submit', {    
+			    url:'../REST/REST/Service/orderAirline',    
+			    onSubmit: function(param){    
+			    	param.listTre =JSON.stringify( $('#yixuan').datagrid('getData'));
+			    },    
+			    success:function(data){    
+			        if(data == "succ"){
+						alert("预订成功！");
+						$('#dlg').dialog('close');
+					}else{
+						alert("预订失败");
+						$('#dlg').dialog('close');
+					}
+			    }    
+			});
 		}
+		
 		function add(){
-			var houxuan=$('#houxuan').datagird('getSelections');
-			$('#yixuan').datagird('appendRow',houxuan);
-		}
-		function remove(){
-			var yixuan = $('#houxuan').datagird('getSelections');
-			for(var i = 0;i < yixuan.length;i++){
-				 $('#houxuan').datagird('deleteRow',yixuan.index);
+			var teamid= $('#cc').combobox('getValue');
+			if(teamid){
+				var houxuan=$('#houxuan').datagrid('getSelections');
+				for(var i = 0;i < houxuan.length;i++){
+					houxuan[i].teamid=teamid;
+				}
+				if(houxuan.length > 0){
+					$('#yixuan').datagrid('appendRow',houxuan);
+				}
+					
 			}
 		}
+		function remove(){
+			var yixuan = $('#houxuan').datagrid('getSelections');
+			for(var i = 0;i < yixuan.length;i++){
+				 $('#houxuan').datagrid('deleteRow',yixuan.index);
+			}
+		}
+		
 	</script>
 
 </head>
@@ -261,38 +296,36 @@
 					<th data-options="field:'Company',width:100,align:'center'">航空公司</th>
 					<th data-options="field:'StartDrome',width:250,align:'center'">出发城市</th>
 					<th data-options="field:'ArriveDrome',width:250,align:'center'">降落城市</th>
-					<th data-options="field:'StartTime',width:100,align:'center',sortable:true">出发时间</th>
-					<th data-options="field:'ArriveTime',width:60,align:'center',sortable:true">到达时间</th>
+					<th data-options="field:'StartTime',width:150,align:'center',sortable:true">出发时间</th>
+					<th data-options="field:'ArriveTime',width:150,align:'center',sortable:true">到达时间</th>
 				</tr>
 			</thead>
 		</table>
 	</div>
 	<div id="dlg" class="easyui-dialog" title="飞机票预订" style="width:1000px;height:600px;padding:10px"
-				data-options="closed:false">
-		<form > 
+				data-options="closed:true,modal:true">
+		<form id="order" method="post"> 
 			<div class="easyui-panel" title="航班信息"> 
 				<table>
-					
 					<tr>
 						<td>
-						<p>航 班 号:</p></td><td><input name="AirlineCode" class="easyui-textbox" id="AirlineCode" 
-							disabled="disabled" style="width:100px">
+						<p>航 班 号:</p></td><td><input name="AirlineCode" class="easyui-textbox" id="AirlineCode"  style="width:100px">
 						</td>
-						<td><p>航空公司:</p></td><td><input name="Company" class="easyui-textbox" id="Company" disabled="disabled" style="width:100px"></td>
+						<td><p>航空公司:</p></td><td><input  name="Company" class="easyui-textbox" id="Company" readonly= "true" style="width:100px"></td>
 					</tr>
 					
 					<tr>
 						<td>
-						 	<p>出发城市:</p></td><td><input name="StartDrome" class="easyui-textbox" id="StartDrome" disabled="disabled" style="width:150px">
+						 	<p>出发城市:</p></td><td><input name="StartDrome" class="easyui-textbox" readonly= "true" id="StartDrome" style="width:150px">
 						</td>
 						<td> 	
-							<p>降落城市:</p></td><td><input name="ArriveDrome" class="easyui-textbox" id="ArriveDrome" disabled="disabled" style="width:150px">
+							<p>降落城市:</p></td><td><input name="ArriveDrome" class="easyui-textbox" id="ArriveDrome" readonly= "true"  style="width:150px">
 						</td>
 						<td>	
-						 	<p>出发时间:</p></td><td><input name="StartTime" class="easyui-textbox" id="StartTime" disabled="disabled" style="width:80px">
+						 	<p>出发时间:</p></td><td><input name="StartTime" readonly= "true" class="easyui-textbox" id="StartTime" style="width:150px">
 						</td>
 						<td>
-						 	<p>到达时间:</p></td><td><input name="ArriveTime" class="easyui-textbox" id="ArriveTime" disabled="disabled" style="width:80px">
+						 	<p>到达时间:</p></td><td><input name="ArriveTime" readonly= "true" class="easyui-textbox" id="ArriveTime" style="width:150px">
 						</td>
 					</tr>
 				</table>
@@ -319,7 +352,7 @@
 					<div id="aa">
 						旅游团
 						<input id="cc" class="easyui-combobox" 
-    						data-options="valueField:'id',textField:'text'" /> 
+    						data-options="valueField:'id',textField:'name',editable:false" /> 
 					</div>
 					</div>
 					<div style="width:10%;float:left" >

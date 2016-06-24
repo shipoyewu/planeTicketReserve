@@ -78,6 +78,7 @@ function qq(value,name){
 	    	    ]]
 	    	});
 	}
+
    }
 var rownum;//全局变量传值
 function edit(){
@@ -105,7 +106,11 @@ function updateEdit(){
         url : '../REST/REST/Service/register',
         data : contacts+'&'+phone+'&'+agencyname+'&'+psw1+'&'+address,
         success : function(msg){
-        	alert("注册成功！");
+        	if(msg == 'Success')
+        		$.messager.alert('提示','信息修改成功!');
+        	else 
+        		$.messager.alert('提示','信息修改失败,请重试！');
         }
 		});
 }
+
