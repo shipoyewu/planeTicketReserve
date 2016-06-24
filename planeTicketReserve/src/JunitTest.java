@@ -10,12 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mps.daoImp.AgencyDaoImp;
-<<<<<<< HEAD
 import com.mps.daoImp.ParticipateDaoImp;
 import com.mps.daoImp.TeamDaoImp;
-=======
 import com.mps.daoImp.OrdersDaoImp;
->>>>>>> branch 'master' of https://github.com/shipoyewu/planeTicketReserve
 import com.mps.daoImp.TravellerDaoImp;
 
 
@@ -27,17 +24,14 @@ public class JunitTest {
 	@Resource
 	TravellerDaoImp travellerDaoImp;
 	@Resource
-<<<<<<< HEAD
 	ParticipateDaoImp participateDaoImp;
 	@Resource
 	TeamDaoImp teamDaoImp;
-=======
+	@Resource
 	OrdersDaoImp ordersDaoImp;
 	
->>>>>>> branch 'master' of https://github.com/shipoyewu/planeTicketReserve
 	@Test
 	public void test(){
-<<<<<<< HEAD
 		//System.out.println(agencyDaoImp.checkPassword("1302777", "123456"));
 		try {
 			System.out.println(travellerDaoImp.get(1).getAgency().getAddress());
@@ -46,8 +40,5 @@ public class JunitTest {
 			e.printStackTrace();
 		}
 		//System.out.println(participateDaoImp.getParticipByTeam(1).size());
-=======
-		System.out.println(ordersDaoImp.getCountOfAirline("asda", new Date()));
->>>>>>> branch 'master' of https://github.com/shipoyewu/planeTicketReserve
 	}
 }
