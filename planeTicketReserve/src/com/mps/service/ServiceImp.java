@@ -232,20 +232,19 @@ public class ServiceImp implements Service {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "unSuccess";
+			return "unsucc";
 		}
-		return "Success";
+		return "succ";
 	}
 
 	@Override
 	public List<Traveller> getTraverllerByTeam(int teamid) {
 		// TODO Auto-generated method stub
-		List<Traveller> items = null;
+		List<Traveller> items = new ArrayList<Traveller>();
 		List<Participate> ps = participateDaoImp.getParticipByTeamId(teamid);
 		System.out.println(ps.size());
 		try {
 			for(Participate p : ps){
-				System.out.println(p.toString());
 				items
 				.add(travellerDaoImp
 				.get(p

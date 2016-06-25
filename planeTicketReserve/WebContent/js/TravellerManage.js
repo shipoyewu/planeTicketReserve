@@ -55,9 +55,11 @@ function isCardNo(card)
  * 搜索框搜索旅客信息
  */
 function qq(value,name){
+	var uid = document.cookie.split('=')[1];
+	//alert(uid);
 	if(name == "all"){
 	    $('#dg').datagrid({
-    	    url:'../REST/REST/Service/getAllTraveller/'+"2",///这里应该放agencyid
+    	    url:'../REST/REST/Service/getAllTraveller/'+uid,///这里应该放agencyid
     	    columns:[[
     	        {field:'id',title:'旅客ID',width:100},
     	        {field:'name',title:'姓名',width:100},
@@ -69,7 +71,7 @@ function qq(value,name){
 	}
 	else{
 		 $('#dg').datagrid({
-	    	    url:'../REST/REST/Service/getTravellerByIdCard/'+value+'/'+"2",///这里应该放agencyid
+	    	    url:'../REST/REST/Service/getTravellerByIdCard/'+value+'/'+uid,///这里应该放agencyid
 	    	    columns:[[
 	    	        {field:'id',title:'旅客ID',width:100},
 	    	        {field:'name',title:'姓名',width:100},
@@ -85,28 +87,39 @@ var rownum;//全局变量传值
 function edit(){
 	var row = $("#dg").datagrid("getSelected");
 	rownum = row.id;
-	if(row == null){
-		$.messager.alert('提示','请先点击需要修改的行'); 
-	}
-	else{
+	if(row != null){
 		$('#editdialog').dialog({    
 		    title: '编辑',    
 		    width: 400,    
-		    height: 400,    
+		    height: 200,    
 		    closed: false,    
 		    cache: false,    
 		    modal: true   
 		});    
-		$('#editdialog').dialog('refresh', 'TravellerEdit.html');  
+		$('#editdialog').dialog('refresh', 'TravellerEdit.html');
+	}
+	else{
+		$.messager.alert('提示','请先选中需要修改的行');
 	}
 }
 function updateEdit(){
-	alert(rownum);
+	//alert(rownum);
+	rname = document.getElementById("rname").value;
+	rtel = document.getElementById("rtel").value;
+	if(!checkMobile(rtel)){
+		$.messager.alert('提示','手机号格式错误');
+		return false;
+	}
+	else if(rname == ''){
+		$.messager.alert('提示','请输入用户名');
+		return false;
+	}
+		
 	$.ajax({
 		type :'get',
-        url : '../REST/REST/Service/saveOrUpdatesTraveller/',
+        url : '../REST/REST/Service/updatesTraveller/'+rownum+'/'+rname+'/'+rtel,
         success : function(msg){
-        	if(msg == 'Success')
+        	if(msg == 'succ')
         		$.messager.alert('提示','信息修改成功!');
         	else 
         		$.messager.alert('提示','信息修改失败,请重试！');

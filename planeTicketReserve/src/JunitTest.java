@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.Resource;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import com.mps.daoImp.TeamDaoImp;
 import com.mps.daoImp.OrdersDaoImp;
 import com.mps.daoImp.TravellerDaoImp;
 import com.mps.model.Participate;
+import com.mps.model.Traveller;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,13 +35,20 @@ public class JunitTest {
 	@Test
 	public void test(){
 		
+		List<Traveller> items = new ArrayList<Traveller>();
+		List<Participate> ps = participateDaoImp.getParticipByTeamId(1);
+		System.out.println(ps.size());
 		try {
-			//System.out.println(participateDaoImp.getParticipByTeamId(1).get(0).toString());
-			System.out.println(travellerDaoImp.getAllTraveller(2));;
+			for(Participate p : ps){
+				items
+				.add(travellerDaoImp
+				.get(p
+				.getId()));
+			}
+			System.out.println(items.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//System.out.println(participateDaoImp.getParticipByTeam(1).size());
 	}
 }
