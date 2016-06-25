@@ -48,7 +48,7 @@ public interface Service {
 	public String getAirLines(String json);
 	
 	@POST
-	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/getListTeam/{agencyid}")
 	public List<Team> getListTeam(@PathParam("agencyid")int agencyid);
 	
@@ -85,5 +85,11 @@ public interface Service {
 	@Path("/orderAirline")
 	public String orderAirline(String jsons);
 	
+	@POST
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("getTraverllerByTeam/{teamid}")
+	public List<Traveller> getTraverllerByTeam(@PathParam("teamid") int teamid);
+
 }
  

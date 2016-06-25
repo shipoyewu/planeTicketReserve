@@ -13,7 +13,10 @@ public class ParticipateDaoImp extends BaseDao<Participate, Integer> {
 		super(Participate.class);
 	}
 	public List<Participate> getListTeam(int teamid){
-		List<Participate> allparticipate = super.findBy("id", true, Restrictions.sqlRestriction("teamid = " + teamid));
+		List<Participate> allparticipate = findBy("id", true, Restrictions.sqlRestriction("teamid = " + teamid));
 		return allparticipate;
+	}
+	public List<Participate> getParticipByTeamId(int teamid){
+		return findBy("id", true, Restrictions.sqlRestriction("teamid="+teamid));
 	}
 }

@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import com.mps.daoImp.AgencyDaoImp;
 import com.mps.daoImp.OrdersDaoImp;
@@ -16,11 +14,12 @@ import com.mps.daoImp.RouteDaoImp;
 import com.mps.daoImp.TeamDaoImp;
 import com.mps.daoImp.TravellerDaoImp;
 import com.mps.iservice.Service;
-import com.mps.model.Agency;
-import com.mps.model.Traveller;
+import com.mps.util.JSONObjectUtils;
 import com.mps.util.PostSplite;
 
 import cn.com.WebXml.ServiceFacade;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import com.google.gson.JsonObject;
 import com.mps.daoImp.*;
@@ -126,6 +125,7 @@ public class ServiceImp implements Service {
 	@Override
 	public List<Team> getListTeam(int agencyid){
 		List<Team> allteam = teamDaoImp.getListTeam(agencyid);
+		System.out.println(allteam.size());
 		return allteam;
 	}
 	
@@ -239,25 +239,36 @@ public class ServiceImp implements Service {
 	@Override
 	public String orderAirline(String json) {
 		// TODO Auto-generated method stub
+		
 		Map<String, String> ma = PostSplite.postchange(json);
-		JSONArray tre = (JSONArray)JSONObject.stringToValue(ma.get("listTre"));
+		JSONArray tre = null;
+		try{
+			String ww = ma.get("listtre");
+			if(ww.charAt(ww.length()-1) == '\"'){
+				ww = ww.substring(0,ww.length()-1);
+			}
+			tre = JSONArray.fromObject(ww);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		Orders a = new Orders();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		System.out.println(1232);
 		a.setFlight(ma.get("airlinecode"));
 		try{
-			
 			a.setStarttime(sdf.parse(ma.get("starttime")));
-			a.setEndtime(sdf.parse(ma.get("endtime")));
+			a.setEndtime(sdf.parse(ma.get("arrivetime")));
 			a.setStartpoint(ma.get("startdrome"));
 			a.setEndpoint(ma.get("arrivedrome"));
 			a.setPrice(50.0);
-		}catch(Exception e){
+		}catch(Throwable e){
 			e.printStackTrace();
 		}
 			
 		synchronized (ordersDaoImp) {
 			int count =ordersDaoImp.getCountOfAirline(a.getFlight(), a.getStarttime());
-			int cc = tre.length();
+			System.out.println("111");
+			int cc = tre.size();
 			if(cc <= 60-count){
 				for(int i = 0;i < cc;i++){
 					Orders o = new Orders();
@@ -269,11 +280,13 @@ public class ServiceImp implements Service {
 					o.setSpace(0);
 					o.setSeat(cc+i);
 					o.setPrice(50.0);
+					o.setAdvancestatus(0);
+					o.setTicketstatus(0);
 					Traveller t = null;
 					try {
 						o.setTeam(teamDaoImp.get(tre.getJSONObject(i).getInt("teamid")));
 						t= travellerDaoImp.get(tre.getJSONObject(i).getInt("id"));
-					} catch (JSONException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 						return "unsucc:ÄÚ²¿´íÎó!";
@@ -287,5 +300,25 @@ public class ServiceImp implements Service {
 		}
 		return "succ";
 	}
+	
+	@Override
+	public List<Traveller> getTraverllerByTeam(int teamid) {
+		// TODO Auto-generated method stub
+		List<Traveller> items = new ArrayList<Traveller>();
+		List<Participate> ps = participateDaoImp.getParticipByTeamId(teamid);
+		System.out.println(ps.size());
+		try {
+			for(Participate p : ps){
+				items
+				.add(travellerDaoImp
+				.get(p
+				.getId()));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return items;
+		}
 
 }
