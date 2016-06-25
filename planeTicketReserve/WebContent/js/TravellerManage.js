@@ -136,4 +136,20 @@ function updateEdit(){
         }
 		});
 }
+/**
+ * 显示不同页面
+ * @param name
+ */
 
+function showcontent(name){
+	var lc=document.getElementById("agc");
+    if (name=="add") 
+    {
+    	lc.src= "AddTraveller.html ";
+    }
+    else 
+         {
+         	lc.src = "TravellerSearch.html";
+         }
+         
+}
