@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.PathParam;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -303,6 +305,22 @@ public class ServiceImp implements Service {
 			}else{
 				return "unscc";
 			}
+		}
+		return "succ";
+	}
+
+	@Override
+	public String updatesTraveller(int id, String name, String tel) {
+		// TODO Auto-generated method stub
+		Traveller t = travellerDaoImp.get(id);
+		t.setPhone(tel);
+		t.setName(name);
+		try {
+			travellerDaoImp.save(t);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "unsucc";
 		}
 		return "succ";
 	}

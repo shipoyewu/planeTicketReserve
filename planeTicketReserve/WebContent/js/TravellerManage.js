@@ -103,9 +103,8 @@ function edit(){
 function updateEdit(){
 	alert(rownum);
 	$.ajax({
-			type :'post',
-        url : '../REST/REST/Service/register',
-        data : contacts+'&'+phone+'&'+agencyname+'&'+psw1+'&'+address,
+		type :'get',
+        url : '../REST/REST/Service/saveOrUpdatesTraveller/',
         success : function(msg){
         	if(msg == 'Success')
         		$.messager.alert('提示','信息修改成功!');

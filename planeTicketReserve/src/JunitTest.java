@@ -33,7 +33,8 @@ public class JunitTest {
 	public void test(){
 		
 		try {
-			System.out.println(participateDaoImp.getParticipByTeamId(1));
+			//System.out.println(participateDaoImp.getParticipByTeamId(1).get(0).toString());
+			System.out.println(travellerDaoImp.getAllTraveller(2));;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

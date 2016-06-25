@@ -27,6 +27,11 @@ public interface Service {
 	@Path("saveOrUpdatesTraveller/{name}/{sex}/{idcard}/{tel}")
 	public String saveOrUpdatesTraveller(@PathParam("name")String name, @PathParam("sex") String sex,
 								@PathParam("idcard")String idcard, @PathParam("tel") String tel);
+	@GET
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.TEXT_PLAIN})
+	@Path("updatesTraveller/{id}/{name}/{tel}")
+	public String updatesTraveller(@PathParam("id")int id, @PathParam("name")String name,  @PathParam("tel") String tel);
 	
 	@GET
 	@Consumes({MediaType.TEXT_PLAIN})
@@ -36,7 +41,7 @@ public interface Service {
 	
 	@GET
 	@Consumes({MediaType.TEXT_PLAIN})
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Path("getAllTraveller/{agencyid}")
 	public List<Traveller> getAllTraveller(@PathParam("agencyid") int agencyid);
 	
