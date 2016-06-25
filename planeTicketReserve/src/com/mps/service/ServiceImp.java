@@ -173,18 +173,17 @@ public class ServiceImp implements Service {
 	}
 
 	@Override
-	public String saveOrUpdatesTraveller(String name, String sex, String idcard, String tel) {
+	public String saveOrUpdatesTraveller(String name, String sex, String idcard, String tel, int agencyid) {
 		// TODO Auto-generated method stub
 		Traveller t = new Traveller();
-		t.setAgency(agencyDaoImp.get(2));///---------------------------test
-		t.setIdcard(idcard);
+		t.setAgency(agencyDaoImp.get(agencyid));
+		t.setIdcard(idcard+"F");
 		t.setName(name);
 		t.setSex(sex);
 		t.setPhone(tel);
 		try {
 			travellerDaoImp.save(t);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "unsucc";
 		}
@@ -202,9 +201,8 @@ public class ServiceImp implements Service {
 	@Override
 	public List<Traveller> getTravellerByIdCard(String idcard, int agencyid) {
 		// TODO Auto-generated method stub
-		agencyid = 2;
 		List<Traveller> items = new ArrayList<Traveller>();
-		items.add(travellerDaoImp.getTraveller(idcard, agencyid));
+		items.add(travellerDaoImp.getTraveller(idcard+"F", agencyid));
 		return items;
 	}
 

@@ -9,7 +9,8 @@ function submitForm(){
 	var idcard = document.getElementById("idcard").value;	
 	var tel = document.getElementById("tel").value;
 	var name = document.getElementById("name").value;
-	var sex = document.getElementById("sex").value;
+	var sex = $("#sex").textbox("getValue");
+
 	if(!isCardNo(idcard)){
 		$.messager.alert('提示','身份证号格式错误');
 		return false;
@@ -18,15 +19,14 @@ function submitForm(){
 		return false;
 	}
 	var s;
-	if(sex == "man")	s = "男";
-		else s = "女";
-	
+	if(sex == "man")	s = "男"
+	else s = "女";
+	var uid = document.cookie.split('=')[1];
 	$('#traveller').form('submit', {    
-	    url:"../REST/REST/Service/saveOrUpdatesTraveller/"+name+'/'+s+'/'+idcard+'/'+tel,    
+	    url:"../REST/REST/Service/saveOrUpdatesTraveller/"+name+'/'+s+'/'+idcard+'/'+tel+'/'+uid,    
 	    onSubmit: function(){    
 	        // do some check    
 	        // return false to prevent submit;  
-	    	alert('heheda');
 	    },
 	    success:function(data){
 	        $.messager.alert('提示','提交成功'); 
@@ -65,7 +65,12 @@ function qq(value,name){
     	        {field:'name',title:'姓名',width:100},
     	        {field:'sex',title:'性别',width:50},
     	        {field:'phone',title:'联系方式',width:130,align:'center'},
-    	        {field:'idcard',title:'身份证号',width:250,align:'center'},
+    	        {field:'idcard',title:'身份证号',width:300,align:'center',
+    	        	formatter: function(value,row,index){	//不知道为什么传身份证号后两位得到会为0，
+    	        		var cardnum = row.idcard;			//在idcard后加了'F'传过来的
+    	        		return cardnum.split('F')[0];
+    				}
+    	        },
     	    ]]
     	});
 	}
@@ -77,7 +82,12 @@ function qq(value,name){
 	    	        {field:'name',title:'姓名',width:100},
 	    	        {field:'sex',title:'性别',width:50},
 	    	        {field:'phone',title:'联系方式',width:130,align:'center'},
-	    	        {field:'idcard',title:'身份证号',width:250,align:'center'},
+	    	        {field:'idcard',title:'身份证号',width:300,align:'center',
+	    	        	formatter: function(value,row,index){
+	    	        		var cardnum = row.idcard;
+	    	        		return cardnum.split('F')[0];
+	    				}
+	    	        },
 	    	    ]]
 	    	});
 	}

@@ -24,9 +24,9 @@ public interface Service {
 	@GET
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})
-	@Path("saveOrUpdatesTraveller/{name}/{sex}/{idcard}/{tel}")
+	@Path("saveOrUpdatesTraveller/{name}/{sex}/{idcard}/{tel}/{agencyid}")
 	public String saveOrUpdatesTraveller(@PathParam("name")String name, @PathParam("sex") String sex,
-								@PathParam("idcard")String idcard, @PathParam("tel") String tel);
+								@PathParam("idcard")String idcard, @PathParam("tel") String tel, @PathParam("agencyid")int agencyid);
 	@GET
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})

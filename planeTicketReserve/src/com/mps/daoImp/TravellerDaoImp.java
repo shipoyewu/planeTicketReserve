@@ -17,10 +17,15 @@ public class TravellerDaoImp extends BaseDao<Traveller, Integer> {
 		if(tras.size() != 1){
 			return null;
 		}
-		else return tras.get(0);
+		else {
+			return tras.get(0);
+		}
 	}
 	public List<Traveller> getAllTraveller(int agencyId){
 		List<Traveller> tras = super.findBy("id", true, Restrictions.sqlRestriction("agencyid=" + agencyId));
+		for(Traveller t : tras){
+			t.setIdcard(t.getIdcard());
+		}
 		return tras;
 	}
 	

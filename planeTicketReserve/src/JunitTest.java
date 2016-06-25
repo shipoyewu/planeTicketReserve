@@ -34,18 +34,9 @@ public class JunitTest {
 	
 	@Test
 	public void test(){
-		
-		List<Traveller> items = new ArrayList<Traveller>();
-		List<Participate> ps = participateDaoImp.getParticipByTeamId(1);
-		System.out.println(ps.size());
+
 		try {
-			for(Participate p : ps){
-				items
-				.add(travellerDaoImp
-				.get(p
-				.getId()));
-			}
-			System.out.println(items.toString());
+			System.out.println(travellerDaoImp.getTraveller("370481199403120314", 2));;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

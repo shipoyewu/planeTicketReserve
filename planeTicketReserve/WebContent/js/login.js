@@ -15,33 +15,32 @@ cookie中 = 号表示添加，不是赋值 */
  * 登陆校验
  */
 function check() {
-                
-                var phone = document.getElementById("phonel").value;
-                var pwd = document.getElementById("password").value;
-                if ("" == phone || "" == pwd) {
-                    alert('用户名或者密码不能为空');
-                } else {
-                    $.ajax({
-                        type :'post',
-                        url : '../REST/REST/Service/checkLoginUser',
-                        data : phone+"&"+pwd,
-                        success : function(msg) {
-                                 // alert(msg);
-                               if(msg == '0'){
-                            	   alert("手机号或密码不正确");
-                            	   return;
-                               }
-                               else {
-                            	   //保存cookie后跳转到主页
-                                   document.cookie="userid="+msg;
-                             	 //  var uid=document.cookie;
-                                   window.location.href="TravellerManager.html"
-                               }
-                        }
-                    });
-                     
+        var phone = document.getElementById("phonel").value;
+        var pwd = document.getElementById("password").value;
+        if ("" == phone || "" == pwd) {
+            alert('用户名或者密码不能为空');
+        } else {
+            $.ajax({
+                type :'post',
+                url : '../REST/REST/Service/checkLoginUser',
+                data : phone+"&"+pwd,
+                success : function(msg) {
+                         // alert(msg);
+                       if(msg == '0'){
+                    	   alert("手机号或密码不正确");
+                    	   return;
+                       }
+                       else {
+                    	   //保存cookie后跳转到主页
+                           document.cookie="userid="+msg;
+                     	 //  var uid=document.cookie;
+                           window.location.href="TravellerManager.html"
+                       }
                 }
-            }
+            });
+             
+        }
+    }
   /*
    * 登陆
    */
