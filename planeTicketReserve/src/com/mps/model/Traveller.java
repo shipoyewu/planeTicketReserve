@@ -30,8 +30,7 @@ public class Traveller implements java.io.Serializable {
 	private String name;
 	private String idcard;
 	private String phone;
-	/*private Set<Participate> participates = new HashSet<Participate>(0);
-	private Set<Orders> orderses = new HashSet<Orders>(0);*/
+
 
 	public Traveller() {
 	}
@@ -40,15 +39,13 @@ public class Traveller implements java.io.Serializable {
 		this.agency = agency;
 	}
 
-	public Traveller(Agency agency, String sex, String name, String idcard, String phone/*, Set<Participate> participates,
-			Set<Orders> orderses*/) {
+	public Traveller(Agency agency, String sex, String name, String idcard, String phone) {
 		this.agency = agency;
 		this.sex = sex;
 		this.name = name;
 		this.idcard = idcard;
 		this.phone = phone;
-		/*this.participates = participates;
-		this.orderses = orderses;*/
+
 	}
 
 	@Id
@@ -109,22 +106,5 @@ public class Traveller implements java.io.Serializable {
 		this.phone = phone;
 	}
 
-	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "traveller")
-	public Set<Participate> getParticipates() {
-		return this.participates;
-	}
-
-	public void setParticipates(Set<Participate> participates) {
-		this.participates = participates;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "traveller")
-	public Set<Orders> getOrderses() {
-		return this.orderses;
-	}
-
-	public void setOrderses(Set<Orders> orderses) {
-		this.orderses = orderses;
-	}*/
 
 }

@@ -6,7 +6,6 @@ import org.hibernate.criterion.Restrictions;
 
 import com.mps.daoBase.BaseDao;
 import com.mps.model.Participate;
-import com.mps.model.Traveller;
 
 public class ParticipateDaoImp extends BaseDao<Participate, Integer> {
 	public ParticipateDaoImp(){
@@ -19,4 +18,8 @@ public class ParticipateDaoImp extends BaseDao<Participate, Integer> {
 	public List<Participate> getParticipByTeamId(int teamid){
 		return findBy("id", true, Restrictions.sqlRestriction("teamid="+teamid));
 	}
+	public int getCountPeople(int teamid){
+		return findBy("id",true,Restrictions.sqlRestriction("teamid='"+teamid+"'")).size();
+	}
+	
 }

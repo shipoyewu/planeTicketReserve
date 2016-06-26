@@ -34,8 +34,7 @@ public class Agency implements java.io.Serializable {
 	public Agency() {
 	}
 
-	public Agency(String pwd, String name, String address, String contacts, String phone/*, Set<Team> teams,
-			Set<Traveller> travellers*/) {
+	public Agency(String pwd, String name, String address, String contacts, String phone) {
 		this.pwd = pwd;
 		this.name = name;
 		this.address = address;
@@ -101,23 +100,5 @@ public class Agency implements java.io.Serializable {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
-	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "agency")
-	public Set<Team> getTeams() {
-		return this.teams;
-	}
-
-	public void setTeams(Set<Team> teams) {
-		this.teams = teams;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "agency")
-	public Set<Traveller> getTravellers() {
-		return this.travellers;
-	}
-
-	public void setTravellers(Set<Traveller> travellers) {
-		this.travellers = travellers;
-	}*/
 
 }

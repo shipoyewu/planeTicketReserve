@@ -15,5 +15,5 @@ public class TeamDaoImp extends BaseDao<Team, Integer> {
 		List<Team> allteam = super.findBy("id", true, Restrictions.sqlRestriction("agencyid = " + agencyid +" and status = 0 "));
 		return allteam;
 	}
- 
+	
 }
