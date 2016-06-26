@@ -1,17 +1,14 @@
 $(function(){
 	
 	$('#flight').combobox({
-		valueField:'flight',   
-		textField:'flight',
-		
+		valueField:'code',   
+		textField:'name',
 		url:'http://localhost:8080/planeTicketReserve/REST/REST/Service/getFlight'
-		
-		
 	});
 
 });
 function doSearch(){
-	var flight=$('#flight').combobox('getValue');
+	/*var flight=$('#flight').combobox('getValue');
 	alert(flight);
 	var start=$('#starttime').textbox('getValue');
 	alert(flight+"liushuo"+start);
@@ -25,5 +22,5 @@ function doSearch(){
 			success:function(data){
 		       		
 			}
-	})
+	})*/
 }

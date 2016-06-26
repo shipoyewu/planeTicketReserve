@@ -9,7 +9,6 @@ import java.util.List;
 import org.hibernate.criterion.Restrictions;
 
 import com.mps.daoBase.BaseDao;
-import com.mps.model.Flight;
 import com.mps.model.Orders;
 
 public class OrdersDaoImp extends BaseDao<Orders, Integer> {
@@ -17,14 +16,13 @@ public class OrdersDaoImp extends BaseDao<Orders, Integer> {
 		super(Orders.class);
 	}
 	@SuppressWarnings("unchecked")
-	public List<Flight> getFlightList(){
+	public List<String> getFlightList(){
 		String sql="select flight from orders group by flight";
-		List<Flight> flight=new ArrayList<Flight>();
-		flight=this.getSession().createSQLQuery(sql).list();
+		
+		return this.getSession().createSQLQuery(sql).list();
 		//return this.queryBySql(sql);
 		
 		/*System.out.println();*/
-		return flight;
 	}
 	/*public int getFlighttest(){
 		int result;

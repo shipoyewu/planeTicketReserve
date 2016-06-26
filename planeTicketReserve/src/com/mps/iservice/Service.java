@@ -14,15 +14,14 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.mps.model.Flight;
 import com.mps.model.Orders;
 
 import javax.xml.crypto.dsig.keyinfo.KeyValue;
 
 import com.mps.model.Agency;
-import com.mps.model.KeyValuePair;
 import com.mps.model.Team;
 import com.mps.model.Traveller;
+import com.mps.smodel.KeyValuePair;
 
 @Path("/Service")
 public interface Service {
@@ -61,11 +60,11 @@ public interface Service {
 	public String getAirLines(String json);
 	
 	//liushuo
-	@GET
+	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/getFlight")
 	//@Produces({MediaType.TEXT_PLAIN})
-    public List<Flight> getFlight();
+    public List<KeyValuePair> getFlight();
 	
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
