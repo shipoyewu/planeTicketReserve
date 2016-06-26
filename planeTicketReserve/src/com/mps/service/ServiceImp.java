@@ -404,21 +404,6 @@ public class ServiceImp implements Service {
 	}
 
 	@Override
-	public List<KeyValuePair> getListFlghtbyTeamId(int teamid) {
-		List<Orders> orders = ordersDaoImp.getOrderByteam(""+teamid);
-		List<KeyValuePair> keys = new ArrayList<>();
-		
-		for(Orders o: orders){
-			KeyValuePair tem = new KeyValuePair();
-			String kk = o.getFlight() + "("+o.getStarttime()+")";
-			tem.setKey(kk);
-			tem.setValue(kk);
-			keys.add(tem);
-		}
-		return keys;
-	}
-
-	@Override
 	public String addTeam(String json) {
 		Map<String,String> ma = PostSplite.postchange(json);
 		Team team = new Team();

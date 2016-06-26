@@ -107,11 +107,6 @@ public interface Service {
 	@Path("/advance")
 	public String advance(String jsons);
 	
-	@POST
-	@Consumes({MediaType.TEXT_PLAIN})
-	@Produces({MediaType.APPLICATION_JSON})
-	@Path("/getListFlghtbyTeamId/{teamid}")
-	public List<KeyValuePair> getListFlghtbyTeamId(@PathParam("teamid") int teamid);
 	
 	
 	@POST
