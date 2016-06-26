@@ -14,7 +14,6 @@ import javax.ws.rs.core.MediaType;
 import javax.xml.crypto.dsig.keyinfo.KeyValue;
 
 import com.mps.model.Agency;
-import com.mps.model.KeyValuePair;
 import com.mps.model.Team;
 import com.mps.model.Traveller;
 
