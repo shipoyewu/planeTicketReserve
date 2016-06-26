@@ -1,3 +1,5 @@
+
+
 /**
  * 旅客信息查询
  */
@@ -151,5 +153,12 @@ function showcontent(name){
          {
          	lc.src = "TravellerSearch.html";
          }
-         
 }
+
+
+//登陆验证
+$(function(){ 
+	if(document.cookie.split('=')[1] == undefined){
+		window.location.href="unlogin.html";
+	}
+}); 

@@ -8,5 +8,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="D:/taobao-sdk-java-auto/taobao-sdk-java-auto_1455552377940-20160626.jar"/>
+	<classpathentry kind="lib" path="D:/taobao-sdk-java-auto/taobao-sdk-java-auto_1455552377940-20160626-source.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
