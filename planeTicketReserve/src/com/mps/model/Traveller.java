@@ -105,4 +105,76 @@ public class Traveller implements java.io.Serializable {
 		this.phone = phone;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((agency == null) ? 0 : agency.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idcard == null) ? 0 : idcard.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Traveller other = (Traveller) obj;
+		if (agency == null) {
+			if (other.agency != null) {
+				return false;
+			}
+		} else if (!agency.equals(other.agency)) {
+			return false;
+		}
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		if (idcard == null) {
+			if (other.idcard != null) {
+				return false;
+			}
+		} else if (!idcard.equals(other.idcard)) {
+			return false;
+		}
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
+		if (phone == null) {
+			if (other.phone != null) {
+				return false;
+			}
+		} else if (!phone.equals(other.phone)) {
+			return false;
+		}
+		if (sex == null) {
+			if (other.sex != null) {
+				return false;
+			}
+		} else if (!sex.equals(other.sex)) {
+			return false;
+		}
+		return true;
+	}
+
+
+
 }

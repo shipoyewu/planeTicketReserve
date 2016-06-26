@@ -46,6 +46,12 @@ public interface Service {
 	public List<Traveller> getAllTraveller(@PathParam("agencyid") int agencyid);
 	
 	@GET
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_XML})
+	@Path("getUnpartTraveller/{agencyid}/{teamid}")
+	public List<Traveller> getUnpartTraveller(@PathParam("agencyid") String agencyid, @PathParam("teamid") String teamid);
+	
+	@GET
 	@Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("getTraverllerByTeam/{teamid}")
@@ -94,6 +100,7 @@ public interface Service {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/orderAirline")
 	public String orderAirline(String jsons);
+	
 	
 }
  

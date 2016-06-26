@@ -322,4 +322,15 @@ public class ServiceImp implements Service {
 		return "succ";
 	}
 
+	@Override
+	public List<Traveller> getUnpartTraveller(String agencyid, String teamid) {
+		// TODO Auto-generated method stub
+		int aid = Integer.parseInt(agencyid);
+		int tid = Integer.parseInt(teamid);
+		List<Traveller> tras = travellerDaoImp.getAllTraveller(aid);
+		List<Traveller> res = participateDaoImp.getUnpartTraveller(tid, tras);
+		
+		return res;
+	}
+
 }
