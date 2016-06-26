@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import javax.persistence.criteria.Order;
+import javax.ws.rs.POST;
+import javax.ws.rs.PathParam;
+
 
 import com.mps.daoImp.AgencyDaoImp;
 import com.mps.daoImp.OrdersDaoImp;
@@ -16,11 +17,11 @@ import com.mps.daoImp.RouteDaoImp;
 import com.mps.daoImp.TeamDaoImp;
 import com.mps.daoImp.TravellerDaoImp;
 import com.mps.iservice.Service;
-import com.mps.model.Agency;
-import com.mps.model.Traveller;
+import com.mps.util.JSONObjectUtils;
 import com.mps.util.PostSplite;
 
 import cn.com.WebXml.ServiceFacade;
+import net.sf.json.JSONArray;
 
 import com.google.gson.JsonObject;
 import com.mps.daoImp.*;
@@ -31,15 +32,14 @@ import java.util.List;
 
 
 public class ServiceImp implements Service {
-	public ServiceFacade webService;
+
+	public TravellerDaoImp travellerDaoImp;
 	public AgencyDaoImp agencyDaoImp;
+	public ServiceFacade webService;
 	public OrdersDaoImp ordersDaoImp;
 	public ParticipateDaoImp participateDaoImp;
-	public RouteDaoImp routeDaoImp;
 	public TeamDaoImp teamDaoImp;
-	public TravellerDaoImp travellerDaoImp;
-
-
+	public RouteDaoImp routeDaoImp;
 	
 	public RouteDaoImp getRouteDaoImp() {
 		return routeDaoImp;
@@ -126,6 +126,7 @@ public class ServiceImp implements Service {
 	@Override
 	public List<Team> getListTeam(int agencyid){
 		List<Team> allteam = teamDaoImp.getListTeam(agencyid);
+		System.out.println(allteam.size());
 		return allteam;
 	}
 	
@@ -139,13 +140,15 @@ public class ServiceImp implements Service {
 	}
 	
 	@Override
-	public void updateAgencyInfo(String pwd,String agencyname,String address,String contacts,String phonenumber){
-		Agency agency = new Agency();
-		agency.setPwd(pwd);
-		agency.setPhone(phonenumber);
-		agency.setName(agencyname);
-		agency.setAddress(address);
-		agency.setContacts(contacts);
+	public void updateAgencyInfo(String json){
+		Map<String,String> ma = PostSplite.postchange(json);
+		
+		Agency agency = agencyDaoImp.get(Integer.parseInt(ma.get("id")));
+		agency.setPwd(ma.get("pwd"));
+		agency.setPhone(ma.get("phonenumber"));
+		agency.setName(ma.get("agencyname"));
+		agency.setAddress(ma.get("address"));
+		agency.setContacts(ma.get("contacts"));
 		try {
 			agencyDaoImp.save(agency);
 		} catch (Exception e) {
@@ -172,18 +175,17 @@ public class ServiceImp implements Service {
 	}
 
 	@Override
-	public String saveOrUpdatesTraveller(String name, String sex, String idcard, String tel) {
+	public String saveOrUpdatesTraveller(String name, String sex, String idcard, String tel, int agencyid) {
 		// TODO Auto-generated method stub
 		Traveller t = new Traveller();
-		t.setAgency(agencyDaoImp.get(2));///---------------------------test
-		t.setIdcard(idcard);
+		t.setAgency(agencyDaoImp.get(agencyid));
+		t.setIdcard(idcard+"F");
 		t.setName(name);
 		t.setSex(sex);
 		t.setPhone(tel);
 		try {
 			travellerDaoImp.save(t);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "unsucc";
 		}
@@ -201,9 +203,8 @@ public class ServiceImp implements Service {
 	@Override
 	public List<Traveller> getTravellerByIdCard(String idcard, int agencyid) {
 		// TODO Auto-generated method stub
-		agencyid = 2;
 		List<Traveller> items = new ArrayList<Traveller>();
-		items.add(travellerDaoImp.getTraveller(idcard, agencyid));
+		items.add(travellerDaoImp.getTraveller(idcard+"F", agencyid));
 		return items;
 	}
 
@@ -231,33 +232,44 @@ public class ServiceImp implements Service {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "unSuccess";
+			return "unsucc";
 		}
-		return "Success";
+		return "succ";
 	}
 
-	@Override
 	public String orderAirline(String json) {
 		// TODO Auto-generated method stub
+		
 		Map<String, String> ma = PostSplite.postchange(json);
-		JSONArray tre = (JSONArray)JSONObject.stringToValue(ma.get("listTre"));
+		JSONArray tre = null;
+		try{
+			String ww = ma.get("listtre");
+			if(ww.charAt(ww.length()-1) == '\"'){
+				ww = ww.substring(0,ww.length()-1);
+			}
+			tre =JSONArray.fromObject(ww);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		Orders a = new Orders();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		System.out.println(1232);
 		a.setFlight(ma.get("airlinecode"));
 		try{
-			
 			a.setStarttime(sdf.parse(ma.get("starttime")));
-			a.setEndtime(sdf.parse(ma.get("endtime")));
+			a.setEndtime(sdf.parse(ma.get("arrivetime")));
 			a.setStartpoint(ma.get("startdrome"));
 			a.setEndpoint(ma.get("arrivedrome"));
 			a.setPrice(50.0);
-		}catch(Exception e){
+		}catch(Throwable e){
 			e.printStackTrace();
 		}
 			
 		synchronized (ordersDaoImp) {
 			int count =ordersDaoImp.getCountOfAirline(a.getFlight(), a.getStarttime());
-			int cc = tre.length();
+			System.out.println("111");
+			int cc = tre.size();
+
 			if(cc <= 60-count){
 				for(int i = 0;i < cc;i++){
 					Orders o = new Orders();
@@ -269,11 +281,13 @@ public class ServiceImp implements Service {
 					o.setSpace(0);
 					o.setSeat(cc+i);
 					o.setPrice(50.0);
+					o.setAdvancestatus(1);
+					o.setTicketstatus(0);
 					Traveller t = null;
 					try {
 						o.setTeam(teamDaoImp.get(tre.getJSONObject(i).getInt("teamid")));
 						t= travellerDaoImp.get(tre.getJSONObject(i).getInt("id"));
-					} catch (JSONException e) {
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 						return "unsucc:ÄÚ²¿´íÎó!";
@@ -287,5 +301,151 @@ public class ServiceImp implements Service {
 		}
 		return "succ";
 	}
+	
+	@Override
+	public List<Traveller> getTraverllerByTeam(int teamid) {
+		// TODO Auto-generated method stub
+		List<Traveller> items = new ArrayList<Traveller>();
+		List<Participate> ps = participateDaoImp.getParticipByTeamId(teamid);
+		System.out.println(ps.size());
+		try {
+			for(Participate p : ps){
+				items
+				.add(travellerDaoImp
+				.get(p
+				.getId()));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return items;
+		}
 
+	@Override
+	public String joinToTeam(String uri) {
+		// TODO Auto-generated method stub
+		
+		Map<String,String> ma = PostSplite.postchange(uri);
+		String teamid = ma.get("teamid");
+		JSONArray array = null;
+		
+		try{
+			array = JSONArray.fromObject(ma.get("listtre"));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		int size = array.size();
+		Team team = teamDaoImp.get(Integer.parseInt(teamid));
+		int max = 0;
+		switch (team.getType()) {
+		case 0:
+			max = 10;
+			break;
+
+		case 1:
+			max = 30;
+			break;
+		case 2:
+			max = 100;
+			break;
+		}
+		
+		int now = participateDaoImp.getCountPeople(Integer.parseInt(teamid));
+		if(size > max - now){
+			return "unsucc";
+		}
+		for(int i = 0;i < array.size();i++){
+			Participate pa = new Participate();
+			pa.setJointime(new Date());
+			pa.setTeam(team);
+			pa.setTraveller(travellerDaoImp.get(array.getJSONObject(i).getInt("id")));
+			participateDaoImp.save(pa);
+		}
+		return "success";
+	}
+
+
+	@Override
+	public String updatesTraveller(int id, String name, String tel) {
+		// TODO Auto-generated method stub
+		Traveller t = travellerDaoImp.get(id);
+		t.setPhone(tel);
+		t.setName(name);
+		try {
+			travellerDaoImp.save(t);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "unsucc";
+		}
+		return "succ";
+	}
+	@Override
+	public String advance(String json){
+		try{
+			Map<String,String> ma = PostSplite.postchange(json);
+			JSONArray array = JSONArray.fromObject(ma.get("listtre"));
+			String starttime = ma.get("starttime");
+			String flght = ma.get("flght");
+			for(int i = 0;i < array.size();i++){
+				Orders a = ordersDaoImp.getOrderByTeamTravalFlight(
+						flght, 
+						starttime, 
+						array.getJSONObject(i).getString("id"));
+				a.setAdvancestatus(1);
+				ordersDaoImp.save(a);
+			}
+			return "succ";
+		}catch(Exception e){
+			e.printStackTrace();
+			return "unsucc";
+		}
+	}
+
+	@Override
+	public List<KeyValuePair> getListFlghtbyTeamId(int teamid) {
+		List<Orders> orders = ordersDaoImp.getOrderByteam(""+teamid);
+		List<KeyValuePair> keys = new ArrayList<>();
+		
+		for(Orders o: orders){
+			KeyValuePair tem = new KeyValuePair();
+			String kk = o.getFlight() + "("+o.getStarttime()+")";
+			tem.setKey(kk);
+			tem.setValue(kk);
+			keys.add(tem);
+		}
+		return keys;
+	}
+
+	@Override
+	public String addTeam(String json) {
+		Map<String,String> ma = PostSplite.postchange(json);
+		Team team = new Team();
+		team.setAgency(agencyDaoImp.get(Integer.parseInt(ma.get("agencyid"))));
+		team.setName(ma.get("name"));
+		team.setStarttime(new Date());
+		team.setType(Integer.parseInt(ma.getOrDefault("type","0")));	
+		team.setStatus(0);
+		try{
+			teamDaoImp.save(team);
+		}catch(Exception e){
+			e.printStackTrace();
+			return "unsucc";
+		}
+		
+		return "succ";
+	}
+	public void updateTeam(String json){
+		Map<String,String> ma = PostSplite.postchange(json);
+		Team team = teamDaoImp.get(Integer.parseInt(ma.get("id")));
+		team.setName(ma.get("name"));
+		team.setType(Integer.parseInt(ma.getOrDefault("type","0")));	
+		team.setStatus(0);
+		try{
+			teamDaoImp.update(team);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }

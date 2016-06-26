@@ -35,6 +35,7 @@ function check() {
                            document.cookie="userid="+msg;
                      	 //  var uid=document.cookie;
                            window.location.href="index.html"
+
                        }
                 }
             });
@@ -87,6 +88,7 @@ function check() {
             		alert("注册成功！");
             	else
             		alert("注册失败！");
+
             }
   		});
   	}	
