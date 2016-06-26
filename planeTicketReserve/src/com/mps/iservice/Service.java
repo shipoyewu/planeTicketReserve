@@ -114,6 +114,10 @@ public interface Service {
 	@Path("/addTeam")
 	public String addTeam(String json);
 	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/updateTeam")
+	public void updateTeam(String json);
 	
 	
 }
