@@ -65,6 +65,7 @@
 		<jaxrs:serviceBeans>
 			<bean class="com.mps.service.ServiceImp">
 			    <property name="webService" ref="webService"></property>
+			    <property name="ordersDaoImp" ref="ordersDaoImp"></property> 
 			</bean>
 		</jaxrs:serviceBeans>
 

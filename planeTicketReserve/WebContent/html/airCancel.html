@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<meta charset="UTF-8">
+		<title>航班取消</title>
+		<link rel="stylesheet">
+		
+		<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/icon.css">
+		<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/demo/demo.css">
+		<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.min.js"></script>
+		<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="../js/airCancel.js"></script>
+		
+	</head>
+	<body>
+	 	<div id="main">
+	 		<div id="top" align="center">
+	 		  <form action="GET" id="search">
+	 			<label>航班编号</label>
+	 			<input class="easyui-textbox" id="flight" name="flight" data-options="required:true"></input>
+	 			<label>出发时间</label>
+	 			<input class="easyui-datebox" id="starttime" name="starttime" data-options="required:true"></input>
+	 			<a href="#" class="easyui-linkbutton" 
+	    	                       iconCls="icon-search" plain="true" 
+	    	                       onclick="doSearch()">查找航班</a>
+	    	    <a href="#" class="easyui-linkbutton" 
+	    	                       iconCls="icon-cancel" plain="true" 
+	    	                       onclick="doCancel()">取消航班</a> 
+	    	  </form>
+	    	 
+	 		</div>
+	 		<div id="bottom">
+	 			<table id="flight" align="center">
+	 			    <!--  <tr>
+	 			     	<td>
+	 			     		<input class="easyui-textbox" id="flightid" name="flightid"></input>
+	 			     	</td>
+	 			     	<td>
+	 			     	    <input class="easyui-textbox" id="start" name="start"></input>
+	 			     	</td>
+	 			     	<td>
+	 			     		<a href="#" class="easyui-linkbutton" 
+	    	                       iconCls="icon-cancel" plain="true" 
+	    	                       onclick="doCancel()">取消航班</a>
+	 			     	</td>
+	 			     </tr>  -->
+	 			</table>
+	 		</div>
+	 	</div>
+	</body>
+</html>

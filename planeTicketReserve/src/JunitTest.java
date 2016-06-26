@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mps.daoImp.AgencyDaoImp;
+import com.mps.daoImp.OrdersDaoImp;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -15,11 +16,15 @@ import com.mps.daoImp.AgencyDaoImp;
 public class JunitTest {
 	@Resource
 	AgencyDaoImp agencyDaoImp;
-
+	@Resource
+	OrdersDaoImp ordersDaoimp;
 	@Test
 	public void test(){
 		
 		try{
+			System.out.println(ordersDaoimp.getFlightList());
+			System.out.println(ordersDaoimp.getFlightList().toString()+"liushuo");
+			/*System.out.println(ordersDaoimp.getFlighttest());*/
 			
 		}catch(Exception e){
 			e.printStackTrace();
