@@ -53,7 +53,7 @@ public interface Service {
 	public List<Team> getListTeam(@PathParam("agencyid")int agencyid);
 	
 	@GET
-	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/getAgencyInfoByAgencyid/{agencyid}")
 	public Agency getAgencyInfoByAgencyid(@PathParam("agencyid")int agencyid);
 	

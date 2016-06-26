@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>客户管理</title>
+	<meta charset="UTF-8">
+	<title>旅行社管理</title>
 	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/metro/easyui.css">
@@ -11,22 +11,36 @@
 	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
 	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.mobile.js"></script>
-	<script type="text/javascript" src="../js/TravellerManage.js"></script>
+	<script type="text/javascript" src="../js/agency.js"></script>
+
+<style type="text/css">
+	html,body{
+		width: 100%;
+    	height:100%;
+    	margin: 0 auto;
+	}
+
+</style>
+
 </head>
-<body>
-	<body >
+<body >
 	<div id="agency" class="easyui-layout" fit="true" style="width:100%;height:100%;">
 		 <div class="easyui-layout" fit="true" style="margin:2px auto;width:99%;height:99%;">
 	        <div region="west" split="true" title="选择操作" style="width:10%;height:100%;">
-                <a href="javascript:void(0)" class="easyui-linkbutton" style="width:100%" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'" onclick="showcontent('add')">增加旅客</a></li>
-			    <a href="javascript:void(0)" class="easyui-linkbutton" style="width:100%" data-options="iconCls:'icon-large-shapes',size:'large',iconAlign:'top'" onclick="showcontent('edit')">旅客信息更改</a></li>
+                <a href="javascript:void(0)" class="easyui-linkbutton" style="width:100%" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'" onclick="showcontent('agencyinfo')">旅行社信息</a>
+			    <a href="javascript:void(0)" class="easyui-linkbutton" style="width:100%" data-options="iconCls:'icon-large-shapes',size:'large',iconAlign:'top'" onclick="showcontent('team')">旅行团管理</a>
+			    <a href="javascript:void(0)" class="easyui-linkbutton" style="width:100%" data-options="iconCls:'icon-large-smartart',size:'large',iconAlign:'top'" onclick="showcontent('gettraveller')">查询旅客</a>
+			    <a href="javascript:void(0)" class="easyui-linkbutton" style="width:100%" data-options="iconCls:'icon-large-clipart',size:'large',iconAlign:'top'" onclick="showcontent('adtraveller')">添加旅客</a> 	
+			   
 			</div>
 			<div id="content" region="center" style="width:90%;height:99%;overflow:hidden;" >
-			    <iframe id="agc" src="TravellerSearch.html" style="width:100%;height:100%;" scroll="auto">
+			    <iframe id="agc" src="agencyinfo.html" style="width:100%;height:100%;" scroll="auto">
+			    
 			    </iframe>
 			</div>
+					   
 		</div>
+	
 	</div>
-</body>
 </body>
 </html>

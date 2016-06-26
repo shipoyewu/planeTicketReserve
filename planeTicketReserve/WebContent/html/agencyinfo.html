@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>agencyinfo</title>
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/icon.css">
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.mobile.js"></script>
+	<script type="text/javascript" src="../js/agencyinfo.js"></script>
+
+</head>
+<body>
+	<div class="easyui-panel"   fit="true">
+		<div style="padding:10px 60px 20px 60px">
+		    <form id="fagency" method="post">
+		    	<table cellpadding="6" align="center">
+		    		<tr>
+		    			<td>旅行社ID:</td>
+		    			<td><input class="easyui-textbox" type="text" name="agencyid" 
+		    			id="agencyid" data-options="required:true,readonly:true "></input></td>
+		    		</tr>
+		    		<tr>
+		    			<td>旅行社名字：</td>
+		    			<td><input class="easyui-textbox" type="text" name="agencyname" id="agencyname" data-options="required:true"></input></td>
+		    		</tr>
+		    		<tr>
+		    			<td>密码:</td>
+		    			<td><input class="easyui-textbox" name="pwd" id="pwd" data-options="required:true"  type="password" placeholder="eg. X8df!90EO"></input></td>
+		    		</tr>
+		    		<tr>
+		    			<td>电话:</td>
+		    			<td><input class="easyui-textbox" name="tel" id="tel" data-options="required:true,validType:'telephone'" ></input></td>
+		    		</tr>
+		    		<tr>
+		    			<td>地址:</td>
+		    			<td><input class="easyui-textbox" name="address" id="address" data-options="required:true" ></input></td>
+		    		</tr>
+		    		<tr>
+		    			<td>介绍:</td>
+		    			<td><textarea name="content" id="content" cols="25" rows="5"></textarea>
+		    			</td>
+		    		</tr>
+		    	</table>
+		    </form>
+		    <div style="text-align:center;padding:5px">
+		    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submit()">修改</a>
+		    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="reset()">重置</a>
+		    </div>
+	    </div>
+	</div>
+</body>
+</html>

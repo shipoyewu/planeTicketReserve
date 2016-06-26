@@ -172,14 +172,15 @@
 					$('#StartTime').textbox('setValue',rowdata.StartTime);
 				}
 			}); 
-		   $('#cc').combobox('reload',"../REST/REST/Service/getListTeam/"+"1");
+		   var uid = document.cookie.split('=')[1];
+		   $('#cc').combobox('reload',"../REST/REST/Service/getListTeam/");
 		   $('#cc').combobox({
 			   onSelect: function(record){
 				   $.ajax({
 					   url:"../REST/REST/Service/getTraverllerByTeam/"+record.id,
-					   method:'GET',
+					   method:'POST',
 					   success: function(data){
-							$('#houxuan').datagird("load",data);
+							$('#houxuan').datagrid("loadData",data);
 					   }
 				   });
 				}
@@ -231,7 +232,7 @@
 			$('#order').form('submit', {    
 			    url:'../REST/REST/Service/orderAirline',    
 			    onSubmit: function(param){    
-			    	param.listTre =JSON.stringify( $('#yixuan').datagrid('getData'));
+			    	param.listTre =JSON.stringify( $('#yixuan').datagrid('getRows'));
 			    },    
 			    success:function(data){    
 			        if(data == "succ"){
@@ -253,19 +254,30 @@
 				for(var i = 0;i < houxuan.length;i++){
 					houxuan[i].teamid=teamid;
 				}
-				if(houxuan.length > 0){
-					$('#yixuan').datagrid('appendRow',houxuan);
+				var yixuan=$('#yixuan').datagrid("getRows");
+				
+				for(var i = 0;i < houxuan.length;i++){
+					var flag= true;
+					for(var j = 0;j < yixuan.length;j++){
+						if(yixuan[j].id==houxuan[i].id){
+							flag=false;
+							break;
+						}
+					}
+					if(flag){
+						$('#yixuan').datagrid('appendRow',houxuan[i]);
+					}
 				}
 					
 			}
 		}
-		function remove(){
-			var yixuan = $('#houxuan').datagrid('getSelections');
-			for(var i = 0;i < yixuan.length;i++){
-				 $('#houxuan').datagrid('deleteRow',yixuan.index);
-			}
+		function remov(){
+			var rows = $('#yixuan').datagrid("getChecked");
+			 for(var i =0;i<rows.length;i++){
+			  var index = $('#yixuan').datagrid('getRowIndex',rows[i]);
+			  $('#yixuan').datagrid('deleteRow',index); 
+			 }
 		}
-		
 	</script>
 
 </head>
@@ -338,11 +350,12 @@
 						data-options="
 							rownumbers:true,
 							toolbar:'#aa',
-							checkbox:'true',
-							checkOnSelect:'true'
+							checkbox:true,
+							checkOnSelect:true
 						">
 						<thead>
 							<tr>
+								<th data-options="field:'ck',checkbox:true">全选</th>
 								<th data-options="field:'name',width:80,align:'center'">姓名</th>
 								<th data-options="field:'sex',width:80,align:'center'">性别</th>
 								<th data-options="field:'idcard',width:80,align:'center'">身份证号</th>
@@ -360,7 +373,7 @@
 						<div class="easyui-panel" style="height:350px;width:auto">
 						<div style="float:left;position: absolute;top:55%;left: 49%">
 							<li style="list-style:none;"><a href="#" id="add" class="easyui-linkbutton" style="display: inline-block;" iconCls="icon-add" onclick="add()" ></a></li>
-							<li style="list-style:none;"><a href="#" id="remove" class="easyui-linkbutton" iconCls="icon-remove" onclick="" ></a></li>
+							<li style="list-style:none;"><a href="#" id="remove" class="easyui-linkbutton" iconCls="icon-remove" onclick="remov()" ></a></li>
 						</div>
 						</div>
 					</div>
@@ -372,6 +385,7 @@
 							checkOnSelect:'true'">
 						<thead>
 							<tr>
+								<th data-options="field:'ck',checkbox:true"></th>
 								<th data-options="field:'name',width:80,align:'center'">姓名</th>
 								<th data-options="field:'sex',width:80,align:'center'">性别</th>
 								<th data-options="field:'idcard',width:80,align:'center'">身份证号</th>

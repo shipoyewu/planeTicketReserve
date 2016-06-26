@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>旅客管理</title>
+<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/demo/demo.css">
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../js/TravellerManage.js"></script>
+</head>
+<body>
+		<div align="center">
+			<input id="ss" class="easyui-searchbox" style="width:300px"
+				    data-options="searcher:qq,prompt:'请输入',menu:'#mm'"></input>
+					<div id="mm" style="width:120px">
+				    <div data-options="name:'all',iconCls:'icon-ok'">全部</div>
+				    <div data-options="name:'idcard'">身份证号</div>
+				</div>
+				<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit'"   
+       				onclick="edit()">修改</a>  
+				<table id="dg" class="easyui-datagrid" title="旅客信息" style="width:700px;height:250px"
+					data-options="singleSelect:true,method:'get'">
+				</table>
+				<div id="editdialog">
+				</div>
+			</div>
+</body>
+</html>
