@@ -321,4 +321,27 @@ public class ServiceImp implements Service {
 		 return items;
 		}
 
+	@Override
+	public String joinToTeam(String uri) {
+		// TODO Auto-generated method stub
+		
+		Map<String,String> ma = PostSplite.postchange(uri);
+		String teamid = ma.get("teamid");
+		JSONArray array = null;
+		
+		try{
+			array = JSONArray.fromObject(ma.get("listtre"));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		for(int i = 0;i < array.size();i++){
+			Participate pa = new Participate();
+			pa.setJointime(new Date());
+			pa.setTeam(teamDaoImp.get(Integer.parseInt(teamid)));
+			pa.setTraveller(travellerDaoImp.get(array.getJSONObject(i).getInt("id")));
+			participateDaoImp.save(pa);
+		}
+		return "success";
+	}
+
 }

@@ -91,5 +91,11 @@ public interface Service {
 	@Path("getTraverllerByTeam/{teamid}")
 	public List<Traveller> getTraverllerByTeam(@PathParam("teamid") int teamid);
 
+	@POST
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("joinToTeam")
+	public String joinToTeam(String uri);
+	
 }
  
