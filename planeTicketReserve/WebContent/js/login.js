@@ -52,7 +52,15 @@ function check() {
   		var psw2 = document.getElementById("passwordsignup").value;
   		var psw1 = document.getElementById("passwordsignup_confirm").value;
   		//alert(name+phone+psw1+psw2+agencyname+address);
-  	
+  		if(contacts == ''||
+  			phone == '' ||
+  			agencyname == ''||
+  			address == ''||
+  			psw2 == '' ||
+  			psw1 == ''){
+  			alert("请将信息填写完整");
+  			return 0;
+  		}
   		if(phone.length != 11){
   			alert("请正确输入11位手机号");
   			return 0;
