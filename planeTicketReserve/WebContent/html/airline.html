@@ -170,11 +170,22 @@
 					$('#ArriveDrome').textbox('setValue',rowdata.ArriveDrome);
 					$('#StartDrome').textbox('setValue',rowdata.StartDrome);
 					$('#StartTime').textbox('setValue',rowdata.StartTime);
-					
 				}
 			}); 
-			
-			
+		   $('#cc').combobox('reload',"../REST/REST/Service/getListTeam/"+"1");
+		   $('#cc').combobox({
+			   onSelect: function(record){
+				   $.ajax({
+					   url:"../REST/REST/Service/getTraverllerByTeam/"+record.id,
+					   method:'POST',
+					   success: function(data){
+							$('#houxuan').datagrid("loadData",data);
+					   }
+				   });
+				}
+			});
+
+		   
 		});
 		function find(){
 			var s = $('#start').textbox('getValue');
@@ -200,6 +211,10 @@
 						},
 						success:function(data){
 							var cc = eval(data);
+							for(var i = 0;i < cc.length;i++){
+								cc[i].StartTime= findDate + " " + cc[i].StartTime;
+								cc[i].ArriveTime= findDate + " " + cc[i].ArriveTime;
+							}
 							$.messager.progress('close');	
 							$('#dd').datagrid('loadData',cc);
 							$('#dd').datagrid('reloadFooter');
@@ -213,85 +228,177 @@
 			}
 		}
 		function comfirm(){
-			$('#dlg').dialog('close');
+			$('#order').form('submit', {    
+			    url:'../REST/REST/Service/orderAirline',    
+			    onSubmit: function(param){    
+			    	param.listTre =JSON.stringify( $('#yixuan').datagrid('getRows'));
+			    },    
+			    success:function(data){    
+			        if(data == "succ"){
+						alert("预订成功！");
+						$('#dlg').dialog('close');
+					}else{
+						var now = data.split(":");
+						$('#dlg').dialog('close');
+						alert(now[1]);
+					}
+			    }    
+			});
 		}
 		
+		function add(){
+			var teamid= $('#cc').combobox('getValue');
+			if(teamid){
+				var houxuan=$('#houxuan').datagrid('getSelections');
+				for(var i = 0;i < houxuan.length;i++){
+					houxuan[i].teamid=teamid;
+				}
+				var yixuan=$('#yixuan').datagrid("getRows");
+				
+				for(var i = 0;i < houxuan.length;i++){
+					var flag= true;
+					for(var j = 0;j < yixuan.length;j++){
+						if(yixuan[j].id==houxuan[i].id){
+							flag=false;
+							break;
+						}
+					}
+					if(flag){
+						$('#yixuan').datagrid('appendRow',houxuan[i]);
+					}
+				}
+					
+			}
+		}
+		function remov(){
+			var rows = $('#yixuan').datagrid("getChecked");
+			 for(var i =0;i<rows.length;i++){
+			  var index = $('#yixuan').datagrid('getRowIndex',rows[i]);
+			  $('#yixuan').datagrid('deleteRow',index); 
+			 }
+		}
 	</script>
 
 </head>
 <body>
 	<div class="easyui-panel" title="机票预订"> 
 		
-	<form id="ff" method="post" style="width:100%">
-		<table cellpadding="3">
-		<tr>
-			<td><td>出发城市: </td><td><select id="start" name="start" class="easyui-combobox" style="width:100px"
-				data-options="valueField:'cnCityName',textField:'cnCityName',required:true"/></td></td>
-			<td><td>到达城市：</td><td><select id="end" name="end" class="easyui-combobox"  style="width:100px"
-				data-options="valueField:'cnCityName',textField:'cnCityName',required:true"/></td></td>
-			<td>
-				<td>出发时间：</td>
-				<td><input id="date" name="date" class="easyui-datebox"/></td>
-			</td>
-			<td>
-				<a href="#" id="search" name="search" class="easyui-linkbutton" data-options="required:true" iconCls="icon-search" onclick="javascript:find()">查询航班</a>
-			</td>
-		</tr>
-		</table>
-	</form>
-	<table id="dd" class="easyui-datagrid" title="航班信息" style="width:100%"
-			data-options="rownumbers:true,singleSelect:true,pagination:true">
-		<thead>
+		<form id="ff" method="post" style="width:100%">
+			<table cellpadding="3">
 			<tr>
-				<th data-options="field:'AirlineCode',width:80,align:'center'">航班号</th>
-				<th data-options="field:'Company',width:100,align:'center'">航空公司</th>
-				<th data-options="field:'StartDrome',width:250,align:'center'">出发城市</th>
-				<th data-options="field:'ArriveDrome',width:250,align:'center'">降落城市</th>
-				<th data-options="field:'StartTime',width:100,align:'center',sortable:true">出发时间</th>
-				<th data-options="field:'ArriveTime',width:60,align:'center',sortable:true">到达时间</th>
+				<td><td>出发城市: </td><td><select id="start" name="start" class="easyui-combobox" style="width:100px"
+					data-options="valueField:'cnCityName',textField:'cnCityName',required:true"/></td></td>
+				<td><td>到达城市：</td><td><select id="end" name="end" class="easyui-combobox"  style="width:100px"
+					data-options="valueField:'cnCityName',textField:'cnCityName',required:true"/></td></td>
+				<td>
+					<td>出发时间：</td>
+					<td><input id="date" name="date" class="easyui-datebox"/></td>
+				</td>
+				<td>
+					<a href="#" id="search" name="search" class="easyui-linkbutton" data-options="required:true" iconCls="icon-search" onclick="javascript:find()">查询航班</a>
+				</td>
 			</tr>
-		</thead>
-	</table>
-	<div id="dlg" class="easyui-dialog" title="飞机票预订" style="width:1000px;height:400px;padding:10px"
-			data-options="closed:true">
-			<form> 
-				<div class="easyui-panel" title="航班信息"> 
+			</table>
+		</form>
+		<table id="dd" class="easyui-datagrid" title="航班信息" style="width:100%"
+				data-options="rownumbers:true,singleSelect:true,pagination:true">
+			<thead>
+				<tr>
+					<th data-options="field:'AirlineCode',width:80,align:'center'">航班号</th>
+					<th data-options="field:'Company',width:100,align:'center'">航空公司</th>
+					<th data-options="field:'StartDrome',width:250,align:'center'">出发城市</th>
+					<th data-options="field:'ArriveDrome',width:250,align:'center'">降落城市</th>
+					<th data-options="field:'StartTime',width:150,align:'center',sortable:true">出发时间</th>
+					<th data-options="field:'ArriveTime',width:150,align:'center',sortable:true">到达时间</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<div id="dlg" class="easyui-dialog" title="飞机票预订" style="width:1000px;height:600px;padding:10px"
+				data-options="closed:true,modal:true">
+		<form id="order" method="post"> 
+			<div class="easyui-panel" title="航班信息"> 
 				<table>
-					
 					<tr>
 						<td>
-						<p>航 班 号:</p></td><td><input name="AirlineCode" class="easyui-textbox" id="AirlineCode" 
-							disabled="disabled" style="width:100px">
+						<p>航 班 号:</p></td><td><input name="AirlineCode" class="easyui-textbox" id="AirlineCode"  style="width:100px">
 						</td>
-						<td><p>航空公司:</p></td><td><input name="Company" class="easyui-textbox" id="Company" disabled="disabled" style="width:100px"></td>
+						<td><p>航空公司:</p></td><td><input  name="Company" class="easyui-textbox" id="Company" readonly= "true" style="width:100px"></td>
 					</tr>
 					
 					<tr>
 						<td>
-						 	<p>出发城市:</p></td><td><input name="StartDrome" class="easyui-textbox" id="StartDrome" disabled="disabled" style="width:150px">
+						 	<p>出发城市:</p></td><td><input name="StartDrome" class="easyui-textbox" readonly= "true" id="StartDrome" style="width:150px">
 						</td>
 						<td> 	
-							<p>降落城市:</p></td><td><input name="ArriveDrome" class="easyui-textbox" id="ArriveDrome" disabled="disabled" style="width:150px">
+							<p>降落城市:</p></td><td><input name="ArriveDrome" class="easyui-textbox" id="ArriveDrome" readonly= "true"  style="width:150px">
 						</td>
 						<td>	
-						 	<p>出发时间:</p></td><td><input name="StartTime" class="easyui-textbox" id="StartTime" disabled="disabled" style="width:80px">
+						 	<p>出发时间:</p></td><td><input name="StartTime" readonly= "true" class="easyui-textbox" id="StartTime" style="width:150px">
 						</td>
 						<td>
-						 	<p>到达时间:</p></td><td><input name="ArriveTime" class="easyui-textbox" id="ArriveTime" disabled="disabled" style="width:80px">
+						 	<p>到达时间:</p></td><td><input name="ArriveTime" readonly= "true" class="easyui-textbox" id="ArriveTime" style="width:150px">
 						</td>
 					</tr>
 				</table>
-				</div>
-				<div class="easyui-panel" title="人员信息">
-				</div>
-				<div align="right">
-				<a href="#" id="search" name="search" class="easyui-linkbutton" iconCls="icon-ok" onclick="comfirm()" >确认</a>
-				<a href="#" id="search" name="search" class="easyui-linkbutton" iconCls="icon-ok" onclick="$('#dlg').dialog('close')" >取消</a>
-				</div> 
-			</form>
+			</div>
 			
+			<div class="easyui-panel" title="添加人员"  style="height:400px">
+					<div  style="width:45%;float:left">
+					<table id="houxuan" class="easyui-datagrid" title="人员选择" style="height:350px"
+						data-options="
+							rownumbers:true,
+							toolbar:'#aa',
+							checkbox:true,
+							checkOnSelect:true
+						">
+						<thead>
+							<tr>
+								<th data-options="field:'ck',checkbox:true">全选</th>
+								<th data-options="field:'name',width:80,align:'center'">姓名</th>
+								<th data-options="field:'sex',width:80,align:'center'">性别</th>
+								<th data-options="field:'idcard',width:80,align:'center'">身份证号</th>
+								<th data-options="field:'phone',width:80,align:'center'">电话</th>
+							</tr>
+						</thead>
+					</table>
+					<div id="aa">
+						旅游团
+						<input id="cc" class="easyui-combobox" 
+    						data-options="valueField:'id',textField:'name',editable:false" /> 
+					</div>
+					</div>
+					<div style="width:10%;float:left" >
+						<div class="easyui-panel" style="height:350px;width:auto">
+						<div style="float:left;position: absolute;top:55%;left: 49%">
+							<li style="list-style:none;"><a href="#" id="add" class="easyui-linkbutton" style="display: inline-block;" iconCls="icon-add" onclick="add()" ></a></li>
+							<li style="list-style:none;"><a href="#" id="remove" class="easyui-linkbutton" iconCls="icon-remove" onclick="remov()" ></a></li>
+						</div>
+						</div>
+					</div>
+					<div style="width:45%;float:left" >
+					<table id="yixuan" class="easyui-datagrid" title="预订人员" style="height:350px"
+						data-options="
+							rownumbers:true,
+							checkbox:'true',
+							checkOnSelect:'true'">
+						<thead>
+							<tr>
+								<th data-options="field:'ck',checkbox:true"></th>
+								<th data-options="field:'name',width:80,align:'center'">姓名</th>
+								<th data-options="field:'sex',width:80,align:'center'">性别</th>
+								<th data-options="field:'idcard',width:80,align:'center'">身份证号</th>
+								<th data-options="field:'phone',width:80,align:'center'">电话</th>
+							</tr>
+						</thead>
+					</table>
+					</div>
+			</div>
+			<div align="right">
+				<a href="#" id="comfir" name="search" class="easyui-linkbutton" iconCls="icon-ok" onclick="comfirm()" >确认</a>
+				<a href="#" id="cancel" name="search" class="easyui-linkbutton" iconCls="icon-ok" onclick="$('#dlg').dialog('close')" >取消</a>
+			</div> 
+		</form>
 	</div>
-	</div>
-	
 </body>
 </html>

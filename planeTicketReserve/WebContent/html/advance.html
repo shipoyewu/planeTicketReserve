@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>预订金交付</title>
+
+<link rel="stylesheet" type="text/css"
+	href="../jquery-easyui-1.4.5/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../jquery-easyui-1.4.5/themes/icon.css">
+<link rel="stylesheet" type="text/css"
+	href="../jquery-easyui-1.4.5/demo/demo.css">
+<script type="text/javascript"
+	src="../jquery-easyui-1.4.5/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript">
+	var uid = null;
+	
+	$(function(){  
+		　 uid = document.cookie.split('=')[1];
+		  $('#cc').combobox('reload',"../REST/REST/Service/getListTeam/"+uid);
+		  $('#cc').combobox({
+		    onSelect: function(record){
+					$("#dd").combobox("reload","../REST/REST/Service/getListFlghtbyTeamId"+record.id);
+					$("#dd").combobox({
+						onSelect:function(dd){
+							$("ee").combobox("reload","../REST/REST/Service/getTimeByTeamandFlght"
+								+"/"+record.id+"/"+dd.key);
+							$("ee").combobox({
+								onSelect:function(ee){
+									$.ajax({
+										url:"../REST/REST/Service/getTraverllerForAndvance"+record.id+dd.key+ee.key,
+										method:"PSOT",
+										success:function(data){
+											$('#houxuan').datagrid("loadData",data);
+										}
+									})	
+								}
+							});
+							
+						}
+					});
+				}
+			});
+	});
+	
+	function comfirm(){
+		$('#order').form('submit', {    
+		    url:'../REST/REST/Service/advance',    
+		    onSubmit: function(param){    
+		    	param.listTre =JSON.stringify( $('#yixuan').datagrid('getRows'));
+		    },    
+		    success:function(data){    
+		        if(data == "succ"){
+					alert("交付成功！");
+					$('#dlg').dialog('close');
+				}else{
+					var now = data.split(":");
+					$('#dlg').dialog('close');
+					alert(now[1]);
+				}
+		    }    
+		});
+	}
+	
+	function add(){
+		var teamid= $('#cc').combobox('getValue');
+		if(teamid){
+			var houxuan=$('#houxuan').datagrid('getSelections');
+			for(var i = 0;i < houxuan.length;i++){
+				houxuan[i].teamid=teamid;
+			}
+			var yixuan=$('#yixuan').datagrid("getRows");
+			
+			for(var i = 0;i < houxuan.length;i++){
+				var flag= true;
+				for(var j = 0;j < yixuan.length;j++){
+					if(yixuan[j].id==houxuan[i].id){
+						flag=false;
+						break;
+					}
+				}
+				if(flag){
+					$('#yixuan').datagrid('appendRow',houxuan[i]);
+				}
+			}
+				
+		}
+	}
+	function remov(){
+		var rows = $('#yixuan').datagrid("getChecked");
+		 for(var i =0;i<rows.length;i++){
+		  var index = $('#yixuan').datagrid('getRowIndex',rows[i]);
+		  $('#yixuan').datagrid('deleteRow',index); 
+		 }
+	}
+	</script>
+
+</head>
+
+<body>
+
+	<div class="easyui-panel" title="预订金交付">
+		<div class="easyui-panel" title="添加人员" style="height: 400px">
+			<div style="width: 45%; float: left">
+				<table id="houxuan" class="easyui-datagrid" title="人员选择"
+					style="height: 350px"
+					data-options="
+					rownumbers:true,
+					toolbar:'#aa',
+					checkbox:true,
+					checkOnSelect:true
+				">
+					<thead>
+						<tr>
+							<th data-options="field:'ck',checkbox:true">全选</th>
+							<th data-options="field:'name',width:80,align:'center'">姓名</th>
+							<th data-options="field:'sex',width:80,align:'center'">性别</th>
+							<th data-options="field:'idcard',width:80,align:'center'">身份证号</th>
+							<th data-options="field:'phone',width:80,align:'center'">电话</th>
+						</tr>
+					</thead>
+				</table>
+				<div id="aa">
+					旅游团 <input id="cc" class="easyui-combobox"
+						data-options="valueField:'id',textField:'name',editable:false,width:40px" />
+					航班<input id="dd" class="easyui-combobox"
+						data-options="valueField:'key',textField:'name',editable:false,width:40px" />
+					出发时间 <input id="ee" class="easyui-combobox"
+						data-options="valueField:'key',textField:'name',editable:false,width:40px" />
+						
+				</div>
+			</div>
+			<div style="width: 10%; float: left">
+				<div class="easyui-panel" style="height: 350px; width: auto">
+					<div style="float: left; position: absolute; top: 55%; left: 49%">
+						<li style="list-style: none;"><a href="#" id="add"
+							class="easyui-linkbutton" style="display: inline-block;"
+							iconCls="icon-add" onclick="add()"></a></li>
+						<li style="list-style: none;"><a href="#" id="remove"
+							class="easyui-linkbutton" iconCls="icon-remove" onclick="remov()"></a></li>
+					</div>
+				</div>
+			</div>
+			<div style="width: 45%; float: left">
+				<table id="yixuan" class="easyui-datagrid" title="预订人员"
+					style="height: 350px"
+					data-options="
+					rownumbers:true,
+					checkbox:'true',
+					checkOnSelect:'true'">
+					<thead>
+						<tr>
+							<th data-options="field:'ck',checkbox:true"></th>
+							<th data-options="field:'name',width:80,align:'center'">姓名</th>
+							<th data-options="field:'sex',width:80,align:'center'">性别</th>
+							<th data-options="field:'idcard',width:80,align:'center'">身份证号</th>
+							<th data-options="field:'phone',width:80,align:'center'">电话</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<div align="right">
+			<a href="#" id="comfir" name="search" class="easyui-linkbutton"
+				iconCls="icon-ok" onclick="comfirm()">确认</a> <a href="#"
+				id="cancel" name="search" class="easyui-linkbutton"
+				iconCls="icon-ok" onclick="$('#dlg').dialog('close')">取消</a>
+		</div>
+	</div>
+</body>
+</html>

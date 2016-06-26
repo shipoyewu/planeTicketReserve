@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>添加旅客</title>
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/demo/demo.css">
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../js/TravellerManage.js"></script>
+</head>
+<body>
+		<form id="traveller" method="get">
+	    	<table cellpadding="5" align="center">
+	    		<tr>
+	    			<td>姓名:</td>
+	    			<td><input class="easyui-textbox" id="rname" type="text" name="name" data-options="required:true"></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>手机号:</td>
+	    			<td><input class="easyui-textbox" id="rtel" type="text" name="tel" data-options="required:true"></input></td>
+	    		</tr>
+			</table>
+		</form>	
+		<div style="padding:10px" align="center">
+	    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="updateEdit()">提交</a>
+	    </div>
+
+	
+</body>
+</html>

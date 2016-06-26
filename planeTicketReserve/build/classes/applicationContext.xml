@@ -30,7 +30,13 @@
 				<!--prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop -->
 			</props>
 		</property>
-		
+		<property name="packagesToScan">	
+			<list>
+				<value>com.mps.model</value>
+				<value>com.mps.daoBase</value>
+				<value>com.mps.daoImp</value>
+			</list>
+		</property>
 	</bean>
 
 	<!-- 配置事务管理器 -->
@@ -46,9 +52,7 @@
 	<bean id="ordersDaoImp" class="com.mps.daoImp.OrdersDaoImp">
 	    <property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	<bean id="participateDaoImp" class="com.mps.daoImp.ParticipateDaoImp">
-	    <property name="sessionFactory" ref="sessionFactory"></property>
-	</bean>	
+		
 	<bean id="routeDaoImp" class="com.mps.daoImp.RouteDaoImp">
 	    <property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
@@ -56,6 +60,9 @@
 	    <property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="travellerDaoImp" class="com.mps.daoImp.TravellerDaoImp">
+	    <property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="participateDaoImp" class="com.mps.daoImp.ParticipateDaoImp">
 	    <property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="webService" class="cn.com.WebXml.ServiceFacade"> 
@@ -66,6 +73,12 @@
 			<bean class="com.mps.service.ServiceImp">
 			    <property name="webService" ref="webService"></property>
 			    <property name="ordersDaoImp" ref="ordersDaoImp"></property> 
+			    <property name="agencyDaoImp" ref="agencyDaoImp"></property>
+			    <property name="ordersDaoImp" ref="ordersDaoImp"></property>
+			    <property name="participateDaoImp" ref="participateDaoImp"></property>
+			    <property name="routeDaoImp" ref="routeDaoImp"></property>
+			    <property name="teamDaoImp" ref="teamDaoImp"></property>
+			    <property name="travellerDaoImp" ref="travellerDaoImp"></property>
 			</bean>
 		</jaxrs:serviceBeans>
 
