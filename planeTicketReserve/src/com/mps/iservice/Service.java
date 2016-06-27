@@ -67,7 +67,6 @@ public interface Service {
 	@Path("/getListTeam/{agencyid}")
 	public List<Team> getListTeam(@PathParam("agencyid")int agencyid);
 	
-	
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Path("/getAgencyInfoByAgencyid/{agencyid}")
@@ -79,7 +78,6 @@ public interface Service {
 	public void updateAgencyInfo(@PathParam("pwd")String pwd,@PathParam("agencyname")String agencyname,
 			@PathParam("address")String address,@PathParam("contacts")String contacts,
 			@PathParam("phonenumber")String phonenumber);
-	
 
 	@GET
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
