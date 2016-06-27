@@ -2,7 +2,6 @@ package com.mps.daoImp;
 
 
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class OrdersDaoImp extends BaseDao<Orders, Integer> {
 	}
 	@SuppressWarnings("unchecked")
 	public List<String> getFlightList(){
-		String sql="select flight from orders group by flight";
+		String sql="select DISTINCT flight from orders group by flight";
 		
 		return this.getSession().createSQLQuery(sql).list();
 		//return this.queryBySql(sql);
@@ -30,6 +29,25 @@ public class OrdersDaoImp extends BaseDao<Orders, Integer> {
 		result=this.excuteBySql(sql);
 		return result;
 	}*/
+	public List<Orders> getAllFlight(String flight){
+		return findBy("id",true,Restrictions.sqlRestriction("flight= '"+flight+"'"));
+	}
+	
+	public List<Orders> getFlightMessage(String flight,String start){
+		try {
+			List<Orders> or=findBy("id",true,Restrictions.sqlRestriction("flight= '"+flight
+					+"' and starttime= '"+start+"'"));
+		    if(or!=null){
+		    	return or;
+		    }
+		    return null;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		} 
+	}
+	
 	public int getCountOfAirline(String code,Date time){
 		return findBy("id", true, Restrictions.sqlRestriction("flight= '"+code+"' and starttime = '" + time+"'")).size();
 	}

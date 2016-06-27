@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.mps.daoImp.OrdersDaoImp;
 import javax.persistence.criteria.Order;
@@ -18,7 +19,6 @@ import com.mps.daoImp.RouteDaoImp;
 import com.mps.daoImp.TeamDaoImp;
 import com.mps.daoImp.TravellerDaoImp;
 import com.mps.iservice.Service;
-import com.mps.model.Orders;
 import com.mps.smodel.KeyValuePair;
 import com.mps.util.JSONObjectUtils;
 import com.mps.util.PostSplite;
@@ -32,6 +32,7 @@ import com.mps.daoImp.*;
 import com.mps.model.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 public class ServiceImp implements Service {
@@ -124,12 +125,12 @@ public class ServiceImp implements Service {
 		str = "[" + str + "]";
 		return str;
 	}
-
+    //liushuo
 	@Override
 	public ArrayList<KeyValuePair> getFlight() {
 		// TODO Auto-generated method stub
 		System.out.println("liushuo----");
-		ArrayList<KeyValuePair> a = new ArrayList<>();;
+		ArrayList<KeyValuePair> a = new ArrayList<>();
 		try {
 			
 			List<String> temp;
@@ -140,15 +141,110 @@ public class ServiceImp implements Service {
 				KeyValuePair ke = new KeyValuePair(temp.get(i),temp.get(i));
 				a.add(ke);
 			}
+			//System.out.println("lisuhuo--"+a);
+			return a;
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			/*ArrayList<KeyValuePair> b = new ArrayList<>();
+			System.err.println("lisuhuo"+b);
+			*/
 			e.printStackTrace();
 			return null;
 		}
 		
-		return a;
+		
 	}
-
+	@Override
+	public Orders getFlightMessage(String flight, String start) {
+		// TODO Auto-generated method stub
+		try {
+			Orders or=new Orders();
+			List<Orders> orders=new ArrayList<>();
+			orders=ordersDaoImp.getFlightMessage(flight, start);
+			System.out.println("liushuo--"+orders);
+			System.out.println("liushuo--"+orders.size());
+			if(orders.size()==0){
+				return or;
+			}
+			or=orders.get(0);
+			return or;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	@Override
+	public String doCancel(String flight) {
+		// TODO Auto-generated method stub
+	    try {
+			List<Orders> li=new ArrayList<>();
+			Date date=new Date();
+			
+			li=ordersDaoImp.getAllFlight(flight);
+			Set<String> phone = new HashSet<>();
+			
+			for(int i=0;i<li.size();i++){
+				System.out.println(li.get(0));
+			    if(date.after(li.get(i).getStarttime())){
+			    	li.get(i).setTicketstatus(2);
+			    	ordersDaoImp.update((Orders)li.get(i));
+			    	
+			    }
+				System.out.println("liushuo---"+li.get(0).getTicketstatus());
+				Team team=li.get(i).getTeam();
+				Agency ag=team.getAgency();
+				System.out.println(ag.getId());
+				phone.add(ag.getPhone());
+				Traveller tr=li.get(i).getTraveller();
+				phone.add(tr.getPhone());
+			}
+			for(String ph:phone){
+				
+			}
+			return "success";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "unsucc";
+		}
+		
+	}
+	@Override
+	public String doDelay(String flight) {
+		// TODO Auto-generated method stub
+	    try {
+			List<Orders> li=new ArrayList<>();
+			Date date=new Date();
+			
+			li=ordersDaoImp.getAllFlight(flight);
+			Set<String> phone = new HashSet<>();
+			
+			for(int i=0;i<li.size();i++){
+				
+				Team team=li.get(i).getTeam();
+				Agency ag=team.getAgency();
+				phone.add(ag.getPhone());
+				Traveller tr=li.get(i).getTraveller();
+				phone.add(tr.getPhone());
+			}
+			for(String ph:phone){
+				
+			}
+			return "success";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "unsucc";
+		}
+		
+	}
+	
+	
+	
+	
 	@Override
 	public List<Team> getListTeam(int agencyid) {
 		List<Team> allteam = teamDaoImp.getListTeam(agencyid);
@@ -468,4 +564,10 @@ public class ServiceImp implements Service {
 			e.printStackTrace();
 		}
 	}
+
+	
+
+	
+
+	
 }

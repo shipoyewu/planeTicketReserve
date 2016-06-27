@@ -66,6 +66,30 @@ public interface Service {
 	//@Produces({MediaType.TEXT_PLAIN})
     public List<KeyValuePair> getFlight();
 	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/getFlightMessage/{flight}/{start}")
+    public Orders getFlightMessage(@PathParam("flight")String flight,@PathParam("start")String start);
+	
+	@GET
+	@Produces({MediaType.TEXT_PLAIN})
+	@Path("/doCancel/{flight}")
+    public String doCancel(@PathParam("flight")String flight);
+	
+	@GET
+	@Produces({MediaType.TEXT_PLAIN})
+	@Path("/doCancel/{flight}")
+    public String doDelay(@PathParam("flight")String flight);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/getListTeam/{agencyid}")
