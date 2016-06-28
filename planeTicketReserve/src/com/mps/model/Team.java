@@ -34,6 +34,10 @@ public class Team implements java.io.Serializable {
 	private Date endtime;
 	private Integer type;
 	private Integer status;
+	private String principal;
+	private String prinphone;
+
+
 	private Set<Orders> orderses = new HashSet<Orders>(0);
 	private Set<Participate> participates = new HashSet<Participate>(0);
 	private Set<Route> routes = new HashSet<Route>(0);
@@ -127,6 +131,23 @@ public class Team implements java.io.Serializable {
 		this.status = status;
 	}
 
+	@Column(name = "principal", length = 10)
+	public String getPrincipal() {
+		return principal;
+	}
+
+	public void setPrincipal(String principal) {
+		this.principal = principal;
+	}
+
+	@Column(name = "prinphone", length = 11)
+	public String getPrinphone() {
+		return prinphone;
+	}
+
+	public void setPrinphone(String prinphone) {
+		this.prinphone = prinphone;
+	}
 	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "team")
 	public Set<Orders> getOrderses() {
 		return this.orderses;

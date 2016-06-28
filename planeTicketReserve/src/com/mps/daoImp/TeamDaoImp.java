@@ -16,4 +16,10 @@ public class TeamDaoImp extends BaseDao<Team, Integer> {
 		return allteam;
 	}
 	
+	public List<Team> getListTeamByPri(int agencyid,String name){
+		List<Team> allteam = findBy("id",true,Restrictions.sqlRestriction("agencyid = " + agencyid +" and status = 0 " + " and principal='"+name+"'"));
+		return allteam;
+				
+	}
+	
 }

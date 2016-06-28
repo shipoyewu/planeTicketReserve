@@ -119,6 +119,11 @@ public interface Service {
 	@Path("/updateTeam")
 	public void updateTeam(String json);
 	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/updateTeam")
+	public List<Team> findTeamByPar(String json);
+	
 	
 }
  

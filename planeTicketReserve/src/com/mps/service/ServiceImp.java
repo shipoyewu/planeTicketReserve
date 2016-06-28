@@ -19,6 +19,11 @@ import com.mps.daoImp.TravellerDaoImp;
 import com.mps.iservice.Service;
 import com.mps.util.JSONObjectUtils;
 import com.mps.util.PostSplite;
+import com.taobao.api.ApiException;
+import com.taobao.api.DefaultTaobaoClient;
+import com.taobao.api.TaobaoClient;
+import com.taobao.api.request.AlibabaAliqinFcSmsNumSendRequest;
+import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 
 import cn.com.WebXml.ServiceFacade;
 import net.sf.json.JSONArray;
@@ -264,7 +269,8 @@ public class ServiceImp implements Service {
 		}catch(Throwable e){
 			e.printStackTrace();
 		}
-			
+		List<String> phone = new ArrayList<>();
+		
 		synchronized (ordersDaoImp) {
 			int count =ordersDaoImp.getCountOfAirline(a.getFlight(), a.getStarttime());
 			System.out.println("111");
@@ -287,6 +293,7 @@ public class ServiceImp implements Service {
 					try {
 						o.setTeam(teamDaoImp.get(tre.getJSONObject(i).getInt("teamid")));
 						t= travellerDaoImp.get(tre.getJSONObject(i).getInt("id"));
+						phone.add(tre.getJSONObject(i).getString("phone"));
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -298,6 +305,33 @@ public class ServiceImp implements Service {
 			}else{
 				return "unscc:座位不够！";
 			}
+		}
+		StringBuilder sb = new StringBuilder();
+		String ans = "";
+		if(phone.size() > 0){
+			for(String s:phone){
+				sb.append(phone);
+				sb.append(',');
+			}
+			ans = sb.toString().substring(0, sb.length()-1);
+		}
+		
+		
+		TaobaoClient client = 
+			new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest","23390281", "14d2de25dc8047fc35985bce7d2aae3d");
+		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+		req.setExtend("123456");
+		req.setSmsType("normal");
+		req.setSmsFreeSignName("学生项目");
+		req.setSmsParamString("");
+		req.setRecNum(ans);
+		req.setSmsTemplateCode("SMS_10885001");
+		AlibabaAliqinFcSmsNumSendResponse rsp = null;
+		try {
+			rsp = client.execute(req);
+		} catch (ApiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return "succ";
 	}
@@ -421,11 +455,12 @@ public class ServiceImp implements Service {
 		
 		return "succ";
 	}
+	@Override
 	public void updateTeam(String json){
 		Map<String,String> ma = PostSplite.postchange(json);
 		Team team = teamDaoImp.get(Integer.parseInt(ma.get("id")));
 		team.setName(ma.get("name"));
-		team.setType(Integer.parseInt(ma.getOrDefault("type","0")));	
+		team.setType(Integer.parseInt(ma.getOrDefault("type","0")));
 		team.setStatus(0);
 		try{
 			teamDaoImp.update(team);
@@ -433,4 +468,13 @@ public class ServiceImp implements Service {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<Team> findTeamByPar(String json){
+		Map<String,String> ma = PostSplite.postchange(json);
+		String pri = ma.get("principal");
+		int agency = Integer.parseInt(ma.get("agencyid"));
+		return teamDaoImp.getListTeamByPri(agency, pri);
+		
+	}
+	
 }
