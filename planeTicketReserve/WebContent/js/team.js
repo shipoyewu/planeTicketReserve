@@ -2,8 +2,7 @@ var uid;
 $(function(){
     //获得旅行社的团队
     //alert('团队');
-    //先手动写入一个数据
-	if(document.cookie.split('=')[1] == undefined){
+    if(document.cookie.split('=')[1] == undefined){
 		window.location.href="unlogin.html";
 	}
     uid = document.cookie.split('=')[1];
@@ -90,7 +89,7 @@ function reload(){
 
 function add(){
     //alert("tianjia");
-    $("#dlga").dialog("open").dialog('setTitle', '添加团队');
+   $("#dlga").dialog("open").dialog('setTitle', '添加团队');
 
 }
 
@@ -102,7 +101,7 @@ function myformatter(date){
     return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);  
 }  
 
-function myparser(s){  
+/*function myparser(s){  
     if (!s) return new Date();  
     var ss = (s.split('-'));  
     var y = parseInt(ss[0],10);  
@@ -113,7 +112,9 @@ function myparser(s){
     } else {  
         return new Date();  
     }  
-}  
+}  */
+
+            
 
 function edit(){
     //alert("xiugai");
@@ -127,7 +128,15 @@ function edit(){
         $("#principale").textbox('setValue',row.principal);
         $("#prinphonee").textbox('setValue',row.prinphone);
         $('#starttimee').datebox('setValue',myformatter(row.starttime));
-        $('#endtimee').datebox('setValue',myformatter(row.endtime));
+        var d=myformatter(row.starttime);
+        var da=new Date(d);
+        alert(da);
+        $('#endtimee').datebox('calendar').calendar({
+            validator: function(date){
+                return da<=date;
+            }
+        });
+        /*$('#endtimee').datebox('setValue'," ");*/
         if (row.type==0) {
             $("#typee").combobox('select',0);
         }else if (row.type==1) {
@@ -159,11 +168,10 @@ function save(){
             },
         success: function(data){
                 //$.messager.progress('close');   // 如果提交成功则隐藏进度条
-                
                 //alert("创建成功！");
                 $("#tm").datagrid("reload",{ });
-                 window.location.reload();
                 $("#dlga").dialog('close');
+                window.location.reload();
                 //alert(data);
             }
         });
@@ -191,61 +199,64 @@ function update(){
 
 function searchname(){
     var uname=$("#principal").textbox('getValue');
-    //alert(uname+uid);
-    $('#tm').datagrid({    
-        url:'../REST/REST/Service/findTeamByPar/'+uname+'/'+uid, 
-        singleSelect:true,   
-        columns:[[    
-            {field:'id',title:'旅行团ID',width:100,align:'right'},    
-            {field:'name',title:'名称',width:100,align:'right'}, 
-            {field:'principal',title:'负责人',width:100,align:'right'}, 
-            {field:'prinphone',title:'负责人电话',width:100,align:'right'},    
-            {field:'starttime',title:'开始时间',
-                formatter:function(value,row,index){
-                    var a = new Date(value);
-                    return a.toLocaleString();
-                },
-                width:200,align:'right'},  
-            {field:'endtime',title:'结束时间',
-                formatter:function(value,row,index){
-                    if (value==null) {
-                        return "";
-                    }
-                    var a = new Date(value);
-                    return a.toLocaleString();
-                },
-                width:200,align:'right'},
-            {field:'type',title:'类型',width:200,align:'right',
-                formatter(value,rec){
-                    if (value!=null) {
-                        if (rec.type== 0 ) {
-                            return "小型(1-30)";
-                        }else if (rec.type== 1) {
-                            return "中型(31-100)";
+    if (uname=="") {
+        alert("请输入负责人名字");
+    }else{
+         //alert(uname+uid);
+        $('#tm').datagrid({    
+            url:'../REST/REST/Service/findTeamByPar/'+uname+'/'+uid, 
+            singleSelect:true,   
+            columns:[[    
+                {field:'id',title:'旅行团ID',width:100,align:'right'},    
+                {field:'name',title:'名称',width:100,align:'right'}, 
+                {field:'principal',title:'负责人',width:100,align:'right'}, 
+                {field:'prinphone',title:'负责人电话',width:100,align:'right'},    
+                {field:'starttime',title:'开始时间',
+                    formatter:function(value,row,index){
+                        var a = new Date(value);
+                        return a.toLocaleString();
+                    },
+                    width:200,align:'right'},  
+                {field:'endtime',title:'结束时间',
+                    formatter:function(value,row,index){
+                        if (value==null) {
+                            return "";
+                        }
+                        var a = new Date(value);
+                        return a.toLocaleString();
+                    },
+                    width:200,align:'right'},
+                {field:'type',title:'类型',width:200,align:'right',
+                    formatter(value,rec){
+                        if (value!=null) {
+                            if (rec.type== 0 ) {
+                                return "小型(1-30)";
+                            }else if (rec.type== 1) {
+                                return "中型(31-100)";
+                            }else{
+                                return "大型(100人以上)";
+                            }
                         }else{
-                            return "大型(100人以上)";
+                            return "";
                         }
-                    }else{
-                        return "";
+                    }
+                },
+                {field:'status',title:'状态',width:100,align:'right',
+                     formatter(value,rec){
+                        if (value!=null) {
+                            if (rec.status== 0 ) {
+                                return "成立";
+                            }else {
+                                return "解散";
+                            }
+                        }else{
+                            return "";
+                        }
                     }
                 }
-            },
-            {field:'status',title:'状态',width:100,align:'right',
-                 formatter(value,rec){
-                    if (value!=null) {
-                        if (rec.status== 0 ) {
-                            return "成立";
-                        }else {
-                            return "解散";
-                        }
-                    }else{
-                        return "";
-                    }
-                }
-            }
-        ]]    
-    });   
-
+            ]]    
+        });   
+    }
 }
 
 //扩展easyui表单的验证

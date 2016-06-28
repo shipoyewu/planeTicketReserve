@@ -27,14 +27,13 @@
 		<div  style="margin-bottom:5px">
 			<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="
 			    javascript:add()"  ></a>
-			<!-- <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:save()" disabled="none"  ></a> -->
 			<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="javascript:edit()" ></a>
 			<a href="#" class="easyui-linkbutton" iconCls="icon-reload" plain="true" onclick="javascript:reload()"  ></a>
 			
 		</div>
 		<div>
 		    <form id="stn" method="post">
-				负责人: <input id="principal" class="easyui-textbox" style="width:80px">
+				负责人: <input id="principal" class="easyui-textbox" required="true"  style="width:80px">
 				<!-- 名字: <input id="teamname" style="width:80px"> -->
 				<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="javascript:searchname()">搜索旅行团</a>
 			</form>	
@@ -46,13 +45,11 @@
 	<table id="tm" class="easyui-datagrid" title="团队管理" toolbar="#tb" width="100%" ></table>
 
 	
-	<div id="dlg" class="easyui-dialog" style="width: 800px; height: 400px; padding: 10px 20px;"
-       	closed="true" modal="true" buttons="#dlg-buttons"> 
-     	<table id="traveller" class="easyui-datagrid" title="旅行团成员" width="100%"></table>
+	<div id="dlg" class="easyui-dialog" style="width: 800px; height: 400px; "
+       	closed="true" modal="true" > 
+     	<table id="traveller" class="easyui-datagrid" style="width: 300px;" ></table>
     </div> 
-    <div id="dlg-buttons"> 
-        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlg').dialog('close')" iconcls="icon-cancel">取消</a> 
-    </div>
+   
 
 	<div id="dlga" class="easyui-dialog" style="width: 800px; height: 400px; padding: 10px 20px;"
        	closed="true" modal="true" buttons="#dlg-buttonsa"> 
@@ -64,7 +61,7 @@
 	    		</tr>
 	    		<tr>
 	    			<td>开始时间:</td>
-	    			<td><input class="easyui-datebox" type="text" name="starttimea" id="starttimea" required="true" data-options="formatter:myformatter,parser:myparser"></input></td>
+	    			<td><input class="easyui-datebox" type="text" name="starttimea" id="starttimea" required="true" editable="false" ></input></td>
 	    		</tr>
 	    		<tr>
 	    			<td>负责人:</td>
@@ -115,11 +112,11 @@
 	    		</tr> 
 	    		<tr>
 	    			<td>开始时间:</td>
-	    			<td><input class="easyui-datebox" type="text" name="starttimee" id="starttimee"  data-options="formatter:myformatter,parser:myparser"  readonly="true"></input></td>
+	    			<td><input class="easyui-datebox" type="text" name="starttimee" id="starttimee"    readonly="true"></input></td>
 	    		</tr>
 	    		<tr>
 	    			<td>结束时间:</td>
-	    			<td><input class="easyui-datebox" type="text" name="endtimee" id="endtimee" data-options="formatter:myformatter,parser:myparser"></input></td>
+	    			<td><input class="easyui-datebox" type="text" name="endtimee" id="endtimee" ></input></td>
 	    		</tr>
 
 	    		<tr>
