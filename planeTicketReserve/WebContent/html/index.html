@@ -14,9 +14,6 @@
 			height: 100%;	
 			width: 100%;
 			margin: 0 auto;
-			font-family:"STKaiti";
-			font-size:80%;
-			color:green;
 			
 		}
 		#first{
@@ -26,14 +23,18 @@
 	</style>
 </head>
 <body >
-    <div class="easyui-layout" data-options="fit:'true'" >
-		<div id="first" data-options="region:'north'" style="height:15%;width:100%;font-family:STKaiti;font-size:160%;color:white">
-			<div style="width: 80% ;float: left; ">
-				<h1>机票预订系统 </h1>
+    <div name="toplayout" class="easyui-layout" data-options="fit:'true'" >
+		<div id="first" name="first" data-options="region:'north'" style="height:15%;width:100%;">
+			<div style="width: 80% ;float: left;font-family:STKaiti;font-size:160%;color:white "  >
+				<h2>机票预订系统</h2>
 			</div>
-			<div style="width: 20%;float: left; "  >
-				<h3>欢迎登录!</h3>
-				<b id="user"></b>
+			<div style="width: 20%;float: left; font-family:STKaiti;font-size:100%;color:white"  >
+				<br>
+				<a id="in" href="#" style="font-family:STKaiti;font-size:160%;color:white;text-decoration:none;"  onclick="javascript:login()">欢迎登录</a>
+				<br>
+				<b id="user" style="font-family:STKaiti;font-size:160%;color:white;" ></b>
+				<br>
+				<a id="out" href="#" style="font-family:STKaiti;font-size:160%;color:white;text-decoration:none;"  onclick="javascript:loginout()">退出登录</a>
 			</div>
 		</div>
 		<div  id="second" data-options="region:'center'" >

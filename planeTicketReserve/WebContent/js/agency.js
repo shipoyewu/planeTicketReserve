@@ -1,5 +1,11 @@
 
 
+$(function(){ 
+	if(document.cookie.split('=')[1] == undefined){
+		window.location.href="unlogin.html";
+	}
+}); 
+
 function showcontent(name){
     	var lc=document.getElementById("agc");
         if (name=="agencyinfo") 

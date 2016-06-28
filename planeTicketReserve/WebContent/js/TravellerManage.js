@@ -5,6 +5,12 @@
  * 37048119940312031X
  *  13027711594
  */
+
+$(function(){ 
+	if(document.cookie.split('=')[1] == undefined){
+		window.location.href="unlogin.html";
+	}
+}); 
 function submitForm(){
 	var idcard = document.getElementById("idcard").value;	
 	var tel = document.getElementById("tel").value;

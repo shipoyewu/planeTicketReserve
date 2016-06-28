@@ -173,7 +173,7 @@
 				}
 			}); 
 		   var uid = document.cookie.split('=')[1];
-		   $('#cc').combobox('reload',"../REST/REST/Service/getListTeam/");
+		   $('#cc').combobox('reload',"../REST/REST/Service/getListTeam/"+uid);
 		   $('#cc').combobox({
 			   onSelect: function(record){
 				   $.ajax({
@@ -293,7 +293,7 @@
 					data-options="valueField:'cnCityName',textField:'cnCityName',required:true"/></td></td>
 				<td>
 					<td>出发时间：</td>
-					<td><input id="date" name="date" class="easyui-datebox"/></td>
+					<td><input id="date" name="date" class="easyui-datebox" data-options="editable:false"/></td>
 				</td>
 				<td>
 					<a href="#" id="search" name="search" class="easyui-linkbutton" data-options="required:true" iconCls="icon-search" onclick="javascript:find()">查询航班</a>

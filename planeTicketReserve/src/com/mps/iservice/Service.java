@@ -68,7 +68,7 @@ public interface Service {
 	@POST
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Path("/updateAgencyInfo")
-	public void updateAgencyInfo(String json);
+	public String updateAgencyInfo(String json);
 	
 
 	@GET
@@ -94,13 +94,12 @@ public interface Service {
 	@POST
 	@Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.APPLICATION_JSON})
-	@Path("getTraverllerByTeam/{teamid}")
+	@Path("/getTraverllerByTeam/{teamid}")
 	public List<Traveller> getTraverllerByTeam(@PathParam("teamid") int teamid);
 
 	@POST
-	@Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.APPLICATION_JSON})
-	@Path("joinToTeam")
+	@Path("/joinToTeam")
 	public String joinToTeam(String uri);
 	
 	@POST
@@ -120,7 +119,20 @@ public interface Service {
 	@Path("/addTeam")
 	public String addTeam(String json);
 	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/updateTeam")
+	public String updateTeam(String json);
 	
+	@GET
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("getUnpartTraveller/{agencyid}/{teamid}")
+	public List<Traveller> getUnpartTraveller(@PathParam("agencyid") String agencyid, @PathParam("teamid") String teamid);
 	
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/findTeamByPar/{pri}/{agency}")
+	public List<Team> findTeamByPar(@PathParam("pri")String pri,@PathParam("agency")int agency);
 }
  

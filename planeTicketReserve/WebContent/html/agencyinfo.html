@@ -11,10 +11,10 @@
 	<script type="text/javascript" src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
 	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.mobile.js"></script>
 	<script type="text/javascript" src="../js/agencyinfo.js"></script>
-
+	
 </head>
 <body>
-	<div class="easyui-panel"   fit="true">
+	<div name="agencyinfo" class="easyui-panel"   fit="true">
 		<div style="padding:10px 60px 20px 60px">
 		    <form id="fagency" method="post">
 		    	<table cellpadding="6" align="center">
@@ -33,17 +33,21 @@
 		    		</tr>
 		    		<tr>
 		    			<td>电话:</td>
-		    			<td><input class="easyui-textbox" name="tel" id="tel" data-options="required:true,validType:'telephone'" ></input></td>
+		    			<td><input class="easyui-textbox" name="tel" id="tel" data-options="required:true,validType:'mobile'" ></input></td>
 		    		</tr>
 		    		<tr>
 		    			<td>地址:</td>
 		    			<td><input class="easyui-textbox" name="address" id="address" data-options="required:true" ></input></td>
 		    		</tr>
 		    		<tr>
-		    			<td>介绍:</td>
-		    			<td><textarea name="content" id="content" cols="25" rows="5"></textarea>
-		    			</td>
+		    			<td>负责人:</td>
+		    			<td><input class="easyui-textbox" name="contacts" id="contacts" data-options="required:true" ></input></td>
 		    		</tr>
+		    		<!-- <tr>
+		    			<td>负责人:</td>
+		    			<td><textarea name="contacts" id="contacts" cols="25" rows="5"></textarea>
+		    			</td>
+		    		</tr> -->
 		    	</table>
 		    </form>
 		    <div style="text-align:center;padding:5px">

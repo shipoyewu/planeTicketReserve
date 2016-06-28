@@ -1,5 +1,6 @@
 package com.mps.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,11 @@ import com.mps.daoImp.TravellerDaoImp;
 import com.mps.iservice.Service;
 import com.mps.util.JSONObjectUtils;
 import com.mps.util.PostSplite;
+import com.taobao.api.ApiException;
+import com.taobao.api.DefaultTaobaoClient;
+import com.taobao.api.TaobaoClient;
+import com.taobao.api.request.AlibabaAliqinFcSmsNumSendRequest;
+import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 
 import cn.com.WebXml.ServiceFacade;
 import net.sf.json.JSONArray;
@@ -140,12 +146,12 @@ public class ServiceImp implements Service {
 	}
 	
 	@Override
-	public void updateAgencyInfo(String json){
+	public String  updateAgencyInfo(String json){
 		Map<String,String> ma = PostSplite.postchange(json);
 		
-		Agency agency = agencyDaoImp.get(Integer.parseInt(ma.get("id")));
+		Agency agency = agencyDaoImp.get(Integer.parseInt(ma.get("agencyid")));
 		agency.setPwd(ma.get("pwd"));
-		agency.setPhone(ma.get("phonenumber"));
+		agency.setPhone(ma.get("tel"));
 		agency.setName(ma.get("agencyname"));
 		agency.setAddress(ma.get("address"));
 		agency.setContacts(ma.get("contacts"));
@@ -154,7 +160,9 @@ public class ServiceImp implements Service {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return "unsuccess";
 		}
+		return "success";
 		
 	}
 	
@@ -264,7 +272,8 @@ public class ServiceImp implements Service {
 		}catch(Throwable e){
 			e.printStackTrace();
 		}
-			
+		List<String> phone = new ArrayList<>();
+		
 		synchronized (ordersDaoImp) {
 			int count =ordersDaoImp.getCountOfAirline(a.getFlight(), a.getStarttime());
 			System.out.println("111");
@@ -287,6 +296,7 @@ public class ServiceImp implements Service {
 					try {
 						o.setTeam(teamDaoImp.get(tre.getJSONObject(i).getInt("teamid")));
 						t= travellerDaoImp.get(tre.getJSONObject(i).getInt("id"));
+						phone.add(tre.getJSONObject(i).getString("phone"));
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -298,6 +308,33 @@ public class ServiceImp implements Service {
 			}else{
 				return "unscc:座位不够！";
 			}
+		}
+		StringBuilder sb = new StringBuilder();
+		String ans = "";
+		if(phone.size() > 0){
+			for(String s:phone){
+				sb.append(phone);
+				sb.append(',');
+			}
+			ans = sb.toString().substring(0, sb.length()-1);
+		}
+		
+		
+		TaobaoClient client = 
+			new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest","23390281", "14d2de25dc8047fc35985bce7d2aae3d");
+		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+		req.setExtend("123456");
+		req.setSmsType("normal");
+		req.setSmsFreeSignName("学生项目");
+		req.setSmsParamString("");
+		req.setRecNum(ans);
+		req.setSmsTemplateCode("SMS_10885001");
+		AlibabaAliqinFcSmsNumSendResponse rsp = null;
+		try {
+			rsp = client.execute(req);
+		} catch (ApiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return "succ";
 	}
@@ -311,9 +348,8 @@ public class ServiceImp implements Service {
 		try {
 			for(Participate p : ps){
 				items
-				.add(travellerDaoImp
-				.get(p
-				.getId()));
+				.add(p
+				.getTraveller());
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -328,10 +364,12 @@ public class ServiceImp implements Service {
 		
 		Map<String,String> ma = PostSplite.postchange(uri);
 		String teamid = ma.get("teamid");
+		System.out.println(teamid);
 		JSONArray array = null;
 		
 		try{
 			array = JSONArray.fromObject(ma.get("listtre"));
+			System.out.println(array);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -421,31 +459,66 @@ public class ServiceImp implements Service {
 	@Override
 	public String addTeam(String json) {
 		Map<String,String> ma = PostSplite.postchange(json);
-		Team team = new Team();
-		team.setAgency(agencyDaoImp.get(Integer.parseInt(ma.get("agencyid"))));
-		team.setName(ma.get("name"));
-		team.setStarttime(new Date());
-		team.setType(Integer.parseInt(ma.getOrDefault("type","0")));	
-		team.setStatus(0);
 		try{
+			Team team = new Team();
+			team.setAgency(agencyDaoImp.get(Integer.parseInt(ma.get("agencyid"))));
+			team.setName(ma.get("teamnamea"));
+			team.setPrincipal(ma.get("principala"));
+			team.setPrinphone(ma.get("prinphonea"));
+			SimpleDateFormat dateform = new SimpleDateFormat("yyyy-MM-dd");
+			team.setStarttime(dateform.parse(ma.get("starttimea")));
+			team.setType(Integer.parseInt(ma.getOrDefault("typea","0")));	
+			team.setStatus(0);
 			teamDaoImp.save(team);
-		}catch(Exception e){
+		}catch(Exception e ){
 			e.printStackTrace();
 			return "unsucc";
-		}ww
+		}
+		
 		
 		return "succ";
 	}
-	public void updateTeam(String json){
+	public String updateTeam(String json){
 		Map<String,String> ma = PostSplite.postchange(json);
-		Team team = teamDaoImp.get(Integer.parseInt(ma.get("id")));
-		team.setName(ma.get("name"));
-		team.setType(Integer.parseInt(ma.getOrDefault("type","0")));	
-		team.setStatus(0);
+		Team team = teamDaoImp.get(Integer.parseInt(ma.get("teamide")));
+		SimpleDateFormat dateform = new SimpleDateFormat("yyyy-MM-dd");
+		team.setName(ma.get("teamnamee"));
+		team.setPrincipal(ma.get("principale"));
+		team.setPrinphone(ma.get("prinphonee"));
+		try {
+			team.setStarttime(dateform.parse(ma.get("starttimee")));
+			if(!ma.get("endtimee").equals("")){
+				team.setEndtime(dateform.parse(ma.get("endtimee")));
+			}
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return "unsuccess";
+		}
+		
+		team.setType(Integer.parseInt(ma.getOrDefault("typee","0")));	
+		team.setStatus(Integer.parseInt(ma.get("statee")));
 		try{
 			teamDaoImp.update(team);
 		}catch(Exception e){
 			e.printStackTrace();
+			return "unsuccess";
 		}
+		return "success";
+	}
+	
+	@Override
+	public List<Traveller> getUnpartTraveller(String agencyid, String teamid) {
+		// TODO Auto-generated method stub
+		int aid = Integer.parseInt(agencyid);
+		int tid = Integer.parseInt(teamid);
+		List<Traveller> tras = travellerDaoImp.getAllTraveller(aid);
+		List<Traveller> res = participateDaoImp.getUnpartTraveller(tid, tras);
+		
+		return res;
+	}
+	
+	public List<Team> findTeamByPar(String pri,int agency){
+		return teamDaoImp.getListTeamByPri(agency, pri);
 	}
 }

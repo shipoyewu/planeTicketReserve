@@ -41,11 +41,7 @@ public class JunitTest {
 	
 	@Test
 	public void test(){
-		System.out.println("123");
-		System.out.println(
-				new ServiceImp().orderAirline("AirlineCode=CA1831&Company=中国国航&StartDrome=北京首都国际机场&ArriveDrome=上海虹桥国际机场&StartTime=2016-06-25 07:30&ArriveTime=2016-06-25 09:40&ck=&listTre=[{\"agency\":{\"address\":123,\"contacts\":123,\"id\":1,\"name\":132,\"phone\":23154,\"pwd\":123},\"id\":1,\"idcard\":340826199502281500,\"name\":\"石胡\",\"phone\":13027710367,\"sex\":\"男\",\"teamid\":\"1\"}]\"")
-				);
-		System.out.println("123");
+		System.out.println(teamDaoImp.getListTeamByPri(2, "邢佳丽").size());
 
 	}
 }

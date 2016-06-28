@@ -32,10 +32,27 @@
 			<a href="#" class="easyui-linkbutton" iconCls="icon-reload" plain="true" onclick="javascript:reload()"  ></a>
 			
 		</div>
+		<div>
+		    <form id="stn" method="post">
+				负责人: <input id="principal" class="easyui-textbox" style="width:80px">
+				<!-- 名字: <input id="teamname" style="width:80px"> -->
+				<a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="javascript:searchname()">搜索旅行团</a>
+			</form>	
+		</div>
+		
 		
 	</div>
 	
 	<table id="tm" class="easyui-datagrid" title="团队管理" toolbar="#tb" width="100%" ></table>
+
+	
+	<div id="dlg" class="easyui-dialog" style="width: 800px; height: 400px; padding: 10px 20px;"
+       	closed="true" modal="true" buttons="#dlg-buttons"> 
+     	<table id="traveller" class="easyui-datagrid" title="旅行团成员" width="100%"></table>
+    </div> 
+    <div id="dlg-buttons"> 
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlg').dialog('close')" iconcls="icon-cancel">取消</a> 
+    </div>
 
 	<div id="dlga" class="easyui-dialog" style="width: 800px; height: 400px; padding: 10px 20px;"
        	closed="true" modal="true" buttons="#dlg-buttonsa"> 
@@ -50,33 +67,38 @@
 	    			<td><input class="easyui-datebox" type="text" name="starttimea" id="starttimea" required="true" data-options="formatter:myformatter,parser:myparser"></input></td>
 	    		</tr>
 	    		<tr>
-	    			<td>结束时间:</td>
-	    			<td><input class="easyui-datebox" type="text" name="endtimea" id="endtimea" required="true" data-options="formatter:myformatter,parser:myparser"></input></td>
-	    		</tr>
-	    		
+	    			<td>负责人:</td>
+	    			<td><input class="easyui-textbox" type="text" name="principala" id="principala" required="true"></input></td>
+	    		</tr> 
+	    		<tr>
+	    			<td>电话:</td>
+	    			<td><input class="easyui-textbox" type="text" name="prinphonea" id="prinphonea" data-options="required:true,validType:'mobile'"></input></td>
+	    		</tr> 
 	    		<tr>
 	    			<td>团队类型:</td>
-	    			<td><select class="easyui-combobox" name="statea" id="statea" required="true" style="width:200px;">
-								<option value="0">成立</option>
-								<option value="1">解散</option>
+	    			<td><select class="easyui-combobox" name="typea" id="typea" required="true" style="width:200px;">
+								<option value="0">小型</option>
+								<option value="1">中型</option>
+								<option value="2">大型</option>
 						</select>
 					</td>
 	    		</tr>
 	    		
 	    	</table>
 	    </form> 
+	</div>    
     <div id="dlg-buttonsa"> 
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save()" iconcls="icon-save">保存</a> 
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlga').dialog('close')" iconcls="icon-cancel">取消</a> 
     </div>
 
-    <div id="dlge" class="easyui-dialog" style="width: 800px; height: 400px; padding: 10px 20px;"
+    <div id="dlge" class="easyui-dialog" style="width: 800px; height: 500px; padding: 10px 20px;"
        	closed="true" modal="true" buttons="#dlg-buttonse"> 
       	<form id="fteame" method="post"> 
 	        <table cellpadding="5" align="left">
 	    		<tr>
 	    			<td>团队ID:</td>
-	    			<td><input class="easyui-textbox" type="text" name="teamide" id="teamide" required="true">
+	    			<td><input class="easyui-textbox" type="text" name="teamide" id="teamide" required="true" readonly="true">
 	    			</input></td>
 	    		</tr>
 	    		<tr>
@@ -84,16 +106,34 @@
 	    			<td><input class="easyui-textbox" type="text" name="teamnamee" id="teamnamee" ></input></td>
 	    		</tr>
 	    		<tr>
+	    			<td>负责人:</td>
+	    			<td><input class="easyui-textbox" type="text" name="principale" id="principale" required="true"></input></td>
+	    		</tr> 
+	    		<tr>
+	    			<td>电话:</td>
+	    			<td><input class="easyui-textbox" type="text" name="prinphonee" id="prinphonee" data-options="required:true,validType:'mobile'"></input></td>
+	    		</tr> 
+	    		<tr>
 	    			<td>开始时间:</td>
-	    			<td><input class="easyui-datebox" type="text" name="starttimee" id="starttimee"  data-options="formatter:myformatter,parser:myparser"></input></td>
+	    			<td><input class="easyui-datebox" type="text" name="starttimee" id="starttimee"  data-options="formatter:myformatter,parser:myparser"  readonly="true"></input></td>
 	    		</tr>
 	    		<tr>
 	    			<td>结束时间:</td>
 	    			<td><input class="easyui-datebox" type="text" name="endtimee" id="endtimee" data-options="formatter:myformatter,parser:myparser"></input></td>
 	    		</tr>
-	    		
+
 	    		<tr>
 	    			<td>团队类型:</td>
+	    			<td><select class="easyui-combobox" name="typee" id="typee" required="true" style="width:200px;">
+								<option value="0">小型</option>
+								<option value="1">中型</option>
+								<option value="2">大型</option>
+						</select>
+					</td>
+	    		</tr>
+	    		
+	    		<tr>
+	    			<td>团队状况:</td>
 	    			<td><select class="easyui-combobox" name="statee" id="statee" style="width:200px;">
 								<option value="0">成立</option>
 								<option value="1">解散</option>
@@ -102,7 +142,8 @@
 	    		</tr>
 	    		
 	    	</table>
-	    </form> 
+	    </form>
+	</div>     
     <div id="dlg-buttonse"> 
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="update()" iconcls="icon-save">保存</a> 
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlge').dialog('close')" iconcls="icon-cancel">取消</a> 
