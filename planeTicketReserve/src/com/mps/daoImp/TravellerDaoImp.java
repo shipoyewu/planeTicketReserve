@@ -29,4 +29,15 @@ public class TravellerDaoImp extends BaseDao<Traveller, Integer> {
 		return tras;
 	}
 	
+	//xufuguo
+	public Traveller getTravellerId(String idcard) {
+		List<Traveller> travellers = super.findBy("id", false, Restrictions.sqlRestriction("idcard=" + idcard));
+		if (travellers==null) {
+			return null;
+		}else{
+			return travellers.get(0);
+		}
+		
+	}
+	
 }

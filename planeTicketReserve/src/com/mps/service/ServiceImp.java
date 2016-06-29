@@ -3,13 +3,11 @@ package com.mps.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.criteria.Order;
-import javax.ws.rs.POST;
-import javax.ws.rs.PathParam;
-
+import java.util.Set;
 
 import com.mps.daoImp.AgencyDaoImp;
 import com.mps.daoImp.OrdersDaoImp;
@@ -18,7 +16,14 @@ import com.mps.daoImp.RouteDaoImp;
 import com.mps.daoImp.TeamDaoImp;
 import com.mps.daoImp.TravellerDaoImp;
 import com.mps.iservice.Service;
-import com.mps.util.JSONObjectUtils;
+import com.mps.model.Agency;
+import com.mps.model.KeyValuePair;
+import com.mps.model.Orders;
+import com.mps.model.Participate;
+import com.mps.model.ReportInfo;
+import com.mps.model.Team;
+import com.mps.model.Traveller;
+import com.mps.smodel.KeyValue;
 import com.mps.util.PostSplite;
 import com.taobao.api.ApiException;
 import com.taobao.api.DefaultTaobaoClient;
@@ -28,13 +33,6 @@ import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 
 import cn.com.WebXml.ServiceFacade;
 import net.sf.json.JSONArray;
-
-import com.google.gson.JsonObject;
-import com.mps.daoImp.*;
-import com.mps.model.*;
-
-import java.util.Date;
-import java.util.List;
 
 
 public class ServiceImp implements Service {
@@ -227,7 +225,7 @@ public class ServiceImp implements Service {
 	@Override
 	public String register(String para) {
 		// TODO Auto-generated method stub
-		//ÁªÏµÈË&ÊÖ»úºÅ&ÂÃÐÐÉçÃû&ÃÜÂë&µØÖ·
+		//ï¿½ï¿½Ïµï¿½ï¿½&ï¿½Ö»ï¿½ï¿½ï¿½&ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½&ï¿½ï¿½ï¿½ï¿½&ï¿½ï¿½Ö·
 		String[] paras = para.split("&");
 		Agency agency = new Agency();
 		agency.setContacts(paras[0]);
@@ -300,13 +298,13 @@ public class ServiceImp implements Service {
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						return "unsucc:ÄÚ²¿´íÎó!";
+						return "unsucc:ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½!";
 					}
 					o.setTraveller(t);
 					ordersDaoImp.save(o);
 				}
 			}else{
-				return "unscc:×ùÎ»²»¹»£¡";
+				return "unscc:ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 			}
 		}
 		StringBuilder sb = new StringBuilder();
@@ -325,7 +323,7 @@ public class ServiceImp implements Service {
 		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
 		req.setExtend("123456");
 		req.setSmsType("normal");
-		req.setSmsFreeSignName("Ñ§ÉúÏîÄ¿");
+		req.setSmsFreeSignName("Ñ§ï¿½ï¿½ï¿½ï¿½Ä¿");
 		req.setSmsParamString("");
 		req.setRecNum(ans);
 		req.setSmsTemplateCode("SMS_10885001");
@@ -521,4 +519,180 @@ public class ServiceImp implements Service {
 	public List<Team> findTeamByPar(String pri,int agency){
 		return teamDaoImp.getListTeamByPri(agency, pri);
 	}
+	
+	
+	   //liushuo
+		@Override
+		public ArrayList<KeyValue> getFlight() {
+			// TODO Auto-generated method stub
+			System.out.println("liushuo----");
+			ArrayList<KeyValue> a = new ArrayList<>();
+			try {
+				
+				List<String> temp;
+				System.out.println(ordersDaoImp);
+				temp = ordersDaoImp.getFlightList();
+				System.out.println(temp);
+				for (int i = 0; i < temp.size(); i++) {
+					KeyValue ke = new KeyValue(temp.get(i),temp.get(i));
+					a.add(ke);
+				}
+				//System.out.println("lisuhuo--"+a);
+				return a;
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				/*ArrayList<KeyValuePair> b = new ArrayList<>();
+				System.err.println("lisuhuo"+b);
+				*/
+				e.printStackTrace();
+				return null;
+			}
+			
+			
+		}
+		@Override
+		public Orders getFlightMessage(String flight, String start) {
+			// TODO Auto-generated method stub
+			try {
+				Orders or=new Orders();
+				List<Orders> orders=new ArrayList<>();
+				orders=ordersDaoImp.getFlightMessage(flight, start);
+				System.out.println("liushuo--"+orders);
+				System.out.println("liushuo--"+orders.size());
+				if(orders.size()==0){
+					return or;
+				}
+				or=orders.get(0);
+				return or;
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				return null;
+			}
+			
+		}
+		@Override
+		public String doCancel(String flight) {
+			// TODO Auto-generated method stub
+		    try {
+				List<Orders> li=new ArrayList<>();
+				Date date=new Date();
+				
+				li=ordersDaoImp.getAllFlight(flight);
+				Set<String> phone = new HashSet<>();
+				
+				for(int i=0;i<li.size();i++){
+					System.out.println(li.get(0));
+				    if(date.after(li.get(i).getStarttime())){
+				    	li.get(i).setTicketstatus(2);
+				    	ordersDaoImp.update((Orders)li.get(i));
+				    	
+				    }
+					System.out.println("liushuo---"+li.get(0).getTicketstatus());
+					Team team=li.get(i).getTeam();
+					Agency ag=team.getAgency();
+					System.out.println(ag.getId());
+					phone.add(ag.getPhone());
+					Traveller tr=li.get(i).getTraveller();
+					phone.add(tr.getPhone());
+				}
+				for(String ph:phone){
+					TaobaoClient client = 
+							new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest","23390281", "14d2de25dc8047fc35985bce7d2aae3d");
+							AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+							req.setExtend("123456");
+							req.setSmsType("normal");
+							req.setSmsFreeSignName("Ñ§ï¿½ï¿½ï¿½ï¿½Ä¿");
+							req.setSmsParamString("");
+							req.setRecNum(ph);
+							req.setSmsTemplateCode("SMS_10825033");
+							AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+							System.out.println(rsp.getBody());
+				}
+				return "success";
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "unsucc";
+			}
+			
+		}
+		@Override
+		public String doDelay(String flight) {
+			// TODO Auto-generated method stub
+		    try {
+				List<Orders> li=new ArrayList<>();
+				Date date=new Date();
+				
+				li=ordersDaoImp.getAllFlight(flight);
+				Set<String> phone = new HashSet<>();
+				
+				for(int i=0;i<li.size();i++){
+					
+					Team team=li.get(i).getTeam();
+					Agency ag=team.getAgency();
+					phone.add(ag.getPhone());
+					Traveller tr=li.get(i).getTraveller();
+					phone.add(tr.getPhone());
+				}
+				for(String ph:phone){
+					TaobaoClient client = 
+							new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest","23390281", "14d2de25dc8047fc35985bce7d2aae3d");
+							AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+							req.setExtend("123456");
+							req.setSmsType("normal");
+							req.setSmsFreeSignName("Ñ§ï¿½ï¿½ï¿½ï¿½Ä¿");
+							req.setSmsParamString("");
+							req.setRecNum(ph);
+							req.setSmsTemplateCode("SMS_10885001");
+							AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+							System.out.println(rsp.getBody());
+				}
+				return "success";
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "unsucc";
+			}
+			
+		}
+		//xufuguo
+		@Override
+		public List<ReportInfo> createReport(String data) {
+			Map<String,String> ma = PostSplite.postchange(data);
+			String startTime=ma.get("starttime");
+			String endTime=ma.get("endtime");
+			String startPoint=ma.get("startpoint");
+			String endPoint=ma.get("endpoint");
+			String agencyid=ma.get("agencyid");
+			System.out.println(""+startTime+endTime+startPoint+endPoint+agencyid);
+			
+			
+			List<ReportInfo> reportInfos = new ArrayList<ReportInfo>();
+			List<Team> teams = teamDaoImp.getTeamByAgencyId(agencyid);
+			System.out.println("teamid:"+teams.get(0).getId());
+			for (Team team : teams) {
+				List<Orders> orders = ordersDaoImp.getTravellerOrders(startTime, endTime, startPoint, endPoint,
+						team.getId().toString());
+				ReportInfo reportInfo = null;
+				if (orders != null) {
+					for (Orders order : orders) {
+						reportInfo = new ReportInfo();
+						reportInfo.setFlight(order.getFlight());
+						reportInfo.setStartPoint(order.getStartpoint());
+						reportInfo.setEndPoint(order.getEndpoint());
+						reportInfo.setStartTime(order.getStarttime().toLocaleString());
+						reportInfo.setEndTime(order.getEndtime().toLocaleString());
+						reportInfo.setFullPeo("60");
+						reportInfo.setActualPeo(orders.size() + "");
+						reportInfo.setSinglePrice(order.getPrice() + "");
+						reportInfo.setTotalPrice(order.getPrice() * orders.size() + "");
+						reportInfos.add(reportInfo);
+					}
+				}
+			}
+			return reportInfos;
+		}
+		
 }

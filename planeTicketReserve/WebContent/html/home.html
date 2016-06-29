@@ -22,7 +22,7 @@
 			width: 40%;
 			height: 40%;
 			position: absolute;
-  			margin: 10% 10% ;
+  			margin: 10% 2% ;
 		}
 		#b{
 			/*border: 10px solid red;*/
@@ -30,7 +30,7 @@
 			width: 40%;
 			height: 40%;
 			position: absolute;
-  			margin: 10% 30% ;
+  			margin: 10% 18% ;
 		}
 		#c{
 			/*border: 10px solid green;*/
@@ -38,7 +38,7 @@
 			width: 40%;
 			height: 40%;
 			position: absolute;
-  			margin: 10% 50% ;
+  			margin: 10% 34% ;
 		}
 		#d{
 			/*border: 10px solid yellow;*/
@@ -46,7 +46,23 @@
 			width: 40%;
 			height: 40%;
 			position: absolute;
-  			margin: 10% 70% ;
+  			margin: 10% 50% ;
+		}
+		#e{
+			/*border: 10px solid yellow;*/
+			float: left;
+			width: 40%;
+			height: 40%;
+			position: absolute;
+  			margin: 10% 66% ;
+		}
+		#f{
+			/*border: 10px solid yellow;*/
+			float: left;
+			width: 40%;
+			height: 40%;
+			position: absolute;
+  			margin: 10% 82% ;
 		}
 		
 
@@ -54,28 +70,39 @@
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:'true'" >
-		<div id="tt" class="easyui-tabs" data-options="fit:true " style="tabWidth:10%;tabHeight:10%;">
-			<div id="home" title="机票预订系统" style="font-family:STKaiti;font-size:300%;color:red" >
-				<div id="a"  >
+		<div id="tt" class="easyui-tabs" data-options="fit:true "  style="tabWidth:10%;tabHeight:10%;">
+			<div id="home" title="机票预订系统" style="font-family:STKaiti;font-size:100px;color:red" >
+				<div id="a" >
 					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'" 
 					style="width:200px;height: 200px "
-					onclick="addTab('航班查询','airlineSearch.html')">航班查询</a>
+					onclick="addTab('航班查询','airlineSearch.html')"><h1>航班查询</h1></a>
 				</div>
 				<div id="b">
 					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-clipart',size:'large',iconAlign:'top'" 
 					style="width:200px;height: 200px "
-					onclick="addTab('机票预订','airline.html')">机票预订</a>
+					onclick="addTab('机票预订','airline.html')"><h1>机票预订</h1></a>
 				</div>
 				<div id="c">
 					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-shapes',size:'large',iconAlign:'top'" 
 					style="width:200px;height: 200px "
-					onclick="addTab('旅行社管理','agency.html ')">旅行社管理</a>
+					onclick="addTab('旅行社管理','agency.html ')"><h1>旅行社管理</h1></a>
 				</div>
 				<div id="d">
 					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',size:'large',iconAlign:'top'"
 					style="width:200px;height: 200px " 
-					onclick="addTab('旅客管理','TravellerManager.html')">旅客管理</a>
+					onclick="addTab('旅客管理','TravellerManager.html')"><h1>旅客管理</h1></a>
 				</div>
+				<div id="e">
+					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'"
+					style="width:200px;height: 200px " 
+					onclick="addTab('取消或延迟航班','airCancel.html')"><h1>取消或延迟航班</h1></a>
+				</div>
+				<div id="f">
+					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-chart',size:'large',iconAlign:'top'"
+					style="width:200px;height: 200px " 
+					onclick="addTab('打印订单','createReport.html')"><h1>打印订单</h1></a>
+				</div>
+				
 			</div>
 		</div>
 	</div>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>生成报表</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css"
+	href="../jquery-easyui-1.4.5/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../jquery-easyui-1.4.5/themes/icon.css">
+<link rel="stylesheet" type="text/css"
+	href="../jquery-easyui-1.4.5/demo/demo.css">
+<script type="text/javascript"
+	src="../jquery-easyui-1.4.5/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript">
+var agencyid;
+$(function(){ 
+	if(document.cookie.split('=')[1] == undefined){
+		window.location.href="unlogin.html";
+	}
+	else {
+		agencyid = document.cookie.split('=')[1];
+	}
+}); 
+	function query() {
+		$('#reportForm').form(
+				'submit',
+				{
+					type : "POST",
+					async : false,
+					url : "../REST/REST/Service/createReport",
+					data:{'starttime':$("#startTime").datebox("getValue"),'endtime':$("#endTime").datebox("getValue"),'startpoint':$("#startPoint").combobox("getValue"),'endpoint':$("#endPoint").combobox("getValue")},
+					onSubmit : function(param) {
+						param.agencyid=agencyid;
+						return $("#reportForm").form('validate');
+					},
+					success : function(data) {
+						var obj=eval(data);
+						$('#dg').datagrid({
+							async : false,
+							data : eval(data),
+							columns : [ [ {
+								field : 'flight',
+								title : '航班',
+								width : 100,
+								align : 'center'
+							}, {
+								field : 'startPoint',
+								title : '出发地',
+								width : 100,
+								align : 'center'
+							}, {
+								field : 'endPoint',
+								title : '目的地',
+								width : 100,
+								align : 'center'
+							}, {
+								field : 'startTime',
+								title : '出发时间',
+								width : 200,
+								align : 'center'
+							}, {
+								field : 'endTime',
+								title : '抵达时间',
+								width : 200,
+								align : 'center'
+							}, {
+								field : 'fullPeo',
+								title : '满座人数',
+								width : 100,
+								align : 'center'
+							}, {
+								field : 'actualPeo',
+								title : '实际乘客',
+								width : 100,
+								align : 'center'
+							}, {
+								field : 'singlePrice',
+								title : '单票价格',
+								width : 100,
+								align : 'center'
+							}, {
+								field : 'totalPrice',
+								title : '总票价',
+								width : 100,
+								align : 'center'
+							} ] ]
+						});
+						$("#conservediv").css("display", "inline");
+						for(var i=1;i<=obj.length;i++){
+							$("#flight"+i).html(obj[i-1].flight);
+							$("#startPoint"+i).html(obj[i-1].startPoint);
+							$("#endPoint"+i).html(obj[i-1].endPoint);
+							$("#startTime"+i).html(obj[i-1].startTime);
+							$("#endTime"+i).html(obj[i-1].endTime);
+							$("#fullPeo"+i).html(obj[i-1].fullPeo);
+							$("#actualPeo"+i).html(obj[i-1].actualPeo);
+							$("#singlePrice"+i).html(obj[i-1].singlePrice);
+							$("#totalPrice"+i).html(obj[i-1].totalPrice);
+						}
+					}
+
+				});
+	}
+
+	var idTmr;
+	function getExplorer() {
+		var explorer = window.navigator.userAgent;
+		//ie 
+		if (explorer.indexOf("MSIE") >= 0) {
+			return 'ie';
+		}
+		//firefox 
+		else if (explorer.indexOf("Firefox") >= 0) {
+			return 'Firefox';
+		}
+		//Chrome
+		else if (explorer.indexOf("Chrome") >= 0) {
+			return 'Chrome';
+		}
+		//Opera
+		else if (explorer.indexOf("Opera") >= 0) {
+			return 'Opera';
+		}
+		//Safari
+		else if (explorer.indexOf("Safari") >= 0) {
+			return 'Safari';
+		}
+	}
+	function method1() {//整个表格拷贝到EXCEL中
+		var tableid = 'targetTable';
+		if (getExplorer() == 'ie') {
+			var curTbl = document.getElementById(tableid);
+			var oXL = new ActiveXObject("Excel.Application");
+
+			//创建AX对象excel 
+			var oWB = oXL.Workbooks.Add();
+			//获取workbook对象 
+			var xlsheet = oWB.Worksheets(1);
+			//激活当前sheet 
+			var sel = document.body.createTextRange();
+			sel.moveToElementText(curTbl);
+			//把表格中的内容移到TextRange中 
+			sel.select();
+			//全选TextRange中内容 
+			sel.execCommand("Copy");
+			//复制TextRange中内容  
+			xlsheet.Paste();
+			//粘贴到活动的EXCEL中       
+			oXL.Visible = true;
+			//设置excel可见属性
+
+			try {
+				var fname = oXL.Application.GetSaveAsFilename("Excel.xls",
+						"Excel Spreadsheets (*.xls), *.xls");
+			} catch (e) {
+				print("Nested catch caught " + e);
+			} finally {
+				oWB.SaveAs(fname);
+
+				oWB.Close(savechanges = false);
+				//xls.visible = false;
+				oXL.Quit();
+				oXL = null;
+				//结束excel进程，退出完成
+				//window.setInterval("Cleanup();",1);
+				idTmr = window.setInterval("Cleanup();", 1);
+
+			}
+
+		} else {
+			tableToExcel(tableid);
+		}
+	}
+	function Cleanup() {
+		window.clearInterval(idTmr);
+		CollectGarbage();
+	}
+	var tableToExcel = (function() {
+		var uri = 'data:application/vnd.ms-excel;base64,', template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>', base64 = function(
+				s) {
+			return window.btoa(unescape(encodeURIComponent(s)))
+		}, format = function(s, c) {
+			return s.replace(/{(\w+)}/g, function(m, p) {
+				return c[p];
+			})
+		}
+		return function(table, name) {
+			if (!table.nodeType)
+				table = document.getElementById(table)
+			var ctx = {
+				worksheet : name || 'Worksheet',
+				table : table.innerHTML
+			}
+			window.location.href = uri + base64(format(template, ctx));
+		}
+	})()
+</script>
+</head>
+<body>
+	<div class="easyui-panel" title="查询航班">
+		<form id="reportForm" name="reportForm" method="post">
+			<table>
+				<tr>
+					<td>出发时间：</td>
+					<td><input id="startTime" name="startTime"
+						class="easyui-datebox" required/></td>
+					<td>结束时间：</td>
+					<td><input id="endTime" name="endTime" class="easyui-datebox"
+						required /></td>
+					<td>出发城市:</td>
+					<td><select id="startPoint" name="startPoint" required
+						class="easyui-combobox" style="width: 100px"
+						data-options="required:true,value:'全部',valueField:'cnCityName',textField:'cnCityName',url:'city.json'">
+					</select></td>
+					<td>到达城市：</td>
+					<td><select id="endPoint" name="endPoint" 
+						class="easyui-combobox" style="width: 100px"
+						data-options="required:true,value:'全部',valueField:'cnCityName',textField:'cnCityName',url:'city.json'">
+					</select></td>
+					<td><a href="#" id="search" name="search"
+						style="margin-left: 10px;" class="easyui-linkbutton"
+						data-options="required:true" iconCls="icon-search"
+						onclick="javascript:query()">查询</a></td>
+				</tr>
+			</table>
+			<div>
+				<table id="dg" title="生成报表" style="width: 100%;"></table>
+			</div>
+			<div id="conservediv"
+				style="display: none; float: right; padding: 5px 5px 5px 5px;">
+				<a href="#" id="conserve" name="conserve" class="easyui-linkbutton"
+					data-options="required:true" iconCls="icon-print"
+					onclick="method1()">导出</a>
+			</div>
+		</form>
+	</div>
+
+	<div style="display: none;">
+		<table id="targetTable">
+			<tbody>
+				<tr align="center">
+					<th>flight</th>
+					<th>startPoint</th>
+					<th>endPoint</th>
+					<th>startTime</th>
+					<th>endTime</th>
+					<th>fullPeo</th>
+					<th>actualPeo</th>
+					<th>singlePrice</th>
+					<th>totalPrice</th>
+				</tr>
+				<tr align="center">
+					<td id="flight1"></td>
+					<td id="startPoint1"></td>
+					<td id="endPoint1"></td>
+					<td id="startTime1"></td>
+					<td id="endTime1"></td>
+					<td id="fullPeo1"></td>
+					<td id="actualPeo1"></td>
+					<td id="singlePrice1"></td>
+					<td id="totalPrice1"></td>
+				</tr>
+				<tr align="center">
+					<td id="flight2"></td>
+					<td id="startPoint2"></td>
+					<td id="endPoint2"></td>
+					<td id="startTime2"></td>
+					<td id="endTime2"></td>
+					<td id="fullPeo2"></td>
+					<td id="actualPeo2"></td>
+					<td id="singlePrice2"></td>
+					<td id="totalPrice2"></td>
+				</tr>
+				<tr align="center">
+					<td id="flight3"></td>
+					<td id="startPoint3"></td>
+					<td id="endPoint3"></td>
+					<td id="startTime3"></td>
+					<td id="endTime3"></td>
+					<td id="fullPeo3"></td>
+					<td id="actualPeo3"></td>
+					<td id="singlePrice"></td>
+					<td id="totalPrice3"></td>
+				</tr>
+				<tr align="center">
+					<td id="flight4"></td>
+					<td id="startPoint4"></td>
+					<td id="endPoint4"></td>
+					<td id="startTime4"></td>
+					<td id="endTime4"></td>
+					<td id="fullPeo4"></td>
+					<td id="actualPeo4"></td>
+					<td id="singlePrice4"></td>
+					<td id="totalPrice14"></td>
+				</tr>
+				<tr align="center">
+					<td id="flight5"></td>
+					<td id="startPoint5"></td>
+					<td id="endPoint5"></td>
+					<td id="startTime5"></td>
+					<td id="endTime5"></td>
+					<td id="fullPeo5"></td>
+					<td id="actualPeo5"></td>
+					<td id="singlePrice5"></td>
+					<td id="totalPrice5"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

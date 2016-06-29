@@ -1,5 +1,6 @@
 package com.mps.iservice;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,11 @@ import javax.xml.crypto.dsig.keyinfo.KeyValue;
 
 import com.mps.model.Agency;
 import com.mps.model.KeyValuePair;
+import com.mps.model.Orders;
+import com.mps.model.ReportInfo;
 import com.mps.model.Team;
 import com.mps.model.Traveller;
+import com.mps.smodel.*;
 
 @Path("/Service")
 public interface Service {
@@ -134,5 +138,34 @@ public interface Service {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("/findTeamByPar/{pri}/{agency}")
 	public List<Team> findTeamByPar(@PathParam("pri")String pri,@PathParam("agency")int agency);
+	
+	
+	//liushuo
+	@POST
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/getFlight")
+	//@Produces({MediaType.TEXT_PLAIN})
+    public ArrayList<com.mps.smodel.KeyValue> getFlight();
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("/getFlightMessage/{flight}/{start}")
+    public Orders getFlightMessage(@PathParam("flight")String flight,@PathParam("start")String start);
+	
+	@GET
+	@Produces({MediaType.TEXT_PLAIN})
+	@Path("/doCancel/{flight}")
+    public String doCancel(@PathParam("flight")String flight);
+	
+	@GET
+	@Produces({MediaType.TEXT_PLAIN})
+	@Path("/doDelay/{flight}")
+    public String doDelay(@PathParam("flight")String flight);
+	
+	//xufuguo 
+	@POST
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("/createReport")
+	public List<ReportInfo> createReport(String data);
 }
  

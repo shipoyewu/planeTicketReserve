@@ -3,6 +3,11 @@ package com.mps.daoBase;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -122,4 +127,26 @@ public class BaseDao<T,PK extends Serializable> extends HibernateDaoSupport impl
 	public void clear() {
 		getHibernateTemplate().clear();
 	}
+	
+	//liushuo
+	@Resource(name = "sessionFactory")  
+    private SessionFactory sessionFactory;  
+  
+    public Session getSession() {  
+        return sessionFactory.getCurrentSession();  
+    }  
+  
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	public List queryBySql(String sql) {  
+        List<Object[]> list = getSession().createSQLQuery(sql).list();  
+        return list;  
+    }  
+      
+    public int excuteBySql(String sql)  
+    {  
+        int result ;  
+        SQLQuery query = this.getSession().createSQLQuery(sql);  
+        result = query.executeUpdate();  
+        return result;  
+    }  
 }

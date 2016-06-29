@@ -130,7 +130,7 @@ function edit(){
         $('#starttimee').datebox('setValue',myformatter(row.starttime));
         var d=myformatter(row.starttime);
         var da=new Date(d);
-        alert(da);
+        //alert(da);
         $('#endtimee').datebox('calendar').calendar({
             validator: function(date){
                 return da<=date;

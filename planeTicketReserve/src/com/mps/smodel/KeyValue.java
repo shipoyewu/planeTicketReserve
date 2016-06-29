@@ -6,14 +6,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
-@XmlRootElement(name="KeyValuePair")
-public class KeyValuePair{
+@XmlRootElement(name="KeyValue")
+public class KeyValue{
 	public String code;
 	public String name;
-	public KeyValuePair(){
+	public KeyValue(){
 		
 	}
-	public KeyValuePair(String code,String name){
+	public KeyValue(String code,String name){
 		this.code = code;
 		this.name = name;	
 	}
