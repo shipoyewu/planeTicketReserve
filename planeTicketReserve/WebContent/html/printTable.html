@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css"
+	href="../jquery-easyui-1.4.5/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../jquery-easyui-1.4.5/themes/icon.css">
+<script type="text/javascript"
+	src="../jquery-easyui-1.4.5/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../js/send.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/myindex.css">
+<title>Insert title here</title>
+<script>
+	$(function() {
+		var thisURL = document.URL;
+		alert(thisURL);
+		thisURL=decodeURI(thisURL,"utf-8");
+		var showval = thisURL.split("=")[1];
+		var tk = showval.split("*");
+		$("#orderid").html(tk[0]);
+		$("#name").html(tk[1]);
+		$("#idcard").html(tk[2].split("F")[0]);
+		$("#flight").html(tk[3]);
+		$("#startPoint").html(tk[4]);
+		$("#endPoint").html(tk[5]);
+		$("#startTime").html(tk[6]);
+		$("#endTime").html(tk[7]);
+		$("#ticketTime").html(tk[8]);
+		$("#seat").html(tk[9]);
+		$("#space").html(tk[10]);
+		$("#teamName").html(tk[11]);
+		$("#agencyName").html(tk[12]);
+		$("#date").html(new Date().toLocaleString());
+		window.print();
+	});
+</script>
+</head>
+<body>
+
+	<div align="center">
+	<p>机票预订单</p>
+		<table border="1">
+		<tr>
+				<td>订单号:</td>
+				<td id="orderid"></td>
+			</tr>
+			<tr>
+				<td>姓名:</td>
+				<td id="name"></td>
+			</tr>
+			<tr>
+				<td>身份证号:</td>
+				<td id="idcard"></td>
+			</tr>
+			<tr>
+				<td>航班:</td>
+				<td id="flight"></td>
+			</tr>
+			<tr>
+				<td>出发地:</td>
+				<td id="startPoint"></td>
+			</tr>
+			<tr>
+				<td>目的地:</td>
+				<td id="endPoint"></td>
+			</tr>
+			<tr>
+				<td>出发时间:</td>
+				<td id="startTime"></td>
+			</tr>
+			<tr>
+				<td>预计抵达时间:</td>
+				<td id="endTime"></td>
+			</tr>
+			<tr>
+				<td>预定时间:</td>
+				<td id="ticketTime"></td>
+			</tr>
+			<tr>
+				<td>座位号:</td>
+				<td id="seat"></td>
+			</tr>
+			<tr>
+				<td>仓位号:</td>
+				<td id="space"></td>
+			</tr>
+			<tr>
+				<td>旅行社:</td>
+				<td id="agencyName"></td>
+			</tr>
+			<tr>
+				<td>团队:</td>
+				<td id="teamName"></td>
+			</tr>
+			<tr>
+				<td>当前时间:</td>
+				<td id="date"></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

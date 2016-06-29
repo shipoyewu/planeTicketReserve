@@ -41,7 +41,7 @@ public class JunitTest {
 	
 	@Test
 	public void test(){
-		System.out.println(teamDaoImp.getListTeamByPri(2, "邢佳丽").size());
-
+	//	System.out.println(teamDaoImp.getListTeamByPri(2, "邢佳丽").size());
+		System.out.println(travellerDaoImp.getTraveller("37048119940312031XF", 2).getName());
 	}
 }

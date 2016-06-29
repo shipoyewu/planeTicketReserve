@@ -104,7 +104,7 @@ public class OrdersDaoImp extends BaseDao<Orders, Integer> {
 			return orders;
 		}
 	}
-	
-	
-	
+	public void reviseTicketStatus(Orders orders){
+		super.update(orders);
+	}	
 }

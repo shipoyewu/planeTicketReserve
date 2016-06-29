@@ -32,5 +32,12 @@ public class AgencyDaoImp extends BaseDao<Agency, Integer> {
 			return 0;
 		else return item.get(0).getId();
 	}
-	
+	public List<Agency> getAgencyById(String id) {
+		List<Agency> agencys = super.findBy("id", false, Restrictions.sqlRestriction("id="+id));
+		if (agencys == null) {
+			return null;
+		} else {
+			return agencys;
+		}
+	}
 }

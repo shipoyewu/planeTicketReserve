@@ -19,6 +19,7 @@ import com.mps.model.KeyValuePair;
 import com.mps.model.Orders;
 import com.mps.model.ReportInfo;
 import com.mps.model.Team;
+import com.mps.model.Ticket;
 import com.mps.model.Traveller;
 import com.mps.smodel.*;
 
@@ -167,5 +168,15 @@ public interface Service {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("/createReport")
 	public List<ReportInfo> createReport(String data);
+	
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("/reviseTicketStatus/{orderid}")
+	public void reviseTicketStatus(@PathParam("orderid") String orderid);
+	
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("/printTicket/{idcard}")
+	public List<Ticket> printTicket(@PathParam("idcard") String idcard);
 }
  

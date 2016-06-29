@@ -146,5 +146,6 @@ public class PostSplite {
 	}
 
 	public static void main(String args[]) {
+		PostSplite.postchange("ticket=1%E5%AE%97%E7%93%9A*370481199403120311F*MU9108*%E5%8C%97%E4%BA%AC%E9%A6%96%E9%83%BD%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA*%E4%B8%8A%E6%B5%B7%E8%99%B9%E6%A1%A5%E5%9B%BD%E9%99%85%E6%9C%BA%E5%9C%BA*2016-06-29%2007:30:00.0*2016-06-29%2009:40:00.0*2016-06-29%2021:44:12.0*4*0*%E9%83%91%E5%A4%A7%E5%9B%A2*snice");
 	}
 }

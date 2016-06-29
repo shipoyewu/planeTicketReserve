@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css"
+	href="../jquery-easyui-1.4.5/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../jquery-easyui-1.4.5/themes/icon.css">
+<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="../jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" href="../css/myindex.css" type="text/css" />
+<style>
+</style>
+<title>打印预定单</title>
+</head>
+<body>
+	<div
+		style="background-image: url('../image/myheader.png'); background-repeat: no-repeat; height: 120px;">
+		<div
+			style="FONT-SIZE: 20pt; WIDTH: 100%; COLOR: #FFFFFF; LINE-HEIGHT: 150%; FONT-FAMILY: 华文行楷">
+			<strong>卓越服务</strong>
+		</div>
+		<div style="margin: 60px 260px auto;">
+			<label style="font-style: italic; font-size: 12px;">打印预订单</label>
+		</div>
+	</div>
+	<div class="nav" align="center">
+		<ul>
+			<li class="cur" id="query"><a href="#">打印预订单</a></li>
+		</ul>
+		<div class="curBg"></div>
+		<div class="cls"></div>
+	</div>
+	<div style="background-color: #F8F8F8">
+		
+		<div class="child" id="querychild"
+			style="display: inherit; width: 980px; margin: 0 auto; position: relative; padding: 0 20px; text-align: center;">
+			<iframe id="queryframe" scrolling="no"
+				style="width: 1080px; height: 550px; margin-left: 57px;"
+				class="myframe" src="printTicketframe.html" frameborder="0">
+			</iframe>
+		</div>
+	</div>
+	<div style="bottom: 45px; width: 90%; text-align: center;">
+		版权所有@:<strong>郑州大学卓越 开发小组</strong>&nbsp;&nbsp;&nbsp;
+		地址:郑州大学信息工程学院3302室&nbsp;&nbsp;&nbsp;电话:1314520
+	</div>
+</body>
+</html>
