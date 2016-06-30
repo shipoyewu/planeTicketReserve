@@ -112,7 +112,7 @@ function edit(){
 		    cache: false,    
 		    modal: true   
 		});    
-		$('#editdialog').dialog('refresh', 'TravellerEdit.html');
+		$('#editdialog').dialog('refresh', 'travelleredit.html');
 	}
 	else{
 		$.messager.alert('提示','请先选中需要修改的行');
@@ -151,11 +151,11 @@ function showcontent(name){
 	var lc=document.getElementById("agc");
     if (name=="add") 
     {
-    	lc.src= "AddTraveller.html ";
+    	lc.src= "addtraveller.html ";
     }
     else 
          {
-         	lc.src = "TravellerSearch.html";
+         	lc.src = "travellersearch.html";
          }
          
 }

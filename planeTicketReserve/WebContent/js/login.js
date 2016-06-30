@@ -84,7 +84,7 @@ function check() {
             url : '../REST/REST/Service/register',
             data : contacts+'&'+phone+'&'+agencyname+'&'+psw1+'&'+address,
             success : function(msg){
-            	if(msg == 'Success')
+            	if(msg == 'succ')
             		alert("注册成功！");
             	else
             		alert("注册失败！");

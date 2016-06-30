@@ -22,8 +22,6 @@ import com.mps.daoImp.TeamDaoImp;
 import com.mps.daoImp.TravellerDaoImp;
 import com.mps.service.ServiceImp;
 
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
 public class JunitTest {
@@ -38,10 +36,9 @@ public class JunitTest {
 	@Resource
 	OrdersDaoImp ordersDaoImp;
 	
-	
 	@Test
 	public void test(){
 	//	System.out.println(teamDaoImp.getListTeamByPri(2, "邢佳丽").size());
-		System.out.println(travellerDaoImp.getTraveller("37048119940312031XF", 2).getName());
+		System.out.println(travellerDaoImp.getTraveller("370481199403120314F", 2));
 	}
 }

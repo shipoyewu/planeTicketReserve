@@ -71,7 +71,12 @@ function searchid(){
                 {field:'name',title:'姓名',width:100}, 
                 {field:'sex',title:'性别',width:100},  
                 {field:'phone',title:'电话',width:100},
-                {field:'idcard',title:'身份证',width:200}          
+                {field:'idcard',title:'身份证',width:200,
+    	        	formatter: function(value,row,index){	//不知道为什么传身份证号后两位得到会为0，
+    	        		var cardnum = row.idcard;			//在idcard后加了'F'传过来的
+    	        		return cardnum.split('F')[0];
+    				}
+    	        },
             ]]   
            
         });

@@ -12,8 +12,9 @@ public class TravellerDaoImp extends BaseDao<Traveller, Integer> {
 		super(Traveller.class);
 	}
 	public Traveller getTraveller(String idcard, int agencyId){
-		List<Traveller> tras = super.findBy("id", true, Restrictions.sqlRestriction("idcard = '" + idcard
+		List<Traveller> tras = findBy("id", true, Restrictions.sqlRestriction("idcard = '" + idcard
 									+ "' and agencyid=" + agencyId));
+		System.out.println(tras.size()+"sdfdsf "+tras.toString());
 		if(tras.size() != 1){
 			return null;
 		}

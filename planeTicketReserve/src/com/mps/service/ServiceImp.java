@@ -209,9 +209,11 @@ public class ServiceImp implements Service {
 	@Override
 	public List<Traveller> getTravellerByIdCard(String idcard, int agencyid) {
 		// TODO Auto-generated method stub
+		System.out.println("idcard"+idcard);
 		List<Traveller> items = new ArrayList<Traveller>();
-
 		items.add(travellerDaoImp.getTraveller(idcard.concat("F"), agencyid));
+		System.out.println("size:"+items.size());
+		System.out.println(travellerDaoImp.getTraveller(idcard.concat("F"), agencyid));
 		return items;
 	}
 
