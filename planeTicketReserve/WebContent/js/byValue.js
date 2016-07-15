@@ -75,7 +75,7 @@ var orderids=new Array();
 								align : 'center'
 							}, {
 								field : 'ticketTime',
-								title : '预定时间',
+								title : '取票时间',
 								width : 160,
 								align : 'center'
 							}, {
@@ -117,7 +117,7 @@ var orderids=new Array();
 				async : false,
 				url : "../REST/REST/Service/reviseTicketStatus/" + orderids[i],
 				success : function(data) {
-					alert(ticket);
+					/*alert(ticket);*/
 					window.parent.location = encodeURI("../html/printTable.html?ticket="+ticket);
 				}
 			});

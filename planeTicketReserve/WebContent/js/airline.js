@@ -129,8 +129,8 @@
 			if(document.cookie.split('=')[1] == undefined){
 				window.location.href="unlogin.html";
 			}
-		　  var curr_time = new Date();     
-		 　 $("#date").datebox("setValue",myformatter(curr_time));
+		  var curr_time = new Date();     
+		 $("#date").datebox("setValue",myformatter(curr_time));
 		  $('#date').datebox('calendar').calendar({
 				validator: function(date){
 					var now = new Date();

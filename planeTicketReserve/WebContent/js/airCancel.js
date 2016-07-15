@@ -1,22 +1,10 @@
-$(function(){
-	if(document.cookie.split('=')[1] == undefined){
-		window.location.href="unlogin.html";
-	}
-	
-	$('#flight').combobox({
-		valueField:'code',   
-		textField:'name',
-		url:'http://localhost:8080/planeTicketReserve/REST/REST/Service/getFlight'
-	});
-
-});
 function doSearch(){
 	var flight=$('#flight').combobox('getValue');
 	//alert(flight);
 	var start=$('#starttime').textbox('getValue');
 	//alert(flight+"liushuo"+start);
 	$('#search').form('submit',{
-		    url:"http://localhost:8080/planeTicketReserve/REST/REST/Service/getFlightMessage"+"/"+flight+"/"+start,
+		    url:"../REST/REST/Service/getFlightMessage"+"/"+flight+"/"+start,
 		    onSubmit: function(){
 				var isValid = $(this).form('validate');
 				
@@ -55,7 +43,7 @@ function doCancel(){
 		   $.messager.confirm('确认','您确认想要取消航班么？',function(r){    
 			    if (r){  
 			    	$.ajax({
-		                url: "http://localhost:8080/planeTicketReserve/REST/REST/Service/doCancel/"+flight,
+		                url: "../REST/REST/Service/doCancel/"+flight,
 		                type: 'GET',
 		                Error: function () {
 		                    alert(Error);
@@ -87,7 +75,7 @@ function doDelay(){
 				$.messager.confirm('确认','您确认想要延迟航班么？',function(r){    
 				    if (r){  
 				    	$.ajax({
-			                url: "http://localhost:8080/planeTicketReserve/REST/REST/Service/doDelay/"+flight,
+			                url: "../REST/REST/Service/doDelay/"+flight,
 			                type: 'GET',
 			                Error: function () {
 			                    alert(Error);

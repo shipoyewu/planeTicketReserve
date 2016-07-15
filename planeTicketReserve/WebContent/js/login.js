@@ -87,7 +87,7 @@ function check() {
             	if(msg == 'succ')
             		alert("注册成功！");
             	else
-            		alert("注册失败！");
+            		alert("注册失败！该账号已被注册");
 
             }
   		});

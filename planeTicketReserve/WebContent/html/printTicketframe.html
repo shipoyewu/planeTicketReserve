@@ -17,21 +17,21 @@
 <title>打印机票</title>
 </head>
 <body>
-	<form id="printForm" method="get" >
-		<div id="searchDiv" style="margin-top: 25px;" align="center">
+	<form id="printForm" method="get">
+		<div id="searchDiv" style="margin-top: 19px;">
 			<input class="easyui-searchbox" id="searchcontent"
 				name="searchcontent" autofocus="autofocus"
 				data-options="prompt:'请输入要您的身份证号',searcher:doSearch,required:true,validType:'idcard'"
 				style="width: 300px; height: 28px;"></input>
 		</div>
-		<div align="center">
-			<table id="dg" title="请选择要打印的预订单" style="width: 100%;"></table>
+		<div>
+			<table id="dg" title="请选择要打印的预订单" style="width: 1080px;"></table>
 		</div>
-		<div id="printBt" style="display: none;"  align="center">
+		<div id="printBt"
+			style="display: none; margin-left: 450px; margin-top: 15px;">
 			<input id="printBt" onclick="printBut()" type="button" value="打印"
 				style="width: 200px; height: 60px;">
 		</div>
 	</form>
-	
 </body>
 </html>

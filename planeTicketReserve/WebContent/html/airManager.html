@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>航空信息管理</title>
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/color.css">
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/index.js"></script>
+	<style type="text/css">
+		html,body{
+			height: 100%;	
+			width: 100%;
+			margin: 0 auto;
+			
+		}
+		#first{
+			background-image:url(../image/plane.png) ;	
+		}
+		
+	</style>
+</head>
+<body >
+    <div name="toplayout" class="easyui-layout" data-options="fit:'true'" >
+		<div id="first" name="first" data-options="region:'north'" style="height:18%;width:100%;">
+			<div style="width: 80% ;float: left;font-family:STKaiti;font-size:160%;color:white "  >
+				<h2>航空信息管理</h2>
+			</div>
+			
+		</div>
+		<div  id="second" data-options="region:'center'" >
+			<iframe src="airManagerHome.html"  width="99.5%" height="98%">
+			</iframe>
+		</div>
+	</div>
+	
+</body>
+</html>

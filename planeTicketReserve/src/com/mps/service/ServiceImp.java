@@ -228,7 +228,7 @@ public class ServiceImp implements Service {
 	@Override
 	public String register(String para) {
 		// TODO Auto-generated method stub
-		// ��ϵ��&�ֻ���&��������&����&��ַ
+	
 		String[] paras = para.split("&");
 		Agency agency = new Agency();
 		agency.setContacts(paras[0]);
@@ -277,9 +277,11 @@ public class ServiceImp implements Service {
 
 		synchronized (ordersDaoImp) {
 			int count = ordersDaoImp.getCountOfAirline(a.getFlight(), a.getStarttime());
+			ArrayList<Orders> orderlis = new ArrayList<>();
+			
 			System.out.println("111");
 			int cc = tre.size();
-
+			
 			if (cc <= 60 - count) {
 				for (int i = 0; i < cc; i++) {
 					Orders o = new Orders();
@@ -294,41 +296,56 @@ public class ServiceImp implements Service {
 					o.setAdvancestatus(1);
 					o.setTicketstatus(0);
 					Traveller t = null;
+					int size = ordersDaoImp.getCount(a.getStarttime(), tre.getJSONObject(i).getInt("id")+"", a.getFlight());
 					try {
+						if(size > 0 ){
+							throw new Exception("人多了");
+						}
 						o.setTeam(teamDaoImp.get(tre.getJSONObject(i).getInt("teamid")));
 						t = travellerDaoImp.get(tre.getJSONObject(i).getInt("id"));
 						phone.add(tre.getJSONObject(i).getString("phone"));
+						o.setTraveller(t);
+						orderlis.add(o);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-						return "unsucc:�ڲ�����!";
+						return "unsucc:机票预订失败!";
 					}
-					o.setTraveller(t);
-					ordersDaoImp.save(o);
+					
 				}
 			} else {
-				return "unscc:��λ������";
+				return "unscc:机票预订成功";
 			}
+			try{
+				
+				for(Orders o : orderlis){
+					ordersDaoImp.save(o);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				return "unsucc:机票预订失败!";
+			}
+			
 		}
 		StringBuilder sb = new StringBuilder();
 		String ans = "";
 		if (phone.size() > 0) {
 			for (String s : phone) {
-				sb.append(phone);
+				sb.append(s);
 				sb.append(',');
 			}
 			ans = sb.toString().substring(0, sb.length() - 1);
 		}
-
+		System.out.println("phones:"+ans+"   ");
 		TaobaoClient client = new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest", "23390281",
 				"14d2de25dc8047fc35985bce7d2aae3d");
 		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
 		req.setExtend("123456");
 		req.setSmsType("normal");
-		req.setSmsFreeSignName("ѧ����Ŀ");
+		req.setSmsFreeSignName("学生项目");
 		req.setSmsParamString("");
 		req.setRecNum(ans);
-		req.setSmsTemplateCode("SMS_10885001");
+		req.setSmsTemplateCode("SMS_10875017");
 		AlibabaAliqinFcSmsNumSendResponse rsp = null;
 		try {
 			rsp = client.execute(req);
@@ -612,7 +629,7 @@ public class ServiceImp implements Service {
 				AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
 				req.setExtend("123456");
 				req.setSmsType("normal");
-				req.setSmsFreeSignName("ѧ����Ŀ");
+				req.setSmsFreeSignName("学生项目");
 				req.setSmsParamString("");
 				req.setRecNum(ph);
 				req.setSmsTemplateCode("SMS_10825033");
@@ -647,12 +664,13 @@ public class ServiceImp implements Service {
 				phone.add(tr.getPhone());
 			}
 			for (String ph : phone) {
+				System.out.println("phonenum:"+ph+"  发送短信-----------------------");
 				TaobaoClient client = new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest", "23390281",
 						"14d2de25dc8047fc35985bce7d2aae3d");
 				AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
 				req.setExtend("123456");
 				req.setSmsType("normal");
-				req.setSmsFreeSignName("ѧ����Ŀ");
+				req.setSmsFreeSignName("学生项目");
 				req.setSmsParamString("");
 				req.setRecNum(ph);
 				req.setSmsTemplateCode("SMS_10885001");
@@ -752,34 +770,39 @@ public class ServiceImp implements Service {
 	public List<Ticket> printTicket(String idcard) {
 		Traveller traveller = travellerDaoImp.getTravellerId(idcard.concat("F"));
 		System.out.println(traveller.getName());
-		// System.out.println(traveller.getIdcard());
+		System.out.println(traveller.getIdcard());
 		List<Orders> orders = ordersDaoImp.getTravellerOrders(traveller.getId().toString());
-		// System.out.println("ordersize:" + orders.size()+"ffff");
-		// System.out.println(orders.get(0).getEndpoint());
+		 System.out.println("ordersize:" + orders.size()+"ffff");
+		 System.out.println(orders.get(0).getEndpoint());
 		List<Ticket> tickets = new ArrayList<Ticket>();
-		Ticket ticket = null;
-		if (orders != null) {
-			for (Orders order : orders) {
-				Team teams = teamDaoImp.get(order.getTeam().getId());
-				Agency agencies = agencyDaoImp.get(teams.getAgency().getId());
-				// System.out.println("fff:"+teams.getName()+agencies.getAddress());
-				ticket = new Ticket();
-				ticket.setOrderid(order.getId().toString());
-				ticket.setName(traveller.getName());
-				ticket.setIdcard(traveller.getIdcard());
-				ticket.setFlight(order.getFlight());
-				ticket.setStartPoint(order.getStartpoint());
-				ticket.setEndPoint(order.getEndpoint());
-				ticket.setTicketTime(order.getTickettime().toString());
-				ticket.setStartTime(order.getStarttime().toString());
-				ticket.setEndTime(order.getEndtime().toString());
-				ticket.setSeat(order.getSeat());
-				ticket.setSpace(order.getSpace());
-				ticket.setAgencyName(agencies.getName());
-				ticket.setTeamName(teams.getName());
-				System.out.println(ticket.getOrderid() + "xxxxxxxxxxxxxxx");
-				tickets.add(ticket);
+		try {
+			Ticket ticket = null;
+			if (orders != null) {
+				for (Orders order : orders) {
+					Team teams = order.getTeam();
+					Agency agencies = teams.getAgency();
+					// System.out.println("fff:"+teams.getName()+agencies.getAddress());
+					ticket = new Ticket();
+					ticket.setOrderid(order.getId().toString());
+					ticket.setName(traveller.getName());
+					ticket.setIdcard(traveller.getIdcard());
+					ticket.setFlight(order.getFlight());
+					ticket.setStartPoint(order.getStartpoint());
+					ticket.setEndPoint(order.getEndpoint());
+					ticket.setTicketTime(order.getTickettime().toLocaleString());
+					ticket.setStartTime(order.getStarttime().toLocaleString());
+					ticket.setEndTime(order.getEndtime().toLocaleString());
+					ticket.setSeat(order.getSeat());
+					ticket.setSpace(order.getSpace());
+					ticket.setAgencyName(agencies.getName());
+					ticket.setTeamName(teams.getName());
+					System.out.println(ticket.getOrderid() + "xxxxxxxxxxxxxxx");
+					tickets.add(ticket);
+				}
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		// System.out.println(tickets.get(0));
 		return tickets;

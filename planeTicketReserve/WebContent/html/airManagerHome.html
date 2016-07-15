@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../jquery-easyui-1.4.5/themes/color.css">
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/index.js"></script>
+	<style type="text/css">
+		html,body{
+			height: 100%;	
+			width: 100%;
+			margin: 0 auto;
+		}	
+		
+		#e{
+			/*border: 10px solid skyblue;*/
+			float: left;
+			width: 40%;
+			height: 40%;
+			position: absolute;
+  			margin: 10% 2% ;
+		}
+		#f{
+			/*border: 10px solid red;*/
+			float: left;
+			width: 40%;
+			height: 40%;
+			position: absolute;
+  			margin: 10% 18% ;
+		}
+		
+
+	</style>
+</head>
+<body>
+	<div class="easyui-layout" data-options="fit:'true'" >
+		<div id="tt" class="easyui-tabs" data-options="fit:true "  style="tabWidth:10%;tabHeight:10%;">
+			<div id="home" title="航空信息管理" style="font-family:STKaiti;font-size:100px;color:red" >
+				<div id="e">
+					<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-picture',size:'large',iconAlign:'top'"
+					style="width:200px;height: 200px " 
+					onclick="addTab('取消或延迟航班','airCancel.html')"><h1>取消或延迟航班</h1></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

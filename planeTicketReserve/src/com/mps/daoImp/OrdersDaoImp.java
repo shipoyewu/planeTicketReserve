@@ -107,4 +107,10 @@ public class OrdersDaoImp extends BaseDao<Orders, Integer> {
 	public void reviseTicketStatus(Orders orders){
 		super.update(orders);
 	}	
+	public int getCount(Date time,String id,String code){
+		return super.findBy("id",false, Restrictions.sqlRestriction("travellerid='" + id+
+					"' and flight='"+code+"'" + 
+					" and starttime='"+time+"'"))
+					.size();
+	}
 }
